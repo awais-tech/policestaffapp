@@ -5,9 +5,6 @@ import 'dart:convert';
 import 'package:policestaffapp/PoliceSFSDuties.dart';
 
 class PoliceSfsDutiesProvider with ChangeNotifier {
-  String Auth;
-  String userid;
-  PoliceSfsDutiesProvider(this.Auth, this.SfsDuties, this.userid);
   List<SFSDuties> SfsDuties = [
     SFSDuties(
         Id: "A1",

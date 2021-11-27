@@ -32,12 +32,12 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
     isActive: false,
   );
   var initial = {
-    'TimeDuration': 0.toString(),
+    'TimeDuration': '',
     'Description': '',
     'AssignedTo': '',
     'Category': '',
     'AssignedBy': '',
-    'Date': 0.toString(),
+    'Date': '',
   };
   @override
   void dispose() {
@@ -55,26 +55,26 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
 
   @override
   void didChangeDependencies() {
-    if (init) {
-      final Id = 1;
+    // if (init) {
+    //   final Id = '1';
 
-      if (Id != null) {
-        _editedDuties =
-            Provider.of<PoliceSfsDutiesProvider>(context, listen: false)
-                .findById(Id as String);
-        initial = {
-          'TimeDuration': _editedDuties.TimeDuration.toString(),
-          'Description': _editedDuties.Description,
-          'AssignedTo': _editedDuties.AssignedTo,
-          'Category': _editedDuties.Category,
-          'AssignedBy': _editedDuties.AssignedBy,
-          'Date': _editedDuties.Date.toString(),
-        };
-        _imageUrlController.text = _editedDuties.ImageUrl;
-        _TextControl.text = _editedDuties.DutyTitle;
-      }
-    }
-    init = false;
+    //   if (Id != null) {
+    //     _editedDuties =
+    //         Provider.of<PoliceSfsDutiesProvider>(context, listen: false)
+    //             .findById(Id as String);
+    //     initial = {
+    //       'TimeDuration': _editedDuties.TimeDuration.toString(),
+    //       'Description': _editedDuties.Description,
+    //       'AssignedTo': _editedDuties.AssignedTo,
+    //       'Category': _editedDuties.Category,
+    //       'AssignedBy': _editedDuties.AssignedBy,
+    //       'Date': _editedDuties.Date.toString(),
+    //     };
+    //     _imageUrlController.text = _editedDuties.ImageUrl;
+    //     _TextControl.text = _editedDuties.DutyTitle;
+    //   }
+    // }
+    // init = false;
     super.didChangeDependencies();
   }
 
