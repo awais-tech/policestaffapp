@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 
 class SFSDuties with ChangeNotifier {
-  final String Id;
-  final String DutyTitle;
-  final String ImageUrl;
-  final String AssignedTo;
-  final String Category;
-  final String Location;
-  final String Priority;
-  final String TimeDuration;
-  final String Date;
-  final String Description;
-  final String AssignedBy;
+  String Id;
+  String DutyTitle;
+  String ImageUrl;
+  String AssignedTo;
+  String Category;
+  String Location;
+  String Priority;
+  String TimeDuration;
+  String Date;
+  String Description;
+  String AssignedBy;
   bool isActive;
 
   SFSDuties({
-    required this.Id,
-    required this.DutyTitle,
-    required this.ImageUrl,
-    required this.AssignedTo,
-    required this.Category,
-    required this.Location,
-    required this.Priority,
-    required this.TimeDuration,
-    required this.Date,
-    required this.Description,
-    required this.AssignedBy,
+    this.Id = "D1",
+    this.DutyTitle = "CheckPosting",
+    this.ImageUrl = "www.pic.com",
+    this.AssignedTo = "ASP Awais Shahbaz",
+    this.Category = "Checkpost",
+    this.Location = "Lahore",
+    this.Priority = "High",
+    this.TimeDuration = "3-5 Hours",
+    this.Date = "29-Nov-2021",
+    this.Description = "I am doing Checkposting",
+    this.AssignedBy = "SHO",
     this.isActive = false,
   });
   void toggleFavoriteStatus() {
