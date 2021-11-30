@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'PoliceSFSDutiesProvider.dart';
 
-class ViewComplaints extends StatefulWidget {
+class ViewDuties extends StatefulWidget {
   static final routeName = 'ViewDuties';
 
   @override
-  _ViewComplaintsState createState() => _ViewComplaintsState();
+  _ViewDutiesState createState() => _ViewDutiesState();
 }
 
-class _ViewComplaintsState extends State<ViewComplaints> {
+class _ViewDutiesState extends State<ViewDuties> {
   final postId = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @override
   Widget build(BuildContext context) {
