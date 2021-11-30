@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:policestaffapp/ViewDuties.dart';
 
 class Staffdashboard extends StatelessWidget {
   static const routeName = '/Dashboard';
@@ -82,7 +83,10 @@ class Staffdashboard extends StatelessWidget {
                             color: Colors.pink,
                             elevation: 8,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(ViewDuties.routeName);
+                              },
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,

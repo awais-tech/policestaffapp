@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:policestaffapp/AddDuties.dart';
 import 'package:policestaffapp/Login.dart';
 import 'package:policestaffapp/PoliceSFSDutiesProvider.dart';
+import 'package:policestaffapp/ViewDuties.dart';
 import 'package:provider/provider.dart';
 import 'Dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,13 +28,14 @@ class MyApp extends StatelessWidget {
           // ),
         ],
         child: MaterialApp(
-            title: 'BaltiApp',
+            title: 'Police SFS',
             theme: ThemeData(
               primaryColor: Color(0xffB788E5),
             ),
             home: LoginScreen(),
             routes: {
               Staffdashboard.routeName: (ctx) => Staffdashboard(),
+              ViewDuties.routeName: (ctx) => ViewDuties()
 
               // HomeScreen.route: (ctx) => HomeScreen(),
               // LoginScreen1.routename: (ctx) => LoginScreen1(),
