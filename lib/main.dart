@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:policestaffapp/AddDuties.dart';
 import 'package:policestaffapp/Dashboard.dart';
 import 'package:policestaffapp/Policetabbar.dart';
+import 'package:policestaffapp/ViewComplaints.dart';
 import 'package:policestaffapp/ViewDetailsOfDuties.dart';
-
+import 'package:policestaffapp/ViewDetailsofComplaints.dart';
+import 'AssignComplaints.dart';
 import 'package:policestaffapp/ViewDuties.dart';
 import 'package:provider/provider.dart';
 
@@ -69,12 +71,16 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: Color(0xffB788E5),
       ),
-      home: Staffdashboard(),
+      home: ViewComplaints(),
       routes: {
         AddDutiesScreen.routename: (ctx) => AddDutiesScreen(),
         dutydetails.routename: (ctx) => dutydetails(),
         ViewDuties.routeName: (ctx) => ViewDuties(),
         PoliceDutiesStatus.routeName: (ctx) => PoliceDutiesStatus(),
+        Complaintdetails.routename: (ctx) => Complaintdetails(),
+        AssignComplaintsScreen.routename: (ctx) => AssignComplaintsScreen(),
+        ViewComplaints.routeName: (ctx) => ViewComplaints(),
+
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),
         // ComplaintTrack.routeName: (ctx) => ComplaintTrack(),
