@@ -8,7 +8,7 @@ import 'package:policestaffapp/AssignComplaints.dart';
 
 // ignore: camel_case_types
 class Complaintdetails extends StatelessWidget {
-  static final routename = "viewdetailsdes";
+  static final routename = "viewdetailsds";
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {

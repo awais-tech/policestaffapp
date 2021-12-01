@@ -39,13 +39,13 @@ class DutiesDatabase {
       await _mainCollection.add({
         "Location": policeStation.Location,
         "Assign by": policeStation.AssignedBy,
-        "PoliceStaffName": policeStation.AssignedTo,
+        "PoliceStaffid": policeStation.AssignedTo,
         "Title": policeStation.DutyTitle,
         "Category": policeStation.Category,
         "Description": policeStation.Description,
         "Priority": policeStation.Priority,
         "Date Created": policeStation.Date,
-        "status": "pending"
+        "status": "Pending"
       });
     } catch (e) {
       print(e);

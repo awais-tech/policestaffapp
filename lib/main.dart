@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: Color(0xffB788E5),
       ),
-      home: ViewComplaints(),
+      home: Staffdashboard(),
       routes: {
         AddDutiesScreen.routename: (ctx) => AddDutiesScreen(),
         dutydetails.routename: (ctx) => dutydetails(),

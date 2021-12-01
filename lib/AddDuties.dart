@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:policestaffapp/ComplaintsDatabase.dart';
 import 'package:policestaffapp/PoliceSFSDuties.dart';
@@ -5,15 +6,49 @@ import 'package:policestaffapp/PoliceSFSDutiesProvider.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddDutiesScreen extends StatefulWidget {
   static final routename = "addduties";
+
   @override
   _AddDutiesScreenState createState() => _AddDutiesScreenState();
 }
 
 class _AddDutiesScreenState extends State<AddDutiesScreen> {
-  var loading = false;
+  bool loading = false;
+  bool _isInit = true;
+  var save;
+
+  void didChangeDependencies() {
+    print(2);
+    if (_isInit) {
+      setState(() {
+        loading = true;
+      });
+      final result = FirebaseFirestore.instance
+          .collection('PoliceStaff')
+          .get()
+          .then((result) {
+        save = result.docs
+            .map((val) => {
+                  'label': val.data()["Name"],
+                  "value": val.data()["PoliceStaffId"]
+                })
+            .toList();
+        setState(() {
+          loading = false;
+        });
+      });
+
+      _isInit = false;
+
+      super.didChangeDependencies();
+    }
+  }
+
   void AssignDuties() async {
     var form = _form.currentState!.validate();
     if (!form) {
@@ -110,6 +145,7 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(save);
     return Scaffold(
       appBar: AppBar(
         title: Text('Assign Duties'),
@@ -144,24 +180,37 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Assign To',
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter a Assigned To.';
-                          }
-                          return null;
-                        },
+                      child: SelectFormField(
+                        labelText: 'Assigned To',
+                        type: SelectFormFieldType.dropdown,
+                        initialValue: 'Select',
+                        items: save,
+                        onChanged: (val) => print(val),
                         onSaved: (value) {
                           PoliceSFSDuties.AssignedTo = value as String;
                         },
                       ),
                     ),
+                    // Container(
+                    //   padding: const EdgeInsets.all(15.0),
+                    //   child: TextFormField(
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(),
+                    //       labelText: 'Assign To',
+                    //     ),
+                    //     textInputAction: TextInputAction.next,
+                    //     keyboardType: TextInputType.text,
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) {
+                    //         return 'Please enter a Assigned To.';
+                    //       }
+                    //       return null;
+                    //     },
+                    //     onSaved: (value) {
+                    //       PoliceSFSDuties.AssignedTo = value as String;
+                    //     },
+                    //   ),
+                    // ),
                     Container(
                       padding: const EdgeInsets.all(15.0),
                       child: SelectFormField(
