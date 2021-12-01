@@ -21,7 +21,10 @@ class ViewDutiesWorking extends StatefulWidget {
 }
 
 class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
-  final stream = FirebaseFirestore.instance.collection('Duties').snapshots();
+  final stream = FirebaseFirestore.instance
+      .collection('Duties')
+      .where('status', isEqualTo: 'Working')
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

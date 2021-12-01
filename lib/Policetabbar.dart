@@ -31,14 +31,12 @@ class PoliceDutiesStatus extends StatelessWidget {
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
-                  child:
-                      Tab(icon: Icon(Icons.pending_actions), text: "Working"),
+                  child: Tab(icon: Icon(Icons.work), text: "Working"),
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
-                  child: Tab(
-                      icon: Icon(Icons.pending_actions),
-                      text: "Completed Duties"),
+                  child:
+                      Tab(icon: Icon(Icons.done_all), text: "Completed Duties"),
                 ),
               ],
             ),

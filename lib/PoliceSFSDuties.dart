@@ -9,7 +9,7 @@ class SFSDuties with ChangeNotifier {
   String Location;
   String Priority;
   String TimeDuration;
-  String Date;
+  DateTime Date;
   String Description;
   String AssignedBy;
   bool isActive;
@@ -23,15 +23,9 @@ class SFSDuties with ChangeNotifier {
     this.Location = "Lahore",
     this.Priority = "High",
     this.TimeDuration = "3-5 Hours",
-    this.Date = "29-Nov-2021",
+    required this.Date,
     this.Description = "I am doing Checkposting",
     this.AssignedBy = "SHO",
     this.isActive = false,
   });
-  void toggleFavoriteStatus() {
-    var old = isActive;
-
-    isActive = !isActive;
-    notifyListeners();
-  }
 }

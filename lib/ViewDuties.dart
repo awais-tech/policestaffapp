@@ -21,7 +21,10 @@ class ViewDuties extends StatefulWidget {
 }
 
 class _ViewDutiesState extends State<ViewDuties> {
-  final stream = FirebaseFirestore.instance.collection('Duties').snapshots();
+  final stream = FirebaseFirestore.instance
+      .collection('Duties')
+      .where('status', isEqualTo: 'Pending')
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:policestaffapp/AddDuties.dart';
+import 'package:policestaffapp/Dashboard.dart';
 import 'package:policestaffapp/Policetabbar.dart';
 import 'package:policestaffapp/ViewDetailsOfDuties.dart';
 
@@ -67,8 +69,9 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primaryColor: Color(0xffB788E5),
       ),
-      home: PoliceDutiesStatus(),
+      home: Staffdashboard(),
       routes: {
+        AddDutiesScreen.routename: (ctx) => AddDutiesScreen(),
         dutydetails.routename: (ctx) => dutydetails(),
         ViewDuties.routeName: (ctx) => ViewDuties(),
         PoliceDutiesStatus.routeName: (ctx) => PoliceDutiesStatus(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:policestaffapp/AddDuties.dart';
+import 'package:policestaffapp/Policetabbar.dart';
 import 'package:policestaffapp/ViewDuties.dart';
 
 class Staffdashboard extends StatelessWidget {
@@ -38,33 +40,36 @@ class Staffdashboard extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            tileColor: Colors.blueGrey[50],
-                            onTap: () {},
-                            title: Text(
-                              "Hi, Officer",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
-                            ),
-                            subtitle: Text(
-                              "There are 16 unread notifications. Tap to see them.",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
+                              tileColor: Colors.blueGrey[50],
+                              onTap: () {},
+                              title: Text(
+                                "Hi, Officer",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            trailing: Icon(
-                              Icons.notifications_active_rounded,
-                              color: Colors.black,
-                              size: 36,
-                            ),
-                          ),
+                              subtitle: Text(
+                                "For add duties Press that button",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                  onPressed: () => {
+                                        Navigator.of(context).pushNamed(
+                                            AddDutiesScreen.routename)
+                                      },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 36,
+                                  ))),
                         ),
                       ),
                     ],
@@ -85,7 +90,7 @@ class Staffdashboard extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed(ViewDuties.routeName);
+                                    .pushNamed(PoliceDutiesStatus.routeName);
                               },
                               child: Column(
                                 mainAxisAlignment:
