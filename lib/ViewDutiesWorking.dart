@@ -13,14 +13,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ViewDuties extends StatefulWidget {
-  static final routeName = 'ViewDuties';
+class ViewDutiesWorking extends StatefulWidget {
+  static final routeName = 'ViewDutiesWorking';
 
   @override
-  _ViewDutiesState createState() => _ViewDutiesState();
+  _ViewDutiesWorkingState createState() => _ViewDutiesWorkingState();
 }
 
-class _ViewDutiesState extends State<ViewDuties> {
+class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
   final stream = FirebaseFirestore.instance.collection('Duties').snapshots();
   @override
   Widget build(BuildContext context) {

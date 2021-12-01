@@ -2,25 +2,20 @@
 // ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, duplicate_ignore, file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
 class dutydetails extends StatelessWidget {
+  static final routename = "viewdetailsdes";
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
+    final dat = ModalRoute.of(context)?.settings.arguments as Map;
+    final datas = dat["data"];
+    final ids = dat["id"];
     return Scaffold(
       appBar: AppBar(
-        leading: TextButton(
-            onPressed: () {},
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            )),
         title: Text("Duty Details"),
         actions: <Widget>[
           IconButton(
@@ -54,33 +49,47 @@ class dutydetails extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "RAID ON EMAAN CENTER",
+                  datas['Title'],
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 // ignore: prefer_const_constructors
                 Text(
-                  "Category: RAID",
+                  'Category:${datas['Category']}',
                   style: TextStyle(
                       color: Colors.red[900],
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
                 ),
-                Text("Priority: High",
+                Text("Priority:${datas['Priority']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
-                Text("Location: Johar town",
+                Text("Location:${datas['Location']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
-                Text("Assign By: SHO ASHRAF GHANI",
+                Text("Assign By: ${datas['Assign by']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
-                Text("Date Created: 24-11-2021",
+                Text("Status: ${datas['status']}",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+                Text(
+                    "Date Created:  ${DateTime.parse(datas["Date Created"].toDate().toString()).toString()}",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+                Divider(
+                  color: Colors.black,
+                ),
+                Text("Officer Name:  ${datas["PoliceStaffName"]}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -89,12 +98,12 @@ class dutydetails extends StatelessWidget {
                   color: Colors.black,
                 ),
                 Text("Description",
+                    softWrap: true,
                     style: TextStyle(
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,
                         fontSize: 22)),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                Text("${datas['Description']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -122,26 +131,71 @@ class dutydetails extends StatelessWidget {
                   ),
                   SizedBox(width: 15),
                   ElevatedButton(
-                    child: Text('Chat',
-                        style: TextStyle(
-                            color: Colors.red[900],
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  ),
-                  SizedBox(width: 15),
-                  ElevatedButton(
                     child: Text('Accept Duty',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 16)),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await _firestore
+                          .collection("Duties")
+                          .doc(ids)
+                          .update({"status": "Working"});
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text('Duty update'),
+                          content: Text(
+                            'Mark as Working',
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(ctx).pop(false);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                      ;
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                        textStyle:
+                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
+                  ),
+                  ElevatedButton(
+                    child: Text('Complete Duty',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16)),
+                    onPressed: () async {
+                      await _firestore
+                          .collection("Duties")
+                          .doc(ids)
+                          .update({"status": "Complete"});
+                      return showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text('Dutie update'),
+                          content: Text(
+                            'Mark as Complete',
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Yes'),
+                              onPressed: () {
+                                Navigator.of(ctx).pop(false);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.black),

@@ -1,72 +1,85 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/AddDuties.dart';
-import 'package:policestaffapp/Login.dart';
-import 'package:policestaffapp/PoliceSFSDutiesProvider.dart';
+import 'package:policestaffapp/Policetabbar.dart';
 import 'package:policestaffapp/ViewDetailsOfDuties.dart';
+
 import 'package:policestaffapp/ViewDuties.dart';
 import 'package:provider/provider.dart';
-import 'Dashboard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
-
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _initialized = false;
+  bool _error = false;
+
+  void initializeFlutterFire() async {
+    try {
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (ctx) => PoliceSfsDutiesProvider(),
+    if (_error) {
+      return MaterialApp(
+        home: Scaffold(
+          body: AlertDialog(
+            content: Text('Something went wrong. Please restart the app.'),
           ),
+        ),
+      );
+    }
+    if (!_initialized) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
+    }
 
-          // ChangeNotifierProvider(
-          //   create: (ctx) => Orders(),
-          // ),
-        ],
-        child: MaterialApp(
-            title: 'Police SFS',
-            theme: ThemeData(
-              primaryColor: Color(0xffB788E5),
-            ),
-            home: dutydetails(),
-            routes: {
-              Staffdashboard.routeName: (ctx) => Staffdashboard(),
-              ViewDuties.routeName: (ctx) => ViewDuties()
-
-              // HomeScreen.route: (ctx) => HomeScreen(),
-              // LoginScreen1.routename: (ctx) => LoginScreen1(),
-              // TabsScreen.route: (ctx) => TabsScreen(),
-              // Mysignuppage.route: (ctx) => Mysignuppage(),
-              // ForgotPasswordScreen.route: (ctx) =>
-              //     ForgotPasswordScreen(),
-              // ResetPassword.route: (ctx) => ResetPassword(),
-              // VerifyEmail.route: (ctx) => VerifyEmail(),
-              // HomeScreen.route: (ctx) => TabsScreen(),
-              // Mycart.route: (ctx) => Mycart(),
-              // ProductDetailScreen.routeName: (ctx) =>
-              //     ProductDetailScreen(),
-              // CheckoutScreen.route: (ctx) => CheckoutScreen(),
-              // Profile.routeName: (ctx) => Profile(),
-              // OrderStatus.routeName: (ctx) => OrderStatus(),
-              // OrdersScreen.routeName: (ctx) => OrdersScreen(),
-              // AboutUs.routeName: (ctx) => AboutUs(),
-              // Address.routeName: (ctx) => Address(),
-              // Sellerdashboard.routeName: (ctx) => Sellerdashboard(),
-              // UserProductsScreen.routeName: (ctx) =>
-              //     UserProductsScreen(),
-              // AddProductScreen.routeName: (ctx) => AddProductScreen(),
-              // FeedbackScreen.routename: (ctx) => FeedbackScreen(),
-              // ManageFeedbacks.routeName: (ctx) => ManageFeedbacks(),
-              // OrdersApprovalScreen.routeName: (ctx) =>
-              //     OrdersApprovalScreen(),
-              // Rating.routename: (ctx) => Rating(),
-              // OrdersScreenprocessprocess.routeName: (ctx) =>
-              //     OrdersScreenprocessprocess()
-            }));
+    return MaterialApp(
+      title: 'Police SFS',
+      theme: ThemeData(
+        primaryColor: Color(0xffB788E5),
+      ),
+      home: PoliceDutiesStatus(),
+      routes: {
+        dutydetails.routename: (ctx) => dutydetails(),
+        ViewDuties.routeName: (ctx) => ViewDuties(),
+        PoliceDutiesStatus.routeName: (ctx) => PoliceDutiesStatus(),
+        // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
+        // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),
+        // ComplaintTrack.routeName: (ctx) => ComplaintTrack(),
+        // Chat.routeName: (ctx) => Chat(),
+        // Addcomplaint.routeName: (ctx) => Addcomplaint(),
+        // ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
+        // AboutUs.routeName: (ctx) => AboutUs(),
+      },
+    );
   }
 }
