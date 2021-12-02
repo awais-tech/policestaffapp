@@ -98,7 +98,7 @@ class Complaintdetails extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 18))
                     : Container(),
-                Text("Complainer Phone no:  ${datas["phone "]}",
+                Text("Complainer Phone no:  ${datas["phone"]}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
