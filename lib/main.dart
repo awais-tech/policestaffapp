@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policestaffapp/AddDuties.dart';
+import 'package:policestaffapp/ComplaintTabbar.dart';
 import 'package:policestaffapp/Dashboard.dart';
 import 'package:policestaffapp/Policetabbar.dart';
 import 'package:policestaffapp/ViewComplaints.dart';
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
         Complaintdetails.routename: (ctx) => Complaintdetails(),
         AssignComplaintsScreen.routename: (ctx) => AssignComplaintsScreen(),
         ViewComplaints.routeName: (ctx) => ViewComplaints(),
+        PolicsComplaintStatus.routeName: (ctx) => PolicsComplaintStatus(),
 
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),

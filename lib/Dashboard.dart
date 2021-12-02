@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:policestaffapp/AddDuties.dart';
+import 'package:policestaffapp/ComplaintTabbar.dart';
 import 'package:policestaffapp/Policetabbar.dart';
 import 'package:policestaffapp/ViewComplaints.dart';
 import 'package:policestaffapp/ViewDuties.dart';
@@ -134,7 +135,7 @@ class Staffdashboard extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed(ViewComplaints.routeName);
+                                    .pushNamed(PolicsComplaintStatus.routeName);
                               },
                               child: Column(
                                 mainAxisAlignment:

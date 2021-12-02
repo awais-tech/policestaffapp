@@ -11,7 +11,7 @@ class PolicsComplaintStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
@@ -19,7 +19,7 @@ class PolicsComplaintStatus extends StatelessWidget {
               padding: EdgeInsets.all(20),
               width: double.infinity,
               child: Text(
-                'Check All Duties',
+                'Check All Complaints',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -33,8 +33,16 @@ class PolicsComplaintStatus extends StatelessWidget {
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
-                  child:
-                      Tab(icon: Icon(Icons.work), text: "Assigned Complaint"),
+                  child: Tab(
+                      icon: Icon(Icons.assignment), text: "Assigned Complaint"),
+                ),
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Tab(icon: Icon(Icons.work), text: "Working"),
+                ),
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Tab(icon: Icon(Icons.done_all), text: "Completed"),
                 ),
                 // FittedBox(
                 //   fit: BoxFit.contain,
@@ -47,6 +55,8 @@ class PolicsComplaintStatus extends StatelessWidget {
           body: TabBarView(
             children: [
               ViewComplaints(),
+              ViewComplaintsassigned(),
+              ViewComplaintsassigned(),
               ViewComplaintsassigned(),
             ],
           ),

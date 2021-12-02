@@ -15,6 +15,7 @@ class Complaintdetails extends StatelessWidget {
     final dat = ModalRoute.of(context)?.settings.arguments as Map;
     final datas = dat["data"];
     final ids = dat["id"];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Complaints Details"),
@@ -55,7 +56,7 @@ class Complaintdetails extends StatelessWidget {
                 ),
                 // ignore: prefer_const_constructors
                 Text(
-                  'Category:${datas['Category']}',
+                  'Category:${datas['Catagory']}',
                   style: TextStyle(
                       color: Colors.red[900],
                       fontWeight: FontWeight.bold,
@@ -90,11 +91,19 @@ class Complaintdetails extends StatelessWidget {
                 Divider(
                   color: Colors.black,
                 ),
-                Text("Complainer Phone no:  ${datas["Phone"]}",
+                datas["OfficerName"] != "No"
+                    ? Text("Assigned To:  ${datas["OfficerName"]}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))
+                    : Container(),
+                Text("Complainer Phone no:  ${datas["phone "]}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
+
                 Divider(
                   color: Colors.black,
                 ),

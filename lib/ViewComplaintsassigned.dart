@@ -17,7 +17,7 @@ class ViewComplaintsassigned extends StatefulWidget {
 class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
   final stream = FirebaseFirestore.instance
       .collection('Complaints')
-      .where('status', isEqualTo: 'Pending')
+      .where('status', isEqualTo: 'assigned')
       .snapshots();
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Category",
+                                              "Catagory",
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
