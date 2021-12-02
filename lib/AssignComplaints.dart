@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class AssignComplaintsScreen extends StatefulWidget {
-  static final routename = "aduties";
+  static final routename = "assignduties";
   @override
   _AssignComplaintsScreenState createState() => _AssignComplaintsScreenState();
 }

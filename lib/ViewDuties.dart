@@ -159,24 +159,37 @@ class _ViewDutiesState extends State<ViewDuties> {
                                               ),
                                             ),
                                             SizedBox(
-                                              height: 5,
+                                              height: 20,
                                             ),
                                             Center(
-                                              child: TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            dutydetails
-                                                                .routename,
-                                                            arguments: {
-                                                          "data": (snp
-                                                              .data!.docs[i]
-                                                              .data()),
-                                                          "id": snp
-                                                              .data!.docs[i].id
-                                                        });
-                                                  },
-                                                  child: Text('View Details')),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                dutydetails
+                                                                    .routename,
+                                                                arguments: {
+                                                              "data": (snp
+                                                                  .data!.docs[i]
+                                                                  .data()),
+                                                              "id": snp.data!
+                                                                  .docs[i].id
+                                                            });
+                                                      },
+                                                      child:
+                                                          Text('View Details')),
+                                                  TextButton(
+                                                      onPressed: () {},
+                                                      child: Text('Update')),
+                                                  TextButton(
+                                                      onPressed: () {},
+                                                      child: Text('Delete')),
+                                                ],
+                                              ),
                                             )
                                           ],
                                         ),
