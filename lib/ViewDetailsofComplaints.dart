@@ -8,7 +8,7 @@ import 'package:policestaffapp/AssignComplaints.dart';
 
 // ignore: camel_case_types
 class Complaintdetails extends StatelessWidget {
-  static final routename = "viewdetailsds";
+  static final routename = "viewdetailComplaints";
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class Complaintdetails extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image(
-                    image: AssetImage('assets/Images/crime.jpg'),
+                    image: NetworkImage("${datas['imageUrl']}"),
                     height: 100,
                     width: double.infinity,
                   ),
@@ -61,17 +61,17 @@ class Complaintdetails extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 20),
                 ),
-                Text("Priority:${datas['Priority']}",
+                Text("sub category:${datas['sub category']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
-                Text("Location:${datas['Location']}",
+                Text("sent by:${datas['sent by']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
-                Text("Assign By: ${datas['Assign by']}",
+                Text("Type: ${datas['Type']}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class Complaintdetails extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
                 Text(
-                    "Date Created:  ${DateTime.parse(datas["Date Created"].toDate().toString()).toString()}",
+                    "Date Created:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -90,7 +90,15 @@ class Complaintdetails extends StatelessWidget {
                 Divider(
                   color: Colors.black,
                 ),
-                Text("Officer Name:  ${datas["PoliceStaffName"]}",
+                Text("Complainer Phone no:  ${datas["Phone"]}",
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+                Divider(
+                  color: Colors.black,
+                ),
+                Text("ReportNo:  ${datas["ReportNo"] ?? "No Report No"}",
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,

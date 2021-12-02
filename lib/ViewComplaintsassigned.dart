@@ -7,14 +7,14 @@ import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ViewComplaints extends StatefulWidget {
-  static final routeName = 'ViewComplaints';
+class ViewComplaintsassigned extends StatefulWidget {
+  static final routeName = 'ViewComplaintsassigned';
 
   @override
-  _ViewComplaintsState createState() => _ViewComplaintsState();
+  _ViewComplaintsassignedState createState() => _ViewComplaintsassignedState();
 }
 
-class _ViewComplaintsState extends State<ViewComplaints> {
+class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
   final stream = FirebaseFirestore.instance
       .collection('Complaints')
       .where('status', isEqualTo: 'Pending')
