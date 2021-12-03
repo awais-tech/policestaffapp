@@ -103,6 +103,24 @@ class Complaintdetails extends StatelessWidget {
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
+                datas["Date Assigned"] != null
+                    ? Text(
+                        "Start Working On:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))
+                    : Container(),
+
+                datas["Description for officer"] != null
+                    ? Text(
+                        "Description for officer:  ${datas["DescriptionForOfficer"]}",
+                        softWrap: true,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))
+                    : Container(),
 
                 Divider(
                   color: Colors.black,
@@ -148,59 +166,75 @@ class Complaintdetails extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 15),
-                  ElevatedButton(
-                    child: Text('Assign Complaint',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
-                    onPressed: () async {
-                      Navigator.of(context)
-                          .pushNamed(AssignComplaintsScreen.routename);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  ),
-                  ElevatedButton(
-                    child: Text('Complete Duty',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
-                    onPressed: () async {
-                      await _firestore
-                          .collection("Duties")
-                          .doc(ids)
-                          .update({"status": "Complete"});
-                      return showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('Dutie update'),
-                          content: Text(
-                            'Mark as Complete',
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                Navigator.of(ctx).pop(false);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  ),
+                  datas['status'] == "pending"
+                      ? ElevatedButton(
+                          child: Text('Assign Complaint',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16)),
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(
+                                AssignComplaintsScreen.routename,
+                                arguments: ids);
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.all(10)),
+                              textStyle: MaterialStateProperty.all(
+                                  TextStyle(fontSize: 16))),
+                        )
+                      : Container(child: Text("Complaint has been assigned ")),
+                  datas['status'] != "pending"
+                      ? ElevatedButton(
+                          child: Text(
+                              '${datas['status']}' == "assigned"
+                                  ? "accept Complaint"
+                                  : "Complete Complaint",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16)),
+                          onPressed: () async {
+                            await _firestore
+                                .collection("Complaints")
+                                .doc(ids)
+                                .update({
+                              "status": '${datas['status']}' == "Active"
+                                  ? "Complete"
+                                  : "Active"
+                            });
+                            return showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text('Update'),
+                                content: Text(
+                                  '${datas['status']}' == "Active"
+                                      ? "Complete"
+                                      : "Active",
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Yes'),
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop(false);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.all(10)),
+                              textStyle: MaterialStateProperty.all(
+                                  TextStyle(fontSize: 16))),
+                        )
+                      : Container(),
                 ],
               ),
             ),

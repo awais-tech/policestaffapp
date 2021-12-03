@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:policestaffapp/ComplaintTabbar.dart';
 import 'package:policestaffapp/ComplaintsDatabase.dart';
 import 'package:policestaffapp/PoliceSFSDuties.dart';
 import 'package:policestaffapp/PoliceSFSDutiesProvider.dart';
@@ -7,14 +9,17 @@ import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class AssignComplaintsScreen extends StatefulWidget {
-  static final routename = "assignduties";
+  static final routename = "assignComplaints";
   @override
   _AssignComplaintsScreenState createState() => _AssignComplaintsScreenState();
 }
 
 class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
   var loading = false;
-  void AssignDuties() async {
+
+  bool _isInit = true;
+  var save;
+  void AssignDuties(ids) async {
     var form = _form.currentState!.validate();
     if (!form) {
       return;
@@ -25,7 +30,28 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
       loading = true;
     });
     try {
-      await DutiesDatabase.addDuties(PoliceSFSDuties);
+      await DutiesDatabase.UpdateDuties(ids, savedata);
+      await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                content: Text(
+                  'Complaints has been assigned ?',
+                ),
+                title: Text(
+                  'Warning',
+                  style: TextStyle(color: Colors.red),
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('Ok'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      Navigator.of(ctx)
+                          .pushNamed(PolicsComplaintStatus.routeName);
+                    },
+                  ),
+                ],
+              ));
     } catch (e) {
       await showDialog(
           context: context,
@@ -53,20 +79,39 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
     });
   }
 
-  final List<Map<String, dynamic>> _PoliceStaff = [
-    {
-      'value': 'asp',
-      'label': 'ASP Awais',
-    },
-    {
-      'value': 'headconstable',
-      'label': 'Head Constable',
-    },
-    {
-      'value': 'constable',
-      'label': 'Constable',
-    },
-  ];
+  void didChangeDependencies() {
+    print(2);
+    if (_isInit) {
+      setState(() {
+        loading = true;
+      });
+      final result = FirebaseFirestore.instance
+          .collection('PoliceStaff')
+          .get()
+          .then((result) {
+        save = result.docs
+            .map((val) => {
+                  'label': val.data()["Name"],
+                  "value": val.data()["PoliceStaffId"]
+                })
+            .toList();
+        setState(() {
+          loading = false;
+        });
+      });
+
+      _isInit = false;
+
+      super.didChangeDependencies();
+    }
+  }
+
+  final savedata = {
+    'PoliceOfficer': "",
+    'Priority': '',
+    "Description": "",
+    "Date": DateTime.now(),
+  };
   final List<Map<String, dynamic>> _Priority = [
     {
       'value': 'low',
@@ -82,10 +127,10 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
     },
   ];
   final _form = GlobalKey<FormState>();
-  SFSDuties PoliceSFSDuties = SFSDuties(Date: DateTime.now());
 
   @override
   Widget build(BuildContext context) {
+    final ids = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text('Assign Complaints'),
@@ -103,10 +148,12 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                       child: SelectFormField(
                         labelText: 'Select Police Officer',
                         type: SelectFormFieldType.dropdown,
-                        initialValue: 'asp',
-                        items: _PoliceStaff,
+                        initialValue: 'Select',
+                        items: save,
                         onChanged: (val) => print(val),
-                        onSaved: (value) {},
+                        onSaved: (value) {
+                          savedata["PoliceOfficer"] = value as String;
+                        },
                       ),
                     ),
                     Container(
@@ -118,42 +165,25 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                         items: _Priority,
                         onChanged: (val) => print(val),
                         onSaved: (value) {
-                          PoliceSFSDuties.Priority = value as String;
+                          savedata["Priority"] = value!;
                         },
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Turnaround Time',
-                          border: OutlineInputBorder(),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter turnaround.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {},
-                      ),
-                    ),
-                    Visibility(
-                      child: TextFormField(
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          labelText: 'Hidden Field',
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.text,
-                      ),
-                      maintainSize: false,
-                      maintainAnimation: true,
-                      maintainState: true,
-                      visible: false,
-                    ),
+
+                    // Visibility(
+                    //   child: TextFormField(
+                    //     maxLines: 4,
+                    //     decoration: InputDecoration(
+                    //       labelText: 'Hidden Field',
+                    //       border: OutlineInputBorder(),
+                    //     ),
+                    //     keyboardType: TextInputType.text,
+                    //   ),
+                    //   maintainSize: false,
+                    //   maintainAnimation: true,
+                    //   maintainState: true,
+                    //   visible: false,
+                    // ),
                     Container(
                       padding: const EdgeInsets.all(15.0),
                       child: TextFormField(
@@ -170,34 +200,36 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                           }
                           return null;
                         },
-                        onSaved: (value) {},
+                        onSaved: (value) {
+                          savedata["Description"] = value!;
+                        },
                       ),
                     ),
                     Container(
                         padding: const EdgeInsets.all(15.0),
                         child: DateTimePicker(
-                          type: DateTimePickerType.dateTimeSeparate,
-                          dateMask: 'd MMM, yyyy',
-                          initialValue: DateTime.now().toString(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                          icon: Icon(Icons.event),
-                          dateLabelText: 'Date',
-                          timeLabelText: "Time",
-                          selectableDayPredicate: (date) {
-                            if (date.weekday == 6 || date.weekday == 7) {
-                              return false;
-                            }
-                            return true;
-                          },
-                          onChanged: (val) => print(val),
-                          validator: (val) {
-                            print(val);
-                            return null;
-                          },
-                          onSaved: (val) => PoliceSFSDuties.Date =
-                              DateTime.parse(val as String),
-                        )),
+                            type: DateTimePickerType.dateTimeSeparate,
+                            dateMask: 'd MMM, yyyy',
+                            initialValue: DateTime.now().toString(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2100),
+                            icon: Icon(Icons.event),
+                            dateLabelText: 'Date',
+                            timeLabelText: "Time",
+                            selectableDayPredicate: (date) {
+                              if (date.weekday == 6 || date.weekday == 7) {
+                                return false;
+                              }
+                              return true;
+                            },
+                            onChanged: (val) => print(val),
+                            validator: (val) {
+                              print(val);
+                              return null;
+                            },
+                            onSaved: (val) {
+                              savedata["Date"] = DateTime.parse(val as String);
+                            })),
                     Center(
                       child: Container(
                           padding: EdgeInsets.all(20),
@@ -221,7 +253,7 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.red[900])),
                               onPressed: () {
-                                AssignDuties();
+                                AssignDuties(ids);
                               },
                               child: Text("Assign"))),
                     )

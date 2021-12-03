@@ -86,7 +86,7 @@ class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
                                             ),
                                             Text(
                                               (snp.data!.docs[i].data()
-                                                  as Map)["Category"],
+                                                  as Map)["Catagory"],
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,

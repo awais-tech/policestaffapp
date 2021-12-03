@@ -3,22 +3,30 @@ import 'package:policestaffapp/PoliceSFSDuties.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection("Duties");
+final CollectionReference _maincomplaints = _firestore.collection("Complaints");
 
 class DutiesDatabase {
   static String? userID;
 
-  static Future<void> UpdateDuties(policeStation) async {
-    DocumentReference collectionRef = _mainCollection.doc();
-    await collectionRef
-        .update({
-          "Address": policeStation.Address,
-          "Division": policeStation.Division,
-          "Name": policeStation.Name,
-          "Nearst Location": policeStation.NearstLocation,
-          "No of cells": policeStation.NoofCells,
-          "Postel Code": policeStation.PostelCode,
-          "Station Phone No": policeStation.StationPhoneno,
-          "imageUrl": policeStation.imageUrl
+  static Future<void> UpdateDuties(ids, Complaints) async {
+    DocumentReference collectionRef = _maincomplaints.doc(ids);
+    _firestore
+        .collection('PoliceStaff')
+        .doc(Complaints["PoliceOfficer"])
+        .get()
+        .then((val) async {
+          await collectionRef
+              .update({
+                "status": "assigned",
+                "PoliceOfficerid": Complaints["PoliceOfficer"],
+                "OfficerName": (val.data() as Map)["Name"],
+                "DescriptionForOfficer": Complaints["Description"],
+                "Priority": Complaints["Priority"],
+                "Date Assigned": Complaints["Date"],
+              })
+              .then((value) => print("User Account Status Updated"))
+              .catchError(
+                  (error) => print("Failed to update transaction: $error"));
         })
         .then((value) => print("User Account Status Updated"))
         .catchError((error) => print("Failed to update transaction: $error"));
