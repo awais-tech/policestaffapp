@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/ViewDetailsOfDuties.dart';
-import 'package:policestaffapp/ViewDetailsofComplaints.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/ViewDetailsofComplaints.dart';
+import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ViewComplaintsassigned extends StatefulWidget {
   static final routeName = 'ViewComplaintsassigned';
@@ -18,12 +22,29 @@ class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
   final stream = FirebaseFirestore.instance
       .collection('Complaints')
       .where('status', isEqualTo: 'assigned')
+      .where('PoliceStationName',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['Division'])
+      .snapshots();
+
+  final streams = FirebaseFirestore.instance
+      .collection('Complaints')
+      .where('status', isEqualTo: 'assigned')
+      .where('PoliceStationName',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['Division'])
+      .where('PoliceOfficerid',
+          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: stream,
+            stream: json.decode(Constants.prefs.getString('userinfo')
+                        as String)['Role'] ==
+                    "Police Inspector"
+                ? stream
+                : streams,
             builder: (context, snp) {
               if (snp.hasError) {
                 return Center(
@@ -98,6 +119,24 @@ class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                            ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map = (snp.data!.docs[i]
+                                                            .data() as Map)[
+                                                        "Complaint Location"]
+                                                    as String;
+                                                var maps = map.split(",");
+                                                var lat = double.parse(maps[0]);
+                                                ;
+                                                var long =
+                                                    double.parse(maps[1]);
+
+                                                MapUtils.openMap(lat, long);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label:
+                                                  Text("Complainer Location"),
                                             ),
                                             SizedBox(
                                               height: 5,
@@ -182,7 +221,7 @@ class _ViewComplaintsassignedState extends State<ViewComplaintsassigned> {
                           );
                         },
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 338,
+                          maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
                           childAspectRatio: 1,

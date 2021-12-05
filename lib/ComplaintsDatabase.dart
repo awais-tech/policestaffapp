@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:policestaffapp/PoliceSFSDuties.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:policesfs/PoliceSFSDuties.dart';
+import 'dart:math';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection("Duties");
@@ -10,11 +14,28 @@ class DutiesDatabase {
 
   static Future<void> UpdateDuties(ids, Complaints) async {
     DocumentReference collectionRef = _maincomplaints.doc(ids);
+
+    Random random = new Random();
+    int randomNumber = random.nextInt(100) + 2;
+    String no = DateTime.now().microsecond.toString() + randomNumber.toString();
     _firestore
         .collection('PoliceStaff')
         .doc(Complaints["PoliceOfficer"])
         .get()
         .then((val) async {
+          final url = Uri.parse(
+              'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+          Map<String, String> headers = {"Content-type": "application/json"};
+
+          var doc = await http.post(
+            url,
+            headers: headers,
+            body: json.encode({
+              'email': (val.data() as Map)["Email"],
+              'message':
+                  "Hi ${(val.data() as Map)["Name"]}!<br> You assigned  a Complaint to Resolve  <h1>Desscription from SHO</h1> ${Complaints["Description"]}<br> <h1>Desscription from Complainer</h1>:${Complaints["Description"]} <br> For accept duties and see further detail please open the app",
+            }),
+          );
           await collectionRef
               .update({
                 "status": "assigned",
@@ -23,6 +44,7 @@ class DutiesDatabase {
                 "DescriptionForOfficer": Complaints["Description"],
                 "Priority": Complaints["Priority"],
                 "Date Assigned": Complaints["Date"],
+                "ComplaintNo": no,
               })
               .then((value) => print("User Account Status Updated"))
               .catchError(
@@ -44,16 +66,39 @@ class DutiesDatabase {
 
   static Future<void> addDuties(SFSDuties policeStation) async {
     try {
-      await _mainCollection.add({
-        "Location": policeStation.Location,
-        "Assign by": policeStation.AssignedBy,
-        "PoliceStaffid": policeStation.AssignedTo,
-        "Title": policeStation.DutyTitle,
-        "Category": policeStation.Category,
-        "Description": policeStation.Description,
-        "Priority": policeStation.Priority,
-        "Date Created": policeStation.Date,
-        "status": "Pending"
+      var Name =
+          json.decode(Constants.prefs.getString('userinfo') as String)['Name'];
+      _firestore
+          .collection('PoliceStaff')
+          .doc(policeStation.AssignedTo)
+          .get()
+          .then((val) async {
+        final url = Uri.parse(
+            'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+        Map<String, String> headers = {"Content-type": "application/json"};
+
+        var doc = await http.post(
+          url,
+          headers: headers,
+          body: json.encode({
+            'email': (val.data() as Map)["Email"],
+            'message':
+                "Hi ${(val.data() as Map)["Name"]}!<br> You assigned  a duty at ${policeStation.Location}<br> <h1>Desscription</h1>:${policeStation.Description} <br> For accept duties and see further detail please open the app",
+          }),
+        );
+        await _mainCollection.add({
+          "Location": policeStation.Location,
+          "Assign by": Name,
+          "PoliceStaffid": policeStation.AssignedTo,
+          "Title": policeStation.DutyTitle,
+          "Category": policeStation.Category,
+          "Description": policeStation.Description,
+          "Priority": policeStation.Priority,
+          "Date Created": policeStation.Date,
+          "Policestationid": json.decode(
+              Constants.prefs.getString('userinfo') as String)['StationId'],
+          "status": "Pending"
+        });
       });
     } catch (e) {
       print(e);

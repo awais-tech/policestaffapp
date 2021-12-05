@@ -1,8 +1,3 @@
-// ignore: duplicate_ignore
-// ignore: duplicate_ignore
-// ignore: duplicate_ignore
-// ignore_for_file: use_key_in_widget_constructors, unused_import
-
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,37 +5,37 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/ViewDetailsofComplaints.dart';
 import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
-// ignore: unused_import
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore: unused_import
 
-class ViewDutiesComplete extends StatefulWidget {
-  static final routeName = 'ViewDutiesComplete';
+class ViewComplaintsWorking extends StatefulWidget {
+  static final routeName = 'ViewComplaintWorking';
 
   @override
-  _ViewDutiesCompleteState createState() => _ViewDutiesCompleteState();
+  _ViewComplaintsWorkingState createState() => _ViewComplaintsWorkingState();
 }
 
-class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
+class _ViewComplaintsWorkingState extends State<ViewComplaintsWorking> {
   final stream = FirebaseFirestore.instance
-      .collection('Duties')
-      .where('status', isEqualTo: 'Complete')
-      .where('Policestationid',
+      .collection('Complaints')
+      .where('status', isEqualTo: 'Active')
+      .where('PoliceStationName',
           isEqualTo: json.decode(
-              Constants.prefs.getString('userinfo') as String)['StationId'])
-      .snapshots();
-  final streams = FirebaseFirestore.instance
-      .collection('Duties')
-      .where('status', isEqualTo: 'Complete')
-      .where('PoliceStaffid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-      .where('Policestationid',
-          isEqualTo: json.decode(
-              Constants.prefs.getString('userinfo') as String)['StationId'])
+              Constants.prefs.getString('userinfo') as String)['Division'])
       .snapshots();
 
+  final streams = FirebaseFirestore.instance
+      .collection('Complaints')
+      .where('status', isEqualTo: 'Active')
+      .where('PoliceStationName',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['Division'])
+      .where('PoliceOfficerid',
+          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +52,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                 );
               } else if (snp.hasData || snp.data != null) {
                 return snp.data!.docs.length < 1
-                    ? Center(child: Container(child: Text("No Duties")))
+                    ? Center(child: Container(child: Text("No Complaints")))
                     : GridView.builder(
                         itemCount: snp.data!.docs.length,
                         itemBuilder: (context, i) {
@@ -101,7 +96,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Category",
+                                              "Catagory",
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -112,7 +107,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                             ),
                                             Text(
                                               (snp.data!.docs[i].data()
-                                                  as Map)["Category"],
+                                                  as Map)["Catagory"],
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
@@ -125,24 +120,30 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map = (snp.data!.docs[i]
+                                                            .data() as Map)[
+                                                        "Complaint Location"]
+                                                    as String;
+                                                var maps = map.split(",");
+                                                var lat = double.parse(maps[0]);
+                                                ;
+                                                var long =
+                                                    double.parse(maps[1]);
+
+                                                MapUtils.openMap(lat, long);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label:
+                                                  Text("Complainer Location"),
+                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            TextButton.icon(
-                                              onPressed: () {
-                                                String map =
-                                                    (snp.data!.docs[i].data()
-                                                            as Map)["Location"]
-                                                        as String;
-                                             
-                                                MapUtils.launchMap(map);
-                                              },
-                                              icon: Icon(Icons.map_outlined),
-                                              label: Text("Duty Location"),
-                                            ),
                                             Text(
                                               (snp.data!.docs[i].data()
-                                                  as Map)["Location"],
+                                                  as Map)["Complaint Location"],
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
@@ -183,8 +184,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                               height: 5,
                                             ),
                                             Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["Priority"],
+                                              "high",
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
@@ -198,7 +198,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                                   onPressed: () {
                                                     Navigator.of(context)
                                                         .pushNamed(
-                                                            dutydetails
+                                                            Complaintdetails
                                                                 .routename,
                                                             arguments: {
                                                           "data": (snp
@@ -224,7 +224,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                           maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
-                          childAspectRatio: 1,
+                          childAspectRatio: 3 / 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                         ));

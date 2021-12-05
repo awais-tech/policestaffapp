@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/ViewDetailsOfDuties.dart';
-import 'package:policestaffapp/ViewDetailsofComplaints.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/ViewDetailsofComplaints.dart';
+import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ViewComplaints extends StatefulWidget {
   static final routeName = 'ViewComplaints';
@@ -18,9 +21,15 @@ class _ViewComplaintsState extends State<ViewComplaints> {
   final stream = FirebaseFirestore.instance
       .collection('Complaints')
       .where('status', isEqualTo: 'pending')
+      .where('PoliceStationName',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['Division'])
       .snapshots();
+
   @override
   Widget build(BuildContext context) {
+    print(json
+        .decode(Constants.prefs.getString('userinfo') as String)['Division']);
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
             stream: stream,
@@ -98,6 +107,24 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                            ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map = (snp.data!.docs[i]
+                                                            .data() as Map)[
+                                                        "Complaint Location"]
+                                                    as String;
+                                                var maps = map.split(",");
+                                                var lat = double.parse(maps[0]);
+                                                ;
+                                                var long =
+                                                    double.parse(maps[1]);
+
+                                                MapUtils.openMap(lat, long);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label:
+                                                  Text("Complainer Location"),
                                             ),
                                             SizedBox(
                                               height: 5,
@@ -182,7 +209,7 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                           );
                         },
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 338,
+                          maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
                           childAspectRatio: 1,

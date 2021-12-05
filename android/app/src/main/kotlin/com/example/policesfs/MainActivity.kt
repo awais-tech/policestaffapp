@@ -1,4 +1,4 @@
-package com.example.policestaffapp
+package com.examplepolicesfs
 
 import io.flutter.embedding.android.FlutterActivity
 

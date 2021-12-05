@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/ViewDuties.dart';
-import 'package:policestaffapp/ViewDutiesComplete.dart';
-import 'package:policestaffapp/ViewDutiesWorking.dart';
+import 'package:policesfs/ViewDuties.dart';
+import 'package:policesfs/ViewDutiesComplete.dart';
+import 'package:policesfs/ViewDutiesWorking.dart';
 
 class PoliceDutiesStatus extends StatelessWidget {
   static final routeName = 'Track Complaint';

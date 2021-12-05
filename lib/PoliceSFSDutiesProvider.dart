@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 
-import 'package:policestaffapp/PoliceSFSDuties.dart';
+import 'package:policesfs/PoliceSFSDuties.dart';
 
 class PoliceSfsDutiesProvider with ChangeNotifier {
   // List<SFSDuties> SfsDuties = [

@@ -2,8 +2,11 @@
 // ignore: file_names
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, duplicate_ignore, file_names
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:policesfs/Constants.dart';
 
 // ignore: camel_case_types
 class dutydetails extends StatefulWidget {
@@ -35,7 +38,7 @@ class _dutydetailsState extends State<dutydetails> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: Text("Duty Details"),
+        title: FittedBox(child: Text("Duty Details")),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -149,79 +152,97 @@ class _dutydetailsState extends State<dutydetails> {
                     ),
                   ),
                   SizedBox(width: 15),
-                  ElevatedButton(
-                    child: Text('Accept Duty',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
-                    onPressed: () async {
-                      await _firestore
-                          .collection("Duties")
-                          .doc(ids)
-                          .update({"status": "Working"});
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('Duty update'),
-                          content: Text(
-                            'Mark as Working',
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text('Ok'),
-                              onPressed: () {
-                                Navigator.of(ctx).pop(false);
+                  json.decode(Constants.prefs.getString('userinfo') as String)[
+                              'Role'] !=
+                          "Police Inspector"
+                      ? datas['status'] == "Pending"
+                          ? ElevatedButton(
+                              child: FittedBox(
+                                child: Text('Accept Duty',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                              ),
+                              onPressed: () async {
+                                await _firestore
+                                    .collection("Duties")
+                                    .doc(ids)
+                                    .update({"status": "Working"});
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text('Duty update'),
+                                    content: Text(
+                                      'Mark as Working',
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop(false);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                ;
                               },
-                            ),
-                          ],
-                        ),
-                      );
-                      ;
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  ),
-                  ElevatedButton(
-                    child: Text('Complete Duty',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
-                    onPressed: () async {
-                      await _firestore
-                          .collection("Duties")
-                          .doc(ids)
-                          .update({"status": "Complete"});
-                      return showDialog(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text('Dutie update'),
-                          content: Text(
-                            'Mark as Complete',
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text('Yes'),
-                              onPressed: () {
-                                Navigator.of(ctx).pop(false);
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.black),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.all(10)),
+                                  textStyle: MaterialStateProperty.all(
+                                      TextStyle(fontSize: 16))),
+                            )
+                          : Container()
+                      : Container(),
+                  json.decode(Constants.prefs.getString('userinfo') as String)[
+                              'Role'] !=
+                          "Police Inspector"
+                      ? datas['status'] == "Working"
+                          ? ElevatedButton(
+                              child: FittedBox(
+                                child: Text('Complete Duty',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                              ),
+                              onPressed: () async {
+                                await _firestore
+                                    .collection("Duties")
+                                    .doc(ids)
+                                    .update({"status": "Complete"});
+                                return showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text('Dutie update'),
+                                    content: Text(
+                                      'Mark as Complete',
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text('Yes'),
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop(false);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
                               },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  ),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.black),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.all(10)),
+                                  textStyle: MaterialStateProperty.all(
+                                      TextStyle(fontSize: 16))),
+                            )
+                          : Container()
+                      : Container()
                 ],
               ),
             ),

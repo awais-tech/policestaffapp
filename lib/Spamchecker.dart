@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:policesfs/Constants.dart';
+import 'package:policesfs/Complaintsapprove.dart';
+import 'package:policesfs/Complaintspamcheck.dart';
 import 'package:policesfs/ViewComplaintComplete.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewComplaintsWorking.dart';
@@ -10,17 +9,13 @@ import 'package:policesfs/ViewDuties.dart';
 import 'package:policesfs/ViewDutiesComplete.dart';
 import 'package:policesfs/ViewDutiesWorking.dart';
 
-class PolicsComplaintStatus extends StatelessWidget {
-  static final routeName = 'Track';
+class OperatorStatus extends StatelessWidget {
+  static final routeName = 'SPamcheck';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: json.decode(
-                    Constants.prefs.getString('userinfo') as String)['Role'] ==
-                "Police Inspector"
-            ? 4
-            : 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
@@ -34,29 +29,20 @@ class PolicsComplaintStatus extends StatelessWidget {
             ),
             bottom: TabBar(
               tabs: [
-                if (json.decode(Constants.prefs.getString('userinfo')
-                        as String)['Role'] ==
-                    "Police Inspector")
-                  FittedBox(
-                    fit: BoxFit.contain,
-                    child: Tab(
-                        icon: Icon(Icons.pending_actions),
-                        text: "Approve Complaints"),
-                  ),
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Tab(
+                      icon: Icon(Icons.pending_actions),
+                      text: "Pending Complaints"),
+                ),
 
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Tab(
-                      icon: Icon(Icons.assignment), text: "Assigned Complaint"),
+                      icon: Icon(Icons.approval_rounded),
+                      text: "Approve Complaints"),
                 ),
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Tab(icon: Icon(Icons.work), text: "Working"),
-                ),
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Tab(icon: Icon(Icons.done_all), text: "Completed"),
-                ),
+
                 // FittedBox(
                 //   fit: BoxFit.contain,
                 //   child:
@@ -67,13 +53,8 @@ class PolicsComplaintStatus extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              if (json.decode(Constants.prefs.getString('userinfo') as String)[
-                      'Role'] ==
-                  "Police Inspector")
-                ViewComplaints(),
-              ViewComplaintsassigned(),
-              ViewComplaintsWorking(),
-              ViewComplaintsComplete(),
+              Complaintspampending(),
+              ComplaintsApprove(),
             ],
           ),
         ),

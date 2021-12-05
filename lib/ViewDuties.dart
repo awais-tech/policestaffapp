@@ -3,15 +3,19 @@
 // ignore: duplicate_ignore
 // ignore_for_file: use_key_in_widget_constructors, unused_import
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/ViewDetailsOfDuties.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ViewDuties extends StatefulWidget {
   static final routeName = 'ViewDuties';
@@ -24,12 +28,27 @@ class _ViewDutiesState extends State<ViewDuties> {
   final stream = FirebaseFirestore.instance
       .collection('Duties')
       .where('status', isEqualTo: 'Pending')
+      .where('Policestationid',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['StationId'])
+      .snapshots();
+  final streams = FirebaseFirestore.instance
+      .collection('Duties')
+      .where('status', isEqualTo: 'Pending')
+      .where('PoliceStaffid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .where('Policestationid',
+          isEqualTo: json.decode(
+              Constants.prefs.getString('userinfo') as String)['StationId'])
       .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: stream,
+            stream: json.decode(Constants.prefs.getString('userinfo')
+                        as String)['Role'] ==
+                    "Police Inspector"
+                ? stream
+                : streams,
             builder: (context, snp) {
               if (snp.hasError) {
                 return Center(
@@ -104,6 +123,18 @@ class _ViewDutiesState extends State<ViewDuties> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               ),
+                                            ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map =
+                                                    (snp.data!.docs[i].data()
+                                                            as Map)["Location"]
+                                                        as String;
+
+                                                MapUtils.launchMap(map);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label: Text("Duty Location"),
                                             ),
                                             SizedBox(
                                               height: 5,
@@ -183,10 +214,15 @@ class _ViewDutiesState extends State<ViewDuties> {
                                                       child:
                                                           Text('View Details')),
                                                   TextButton(
-                                                      onPressed: () {},
-                                                      child: Text('Update')),
-                                                  TextButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                "Duties")
+                                                            .doc(snp.data!
+                                                                .docs[i].id)
+                                                            .delete();
+                                                      },
                                                       child: Text('Delete')),
                                                 ],
                                               ),
@@ -202,7 +238,7 @@ class _ViewDutiesState extends State<ViewDuties> {
                           );
                         },
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 338,
+                          maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
                           childAspectRatio: 1,

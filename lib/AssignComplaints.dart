@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:policestaffapp/ComplaintTabbar.dart';
-import 'package:policestaffapp/ComplaintsDatabase.dart';
-import 'package:policestaffapp/PoliceSFSDuties.dart';
-import 'package:policestaffapp/PoliceSFSDutiesProvider.dart';
+import 'package:policesfs/ComplaintTabbar.dart';
+import 'package:policesfs/ComplaintsDatabase.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:policesfs/PoliceSFSDuties.dart';
+import 'package:policesfs/PoliceSFSDutiesProvider.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -80,13 +83,16 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
   }
 
   void didChangeDependencies() {
-    print(2);
     if (_isInit) {
       setState(() {
         loading = true;
       });
+      var stationId = json
+          .decode(Constants.prefs.getString('userinfo') as String)['StationId'];
       final result = FirebaseFirestore.instance
           .collection('PoliceStaff')
+          .where("PoliceStationID", isEqualTo: stationId)
+          .where("Role", isNotEqualTo: 'Police Inspector')
           .get()
           .then((result) {
         save = result.docs
