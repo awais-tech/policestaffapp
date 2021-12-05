@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
+import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,7 +56,7 @@ class _ViewComplaintsCompleteState extends State<ViewComplaintsComplete> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 10, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -125,6 +126,24 @@ class _ViewComplaintsCompleteState extends State<ViewComplaintsComplete> {
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
                                               ),
+                                            ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map = (snp.data!.docs[i]
+                                                            .data() as Map)[
+                                                        "Complaint Location"]
+                                                    as String;
+                                                var maps = map.split(",");
+                                                var lat = double.parse(maps[0]);
+                                                ;
+                                                var long =
+                                                    double.parse(maps[1]);
+
+                                                MapUtils.openMap(lat, long);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label:
+                                                  Text("Complainer Location"),
                                             ),
                                             SizedBox(
                                               height: 5,

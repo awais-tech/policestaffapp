@@ -140,6 +140,7 @@ class Complaintdetails extends StatelessWidget {
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18)),
+
                 Divider(
                   color: Colors.black,
                 ),
