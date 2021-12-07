@@ -8,10 +8,16 @@ import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
+import 'package:policesfs/drawner/drawner.dart';
 
 class Staffdashboard extends StatelessWidget {
   static const routeName = '/Dashboard';
   final _auth = FirebaseAuth.instance;
+  final List<String> navigators = [
+    "Home",
+    "Crime Record",
+    "Jail Record",
+  ];
   @override
   Widget build(BuildContext context) {
     print(Constants.prefs.getBool("login"));
@@ -39,6 +45,7 @@ class Staffdashboard extends StatelessWidget {
             ),
           ],
         ), //AppBar
+        drawer: Drawner(navigators: navigators),
         body: LayoutBuilder(builder: (ctx, constraints) {
           return Center(
             child: Container(

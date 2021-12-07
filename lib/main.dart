@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
+import 'package:policesfs/ComplaintEmergency.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/Complaintsapprove.dart';
 import 'package:policesfs/Complaintspamcheck.dart';
@@ -13,6 +14,7 @@ import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
+import 'package:policesfs/RegisteredComplaints.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
@@ -120,6 +122,8 @@ class _MyAppState extends State<MyApp> {
         Complaintspampending.routeName: (ctx) => Complaintspampending(),
         ComplaintsApprove.routeName: (ctx) => ComplaintsApprove(),
         detailsofSpam.routename: (ctx) => detailsofSpam(),
+        ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
+        AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
 
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),

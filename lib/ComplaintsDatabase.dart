@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/PoliceSFSDuties.dart';
 import 'dart:math';
@@ -8,6 +9,7 @@ import 'dart:convert';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection("Duties");
 final CollectionReference _maincomplaints = _firestore.collection("Complaints");
+final CollectionReference _mainCrime = _firestore.collection("CriminalRecord");
 
 class DutiesDatabase {
   static String? userID;
@@ -99,6 +101,34 @@ class DutiesDatabase {
               Constants.prefs.getString('userinfo') as String)['StationId'],
           "status": "Pending"
         });
+      });
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
+  static Future<void> addCrimRecord(Complaints, image) async {
+    try {
+      Random random = new Random();
+      int randomNumber = random.nextInt(1000) + 100;
+      int randoms = random.nextInt(10);
+      String no = randoms.toString() +
+          DateTime.now().microsecond.toString() +
+          randomNumber.toString();
+      await _mainCrime.add({
+        "status": Complaints["Status"],
+        "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
+        "Person Name": Complaints["Name"],
+        "Description": Complaints["Description"],
+        "Title": Complaints["Title"],
+        "ImageUrl": image,
+        "Record Id": no,
+        "Date added": Complaints["Date"],
+        "CrimeType": Complaints["CrimeType"],
+        "IdentificationMark": Complaints["IdentificationMark"],
+        "Policestationid": json.decode(
+            Constants.prefs.getString('userinfo') as String)['StationId'],
       });
     } catch (e) {
       print(e);

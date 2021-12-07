@@ -7,10 +7,22 @@ import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
+import 'package:policesfs/drawner/drawner.dart';
 
 class Operatordashboard extends StatelessWidget {
   static const routeName = '/operatorDashboard';
   final _auth = FirebaseAuth.instance;
+  static List<IconData> navigatorsIcon = [
+    Icons.home,
+    Icons.cancel_outlined,
+    Icons.record_voice_over,
+  ];
+
+  final List<String> navigators = [
+    "Home",
+    "Crime Record",
+    "Jail Record",
+  ];
   @override
   Widget build(BuildContext context) {
     print(Constants.prefs.getBool("login"));
@@ -37,7 +49,8 @@ class Operatordashboard extends StatelessWidget {
               child: FittedBox(fit: BoxFit.fitWidth, child: Text('Logout')),
             ),
           ],
-        ), //AppBar
+        ),
+        drawer: Drawner(navigators: navigators), //AppBar
         body: LayoutBuilder(builder: (ctx, constraints) {
           return Center(
             child: Container(
