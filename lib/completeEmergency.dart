@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:policesfs/Constants.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class ComplEmergency extends StatefulWidget {
   final comp;
@@ -64,6 +67,26 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                                 });
                           },
                         ),
+                        json.decode(Constants.prefs.getString('userinfo')
+                                    as String)['Role'] ==
+                                "Operator"
+                            ? ElevatedButton.icon(
+                                icon: Icon(Icons.details_outlined),
+                                label: Text("Change Status"),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return changestatus(
+                                            context,
+                                            "Change Status",
+                                            widget.comp,
+                                            snapshot.data!);
+                                      });
+                                },
+                              )
+                            : Container(),
                         IconButton(
                           icon: Icon(_expanded
                               ? Icons.expand_less
@@ -164,6 +187,106 @@ Widget editEmail(BuildContext context, String title, compl, station) {
               ),
             ),
           ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget changestatus(BuildContext context, String title, compl, station) {
+  final List<Map<String, dynamic>> status = [
+    {
+      'value': 'Missing',
+      'label': 'Missing',
+    },
+    {
+      'value': 'in Jail',
+      'label': 'in Jail',
+    },
+    {
+      'value': 'Ran away from Jail',
+      'label': 'Ran away from Jail',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
+    },
+    {
+      'value': 'Complete its punishment',
+      'label': 'Complete its punishment',
+    },
+  ];
+  final statuschan = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  return Padding(
+    padding: MediaQuery.of(context).viewInsets,
+    child: Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text('Change status'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              child: SelectFormField(
+                controller: statuschan,
+                labelText: 'Change status',
+                type: SelectFormFieldType.dropdown,
+                initialValue: compl.data()["status"], // or can be dialog
+                items: status,
+              ),
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )),
+                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                          vertical: 25,
+                          horizontal: MediaQuery.of(context).size.width -
+                              MediaQuery.of(context).padding.top) *
+                      0.35),
+                  backgroundColor: MaterialStateProperty.all(
+                      Color(0xff8d43d6)), // <-- Button color
+                  overlayColor:
+                      MaterialStateProperty.resolveWith<Color?>((states) {
+                    if (states.contains(MaterialState.pressed))
+                      return Color(0xffB788E5); // <-- Splash color
+                  }),
+                ),
+                child: const Text(
+                  "Change",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  await _firestore
+                      .collection("Complaints")
+                      .doc(compl.id)
+                      .update({"status": statuschan.text});
+                  return await showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text('Update'),
+                      content: Text("Status Update"),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('Yes'),
+                          onPressed: () {
+                            Navigator.of(ctx).pop(false);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )),
         ],
       ),
     ),

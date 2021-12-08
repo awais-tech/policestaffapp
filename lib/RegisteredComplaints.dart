@@ -39,11 +39,11 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
       loading = true;
     });
     try {
-      // final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
+      final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
 
-      // await ref.putFile(File(_userImageFile!.path));
-      // final download = await ref.getDownloadURL();
-      await DutiesDatabase.addCrimRecord(savedata, "sjskks");
+      await ref.putFile(File(_userImageFile!.path));
+      final download = await ref.getDownloadURL();
+      await DutiesDatabase.addCrimRecord(savedata, download);
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -323,8 +323,8 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
                             onSaved: (val) {
                               savedata["Date"] = DateTime.parse(val as String);
                             })),
-                    // UserImagePicker(_pickedImage),
-                    // camera(_pickedImage),
+                    UserImagePicker(_pickedImage),
+                    camera(_pickedImage),
                     SizedBox(
                       height: 8,
                     ),

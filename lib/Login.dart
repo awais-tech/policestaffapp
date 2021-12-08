@@ -254,15 +254,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 Container(
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      textStyle: const TextStyle(fontSize: 10),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text('Forgot Password?'),
-                                  ),
-                                ),
-                                Container(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
