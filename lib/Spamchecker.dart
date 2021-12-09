@@ -22,9 +22,11 @@ class OperatorStatus extends StatelessWidget {
             title: Container(
               padding: EdgeInsets.all(20),
               width: double.infinity,
-              child: Text(
-                'Check All Complaints',
-                textAlign: TextAlign.center,
+              child: FittedBox(
+                child: Text(
+                  'Check All Complaints',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             bottom: TabBar(

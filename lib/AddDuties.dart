@@ -37,19 +37,19 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
       final result = FirebaseFirestore.instance
           .collection('PoliceStaff')
           .where("PoliceStationID", isEqualTo: stationId)
-          .where("Role", isNotEqualTo: 'Police Inspector')
+          .where("Role", whereNotIn: ['Police Inspector', 'Operator'])
           .get()
           .then((result) {
-        save = result.docs
-            .map((val) => {
-                  'label': val.data()["Name"],
-                  "value": val.data()["PoliceStaffId"]
-                })
-            .toList();
-        setState(() {
-          loading = false;
-        });
-      });
+            save = result.docs
+                .map((val) => {
+                      'label': val.data()["Name"],
+                      "value": val.data()["PoliceStaffId"]
+                    })
+                .toList();
+            setState(() {
+              loading = false;
+            });
+          });
 
       _isInit = false;
 
@@ -261,7 +261,6 @@ class _AddDutiesScreenState extends State<AddDutiesScreen> {
                           border: OutlineInputBorder(),
                         ),
                         textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter Location Address.';

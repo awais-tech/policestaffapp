@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:policesfs/ViewDuties.dart';
 import 'package:policesfs/ViewDutiesComplete.dart';
+import 'package:policesfs/ViewDutiesRequest.dart';
 import 'package:policesfs/ViewDutiesWorking.dart';
 
 class PoliceDutiesStatus extends StatelessWidget {
@@ -9,16 +10,18 @@ class PoliceDutiesStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
             title: Container(
               padding: EdgeInsets.all(20),
               width: double.infinity,
-              child: Text(
-                'Check All Duties',
-                textAlign: TextAlign.center,
+              child: FittedBox(
+                child: Text(
+                  'Check All Duties',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             bottom: TabBar(
@@ -35,6 +38,10 @@ class PoliceDutiesStatus extends StatelessWidget {
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
+                  child: Tab(icon: Icon(Icons.request_page), text: "Request"),
+                ),
+                FittedBox(
+                  fit: BoxFit.contain,
                   child:
                       Tab(icon: Icon(Icons.done_all), text: "Completed Duties"),
                 ),
@@ -45,6 +52,7 @@ class PoliceDutiesStatus extends StatelessWidget {
             children: [
               ViewDuties(),
               ViewDutiesWorking(),
+              ViewDutiesRequest(),
               ViewDutiesComplete(),
             ],
           ),

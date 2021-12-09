@@ -44,7 +44,7 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 20, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -123,17 +123,6 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             SizedBox(

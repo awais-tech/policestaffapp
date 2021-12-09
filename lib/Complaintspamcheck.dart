@@ -46,7 +46,7 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 20, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -138,24 +138,6 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                                             ),
                                             SizedBox(
                                               height: 5,
-                                            ),
-                                            Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
                                             ),
                                             SizedBox(
                                               height: 5,

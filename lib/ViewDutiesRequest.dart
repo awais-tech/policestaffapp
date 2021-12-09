@@ -9,32 +9,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/maps.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 // ignore: unused_import
 import 'PoliceSFSDutiesProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: unused_import
 
-class ViewDuties extends StatefulWidget {
-  static final routeName = 'ViewDuties';
+class ViewDutiesRequest extends StatefulWidget {
+  static final routeName = 'ViewDutiesRequest';
 
   @override
-  _ViewDutiesState createState() => _ViewDutiesState();
+  _ViewDutiesRequestState createState() => _ViewDutiesRequestState();
 }
 
-class _ViewDutiesState extends State<ViewDuties> {
+class _ViewDutiesRequestState extends State<ViewDutiesRequest> {
   final stream = FirebaseFirestore.instance
       .collection('Duties')
-      .where('status', isEqualTo: 'Pending')
+      .where('status', isEqualTo: 'Request')
       .where('Policestationid',
           isEqualTo: json.decode(
               Constants.prefs.getString('userinfo') as String)['StationId'])
       .snapshots();
   final streams = FirebaseFirestore.instance
       .collection('Duties')
-      .where('status', isEqualTo: 'Pending')
+      .where('status', isEqualTo: 'Request')
       .where('PoliceStaffid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where('Policestationid',
           isEqualTo: json.decode(
@@ -124,6 +126,9 @@ class _ViewDutiesState extends State<ViewDuties> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
                                             TextButton.icon(
                                               onPressed: () {
                                                 String map =
@@ -135,9 +140,6 @@ class _ViewDutiesState extends State<ViewDuties> {
                                               },
                                               icon: Icon(Icons.map_outlined),
                                               label: Text("Duty Location"),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
                                             ),
                                             Text(
                                               (snp.data!.docs[i].data()
@@ -151,11 +153,10 @@ class _ViewDutiesState extends State<ViewDuties> {
                                               height: 5,
                                             ),
                                             Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
+                                              "Status",
                                               style: TextStyle(
                                                 fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             SizedBox(
@@ -180,7 +181,7 @@ class _ViewDutiesState extends State<ViewDuties> {
                                               ),
                                             ),
                                             SizedBox(
-                                              height: 20,
+                                              height: 5,
                                             ),
                                             Center(
                                               child: Row(
@@ -204,21 +205,31 @@ class _ViewDutiesState extends State<ViewDuties> {
                                                       child:
                                                           Text('View Details')),
                                                   json.decode(Constants.prefs
-                                                                  .getString(
-                                                                      'userinfo')
-                                                              as String)['Role'] ==
+                                                                      .getString(
+                                                                          'userinfo')
+                                                                  as String)[
+                                                              'Role'] ==
                                                           "Police Inspector"
                                                       ? TextButton(
                                                           onPressed: () {
-                                                            FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    "Duties")
-                                                                .doc(snp.data!
-                                                                    .docs[i].id)
-                                                                .delete();
+                                                            showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                isScrollControlled:
+                                                                    true,
+                                                                builder:
+                                                                    (context) {
+                                                                  return editEmail(
+                                                                      context,
+                                                                      snp
+                                                                          .data!
+                                                                          .docs[
+                                                                              i]
+                                                                          .id);
+                                                                });
                                                           },
-                                                          child: Text('Delete'))
+                                                          child: Text(
+                                                              'View Report'))
                                                       : Container(),
                                                 ],
                                               ),
@@ -234,11 +245,11 @@ class _ViewDutiesState extends State<ViewDuties> {
                           );
                         },
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 500,
+                          maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
                           childAspectRatio: 1,
-                          crossAxisSpacing: 8,
+                          crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                         ));
               }
@@ -250,4 +261,183 @@ class _ViewDutiesState extends State<ViewDuties> {
               );
             }));
   }
+}
+
+Widget editEmail(BuildContext context, String id) {
+  var streams =
+      FirebaseFirestore.instance.collection('DutyReport').doc(id).snapshots();
+  return StreamBuilder(
+      stream: streams,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snp) {
+        if (snp.hasError) {
+          print(snp);
+          return Center(
+            child: Text("No Data is here"),
+          );
+        } else if (snp.hasData || snp.data != null) {
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+              margin:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('Report'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        DateFormat('dd/MM/yyyy hh:mm')
+                            .format((snp.data!.data() as Map)['Date'].toDate()),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        'Description:' +
+                            ((snp.data!.data() as Map)['Description']),
+                        softWrap: true,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image(
+                        image: NetworkImage((snp.data!.data() as Map)['Image']),
+                        height: 100,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          )),
+                          padding: MaterialStateProperty.all(
+                              EdgeInsets.symmetric(
+                                      vertical: 25,
+                                      horizontal: MediaQuery.of(context)
+                                              .size
+                                              .width -
+                                          MediaQuery.of(context).padding.top) *
+                                  0.35),
+                          backgroundColor: MaterialStateProperty.all(
+                              Color(0xff8d43d6)), // <-- Button color
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                  (states) {
+                            if (states.contains(MaterialState.pressed))
+                              return Color(0xffB788E5); // <-- Splash color
+                          }),
+                        ),
+                        child: FittedBox(
+                          child: const Text(
+                            "Mark as Done",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await FirebaseFirestore.instance
+                              .collection("Duties")
+                              .doc(id)
+                              .update({"status": "Complete"});
+                          return await showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text('Update'),
+                              content: Text("Status Update"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          )),
+                          padding: MaterialStateProperty.all(
+                              EdgeInsets.symmetric(
+                                      vertical: 25,
+                                      horizontal: MediaQuery.of(context)
+                                              .size
+                                              .width -
+                                          MediaQuery.of(context).padding.top) *
+                                  0.35),
+                          backgroundColor: MaterialStateProperty.all(
+                              Color(0xff8d43d6)), // <-- Button color
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color?>(
+                                  (states) {
+                            if (states.contains(MaterialState.pressed))
+                              return Color(0xffB788E5); // <-- Splash color
+                          }),
+                        ),
+                        child: FittedBox(
+                          child: const Text(
+                            "ReAssign Again",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await FirebaseFirestore.instance
+                              .collection("Duties")
+                              .doc(id)
+                              .update({
+                            "status": "Working",
+                            "Updation":
+                                "Report is not correct as duty assign Please attach the correct report again"
+                          });
+                          await FirebaseFirestore.instance
+                              .collection("DutyReport")
+                              .doc(id)
+                              .delete();
+                          Navigator.of(context)
+                              .pushNamed(PoliceDutiesStatus.routeName);
+                          return await showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: Text('Update'),
+                              content: Text("Status Update"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(ctx).pop(false);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      )),
+                ],
+              ),
+            ),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orangeAccent),
+          ),
+        );
+      });
 }

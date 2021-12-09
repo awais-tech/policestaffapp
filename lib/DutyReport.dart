@@ -1,28 +1,37 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/ComplaintsDatabase.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/PoliceSFSDuties.dart';
 import 'package:policesfs/PoliceSFSDutiesProvider.dart';
+import 'package:policesfs/Policetabbar.dart';
+import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/ViewDutiesRequest.dart';
+import 'package:policesfs/camera.dart';
+import 'package:policesfs/image_upload.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
-class AssignComplaintsScreen extends StatefulWidget {
-  static final routename = "assignComplaints";
+class DutyReport extends StatefulWidget {
+  static final routename = "DutyReport";
   @override
-  _AssignComplaintsScreenState createState() => _AssignComplaintsScreenState();
+  _DutyReportState createState() => _DutyReportState();
 }
 
-class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
+class _DutyReportState extends State<DutyReport> {
   var loading = false;
 
   bool _isInit = true;
   var save;
   void AssignDuties(ids) async {
+    var id = ModalRoute.of(context)?.settings.arguments;
     var form = _form.currentState!.validate();
     if (!form) {
       return;
@@ -33,15 +42,19 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
       loading = true;
     });
     try {
-      await DutiesDatabase.UpdateDuties(ids, savedata);
+      final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
+
+      await ref.putFile(File(_userImageFile!.path));
+      final download = await ref.getDownloadURL();
+      await DutiesDatabase.UploadRepord(savedata, download, id);
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
                 content: Text(
-                  'Complaints has been assigned ?',
+                  'Request sent',
                 ),
                 title: Text(
-                  'Warning',
+                  'Alert',
                   style: TextStyle(color: Colors.red),
                 ),
                 actions: [
@@ -49,8 +62,7 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                     child: Text('Ok'),
                     onPressed: () {
                       Navigator.of(ctx).pop();
-                      Navigator.of(ctx)
-                          .pushNamed(PolicsComplaintStatus.routeName);
+                      Navigator.of(ctx).pushNamed(PoliceDutiesStatus.routeName);
                     },
                   ),
                 ],
@@ -82,39 +94,42 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
     });
   }
 
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        loading = true;
-      });
-      var stationId = json
-          .decode(Constants.prefs.getString('userinfo') as String)['StationId'];
-      final result = FirebaseFirestore.instance
-          .collection('PoliceStaff')
-          .where("PoliceStationID", isEqualTo: stationId)
-          .where("Role", whereNotIn: ['Police Inspector', 'Operator'])
-          .get()
-          .then((result) {
-            save = result.docs
-                .map((val) => {
-                      'label': val.data()["Name"],
-                      "value": val.data()["PoliceStaffId"]
-                    })
-                .toList();
-            setState(() {
-              loading = false;
-            });
-          });
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     setState(() {
+  //       loading = true;
+  //     });
+  //     var stationId = json
+  //         .decode(Constants.prefs.getString('userinfo') as String)['StationId'];
+  //     final result = FirebaseFirestore.instance
+  //         .collection('PoliceStaff')
+  //         .where("PoliceStationID", isEqualTo: stationId)
+  //         .where("Role", whereNotIn: ['Police Inspector', 'Operator'])
+  //         .get()
+  //         .then((result) {
+  //           save = result.docs
+  //               .map((val) => {
+  //                     'label': val.data()["Name"],
+  //                     "value": val.data()["PoliceStaffId"]
+  //                   })
+  //               .toList();
+  //           setState(() {
+  //             loading = false;
+  //           });
+  //         });
 
-      _isInit = false;
+  //     _isInit = false;
 
-      super.didChangeDependencies();
-    }
+  //     super.didChangeDependencies();
+  //   }
+  // }
+
+  XFile? _userImageFile;
+  void _pickedImage(XFile image) {
+    _userImageFile = image;
   }
 
   final savedata = {
-    'PoliceOfficer': "",
-    'Priority': '',
     "Description": "",
     "Date": DateTime.now(),
   };
@@ -139,7 +154,7 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
     final ids = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Assign Complaints'),
+        title: Text('Duty Record'),
         backgroundColor: Colors.blue[900],
       ),
       body: Padding(
@@ -149,33 +164,6 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                 key: _form,
                 child: ListView(
                   children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SelectFormField(
-                        labelText: 'Select Police Officer',
-                        type: SelectFormFieldType.dropdown,
-                        initialValue: 'Select',
-                        items: save,
-                        onChanged: (val) => print(val),
-                        onSaved: (value) {
-                          savedata["PoliceOfficer"] = value as String;
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SelectFormField(
-                        labelText: 'Select Complaint Priority',
-                        type: SelectFormFieldType.dropdown,
-                        initialValue: 'low', // or can be dialog
-                        items: _Priority,
-                        onChanged: (val) => print(val),
-                        onSaved: (value) {
-                          savedata["Priority"] = value!;
-                        },
-                      ),
-                    ),
-
                     // Visibility(
                     //   child: TextFormField(
                     //     maxLines: 4,
@@ -211,6 +199,8 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                         },
                       ),
                     ),
+                    UserImagePicker(_pickedImage),
+                    camera(_pickedImage),
                     Container(
                         padding: const EdgeInsets.all(15.0),
                         child: DateTimePicker(
@@ -236,6 +226,7 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                             onSaved: (val) {
                               savedata["Date"] = DateTime.parse(val as String);
                             })),
+
                     Center(
                       child: Container(
                           padding: EdgeInsets.all(20),
@@ -261,7 +252,8 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                               onPressed: () {
                                 AssignDuties(ids);
                               },
-                              child: Text("Assign"))),
+                              child: Text(
+                                  "Send for Review for Duty Completetion"))),
                     )
                   ],
                 ),

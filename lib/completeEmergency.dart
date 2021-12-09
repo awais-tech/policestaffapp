@@ -70,9 +70,8 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                         json.decode(Constants.prefs.getString('userinfo')
                                     as String)['Role'] ==
                                 "Operator"
-                            ? ElevatedButton.icon(
-                                icon: Icon(Icons.details_outlined),
-                                label: Text("Change Status"),
+                            ? TextButton(
+                                child: Text("Change Status"),
                                 onPressed: () {
                                   showModalBottomSheet(
                                       context: context,
@@ -108,6 +107,7 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Container(
+                          width: 70,
                           child: Text(
                             'Description: ${widget.comp.data()['Description']}',
                             softWrap: true,
@@ -120,7 +120,7 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                           child: FittedBox(
                             fit: BoxFit.contain,
                             child: Text(
-                              'Crime Reason :${widget.comp.data()['CrimeType']}',
+                              'CrimeReason :${widget.comp.data()['CrimeType']}',
                               softWrap: true,
                               style: TextStyle(
                                 color: Colors.grey,
@@ -216,7 +216,8 @@ Widget changestatus(BuildContext context, String title, compl, station) {
       'label': 'Complete its punishment',
     },
   ];
-  final statuschan = TextEditingController();
+  var statuschan = TextEditingController();
+  statuschan.text = compl.data()["status"];
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   return Padding(
     padding: MediaQuery.of(context).viewInsets,
@@ -232,7 +233,7 @@ Widget changestatus(BuildContext context, String title, compl, station) {
             child: Container(
               padding: const EdgeInsets.all(15.0),
               child: SelectFormField(
-                controller: statuschan,
+                onChanged: (val) => statuschan.text = val,
                 labelText: 'Change status',
                 type: SelectFormFieldType.dropdown,
                 initialValue: compl.data()["status"], // or can be dialog
@@ -266,8 +267,10 @@ Widget changestatus(BuildContext context, String title, compl, station) {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
+                  print(statuschan.text);
+                  print(compl.id);
                   await _firestore
-                      .collection("CrinminalRecord")
+                      .collection("CriminalRecord")
                       .doc(compl.id)
                       .update({"status": statuschan.text});
                   return await showDialog(

@@ -65,7 +65,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 10, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -134,7 +134,7 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                                     (snp.data!.docs[i].data()
                                                             as Map)["Location"]
                                                         as String;
-                                             
+
                                                 MapUtils.launchMap(map);
                                               },
                                               icon: Icon(Icons.map_outlined),
@@ -146,16 +146,6 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             SizedBox(

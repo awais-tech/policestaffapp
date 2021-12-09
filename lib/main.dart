@@ -11,6 +11,7 @@ import 'package:policesfs/Complaintspamcheck.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Dashboard.dart';
 import 'package:policesfs/DetailsSPam.dart';
+import 'package:policesfs/DutyReport.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
@@ -19,6 +20,7 @@ import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
+import 'package:policesfs/ViewDutiesRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AssignComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
@@ -124,6 +126,8 @@ class _MyAppState extends State<MyApp> {
         detailsofSpam.routename: (ctx) => detailsofSpam(),
         ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
+        DutyReport.routename: (ctx) => DutyReport(),
+        ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
 
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),

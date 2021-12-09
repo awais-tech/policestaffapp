@@ -64,7 +64,7 @@ class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 10, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -133,7 +133,7 @@ class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
                                                     (snp.data!.docs[i].data()
                                                             as Map)["Location"]
                                                         as String;
-                                              
+
                                                 MapUtils.launchMap(map);
                                               },
                                               icon: Icon(Icons.map_outlined),
@@ -155,17 +155,6 @@ class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             SizedBox(

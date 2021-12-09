@@ -9,6 +9,7 @@ import 'dart:convert';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection("Duties");
 final CollectionReference _maincomplaints = _firestore.collection("Complaints");
+final CollectionReference _mainDuty = _firestore.collection("DutyReport");
 final CollectionReference _mainCrime = _firestore.collection("CriminalRecord");
 
 class DutiesDatabase {
@@ -116,6 +117,7 @@ class DutiesDatabase {
       String no = randoms.toString() +
           DateTime.now().microsecond.toString() +
           randomNumber.toString();
+      print(Complaints["Title"]);
       await _mainCrime.add({
         "status": Complaints["Status"],
         "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
@@ -133,6 +135,23 @@ class DutiesDatabase {
     } catch (e) {
       print(e);
       throw (e);
+    }
+  }
+
+  static Future<void> UploadRepord(Complaints, image, id) async {
+    try {
+      DocumentReference collectionRef = _mainDuty.doc(id);
+      DocumentReference collections = _mainCollection.doc(id);
+      collectionRef.set({
+        "Description": Complaints["Description"],
+        "Image": image,
+        "Date": Complaints["Date"],
+      });
+      collections.update({
+        "status": "Request",
+      });
+    } catch (e) {
+      throw e;
     }
   }
 }

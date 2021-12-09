@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/DutyReport.dart';
 
 // ignore: camel_case_types
 class dutydetails extends StatefulWidget {
@@ -202,44 +203,49 @@ class _dutydetailsState extends State<dutydetails> {
                               'Role'] !=
                           "Police Inspector"
                       ? datas['status'] == "Working"
-                          ? ElevatedButton(
-                              child: FittedBox(
-                                child: Text('Complete Duty',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
-                              ),
-                              onPressed: () async {
-                                await _firestore
-                                    .collection("Duties")
-                                    .doc(ids)
-                                    .update({"status": "Complete"});
-                                return showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    title: Text('Dutie update'),
-                                    content: Text(
-                                      'Mark as Complete',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text('Yes'),
-                                        onPressed: () {
-                                          Navigator.of(ctx).pop(false);
-                                        },
+                          ? FittedBox(
+                              child: ElevatedButton(
+                                child: FittedBox(
+                                  child: Text('Request for complete',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                onPressed: () async {
+                                  Navigator.of(context).pushNamed(
+                                      DutyReport.routename,
+                                      arguments: ids);
+                                  // await _firestore
+                                  //     .collection("Duties")
+                                  //     .doc(ids)
+                                  //     .update({"status": "Complete"});
+                                  return showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      title: Text('Upload Report'),
+                                      content: Text(
+                                        'Please Fill all details',
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.black),
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.all(10)),
-                                  textStyle: MaterialStateProperty.all(
-                                      TextStyle(fontSize: 16))),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Yes'),
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop(false);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.black),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(10)),
+                                    textStyle: MaterialStateProperty.all(
+                                        TextStyle(fontSize: 16))),
+                              ),
                             )
                           : Container()
                       : Container()

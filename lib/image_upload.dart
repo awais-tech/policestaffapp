@@ -30,7 +30,6 @@ class _UserImagePickerState extends State<UserImagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    print(_pickedImage);
     return Column(
       children: <Widget>[
         // CircleAvatar(

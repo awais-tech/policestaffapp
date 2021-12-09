@@ -91,14 +91,6 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
     });
   }
 
-  void didChangeDependencies() {
-    if (_isInit) {
-      _isInit = false;
-
-      super.didChangeDependencies();
-    }
-  }
-
   final savedata = {
     'CrimeType': '',
     'Status': '',
@@ -171,191 +163,193 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: !loading
-            ? Form(
-                key: _form,
-                child: ListView(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Title',
-                          border: OutlineInputBorder(),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter Title.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          savedata["Title"] = value!;
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SelectFormField(
-                        labelText: 'Select Crime Type',
-                        type: SelectFormFieldType.dropdown,
-                        initialValue: 'Select', // or can be dialog
-                        items: CrimeType,
-                        onChanged: (val) => print(val),
-                        onSaved: (value) {
-                          savedata["CrimeType"] = value!;
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SelectFormField(
-                        labelText: 'Select Status',
-                        type: SelectFormFieldType.dropdown,
-                        initialValue: 'Select', // or can be dialog
-                        items: status,
-                        onChanged: (val) => print(val),
-                        onSaved: (value) {
-                          savedata["Status"] = value!;
-                        },
-                      ),
-                    ),
-
-                    // Visibility(
-                    //   child: TextFormField(
-                    //     maxLines: 4,
-                    //     decoration: InputDecoration(
-                    //       labelText: 'Hidden Field',
-                    //       border: OutlineInputBorder(),
-                    //     ),
-                    //     keyboardType: TextInputType.text,
-                    //   ),
-                    //   maintainSize: false,
-                    //   maintainAnimation: true,
-                    //   maintainState: true,
-                    //   visible: false,
-                    // ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          labelText: 'Description',
-                          border: OutlineInputBorder(),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter Description.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          savedata["Description"] = value!;
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          labelText: 'Identification Mark',
-                          border: OutlineInputBorder(),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter Identification Mark.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          savedata["IdentificationMark"] = value!;
-                        },
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(15.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Name Of Person',
-                          border: OutlineInputBorder(),
-                        ),
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.text,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please Enter Name of Person.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          savedata["Name"] = value!;
-                        },
-                      ),
-                    ),
-                    Container(
+            ? SingleChildScrollView(
+                child: Form(
+                  key: _form,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
                         padding: const EdgeInsets.all(15.0),
-                        child: DateTimePicker(
-                            type: DateTimePickerType.dateTimeSeparate,
-                            dateMask: 'd MMM, yyyy',
-                            initialValue: DateTime.now().toString(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                            icon: Icon(Icons.event),
-                            dateLabelText: 'Date',
-                            timeLabelText: "Time",
-                            selectableDayPredicate: (date) {
-                              if (date.weekday == 6 || date.weekday == 7) {
-                                return false;
-                              }
-                              return true;
-                            },
-                            onChanged: (val) => print(val),
-                            validator: (val) {
-                              print(val);
-                              return null;
-                            },
-                            onSaved: (val) {
-                              savedata["Date"] = DateTime.parse(val as String);
-                            })),
-                    UserImagePicker(_pickedImage),
-                    camera(_pickedImage),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Center(
-                      child: Container(
-                          padding: EdgeInsets.all(20),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  )),
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.symmetric(
-                                              vertical: 1,
-                                              horizontal: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  MediaQuery.of(context)
-                                                      .padding
-                                                      .top) *
-                                          0.3),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Colors.red[900])),
-                              onPressed: () {
-                                AssignDuties(ids);
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Title',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Title.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["Title"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SelectFormField(
+                          labelText: 'Select Crime Type',
+                          type: SelectFormFieldType.dropdown,
+                          initialValue: 'Kidnapping', // or can be dialog
+                          items: CrimeType,
+                          onSaved: (value) {
+                            savedata["CrimeType"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SelectFormField(
+                          labelText: 'Select Status',
+                          type: SelectFormFieldType.dropdown,
+                          initialValue: 'in Jail', // or can be dialog
+                          items: status,
+                          onSaved: (value) {
+                            savedata["Status"] = value!;
+                          },
+                        ),
+                      ),
+
+                      // Visibility(
+                      //   child: TextFormField(
+                      //     maxLines: 4,
+                      //     decoration: InputDecoration(
+                      //       labelText: 'Hidden Field',
+                      //       border: OutlineInputBorder(),
+                      //     ),
+                      //     keyboardType: TextInputType.text,
+                      //   ),
+                      //   maintainSize: false,
+                      //   maintainAnimation: true,
+                      //   maintainState: true,
+                      //   visible: false,
+                      // ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Description.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["Description"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            labelText: 'Identification Mark',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Identification Mark.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["IdentificationMark"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Name Of Person',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please Enter Name of Person.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["Name"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.all(15.0),
+                          child: DateTimePicker(
+                              type: DateTimePickerType.dateTimeSeparate,
+                              dateMask: 'd MMM, yyyy',
+                              initialValue: DateTime.now().toString(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2100),
+                              icon: Icon(Icons.event),
+                              dateLabelText: 'Date',
+                              timeLabelText: "Time",
+                              selectableDayPredicate: (date) {
+                                if (date.weekday == 6 || date.weekday == 7) {
+                                  return false;
+                                }
+                                return true;
                               },
-                              child: Text("Add Criminal Record"))),
-                    )
-                  ],
+                              onChanged: (val) => print(val),
+                              validator: (val) {
+                                print(val);
+                                return null;
+                              },
+                              onSaved: (val) {
+                                savedata["Date"] =
+                                    DateTime.parse(val as String);
+                              })),
+                      UserImagePicker(_pickedImage),
+                      camera(_pickedImage),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Center(
+                        child: Container(
+                            padding: EdgeInsets.all(20),
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    )),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.symmetric(
+                                                vertical: 1,
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                        MediaQuery.of(context)
+                                                            .padding
+                                                            .top) *
+                                            0.3),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.red[900])),
+                                onPressed: () {
+                                  AssignDuties(ids);
+                                },
+                                child: Text("Add Criminal Record"))),
+                      )
+                    ],
+                  ),
                 ),
               )
             : Center(child: CircularProgressIndicator()),
