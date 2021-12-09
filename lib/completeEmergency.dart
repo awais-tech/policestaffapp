@@ -267,7 +267,7 @@ Widget changestatus(BuildContext context, String title, compl, station) {
                 ),
                 onPressed: () async {
                   await _firestore
-                      .collection("Complaints")
+                      .collection("CrinminalRecord")
                       .doc(compl.id)
                       .update({"status": statuschan.text});
                   return await showDialog(
@@ -277,7 +277,7 @@ Widget changestatus(BuildContext context, String title, compl, station) {
                       content: Text("Status Update"),
                       actions: <Widget>[
                         TextButton(
-                          child: Text('Yes'),
+                          child: Text('Ok'),
                           onPressed: () {
                             Navigator.of(ctx).pop(false);
                           },
