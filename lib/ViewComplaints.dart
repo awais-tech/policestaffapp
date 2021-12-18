@@ -140,24 +140,6 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
@@ -172,7 +154,8 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "high",
+                                              (snp.data!.docs[i].data()
+                                                  as Map)["Priority"],
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,

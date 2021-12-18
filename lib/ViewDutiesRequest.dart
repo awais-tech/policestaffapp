@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
+import 'package:policesfs/Dutyfeedback.dart';
 import 'package:policesfs/maps.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -264,8 +265,10 @@ class _ViewDutiesRequestState extends State<ViewDutiesRequest> {
 }
 
 Widget editEmail(BuildContext context, String id) {
+  print(id);
   var streams =
       FirebaseFirestore.instance.collection('DutyReport').doc(id).snapshots();
+
   return StreamBuilder(
       stream: streams,
       builder: (context, AsyncSnapshot<DocumentSnapshot> snp) {
@@ -343,26 +346,9 @@ Widget editEmail(BuildContext context, String id) {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        onPressed: () async {
-                          await FirebaseFirestore.instance
-                              .collection("Duties")
-                              .doc(id)
-                              .update({"status": "Complete"});
-                          return await showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              title: Text('Update'),
-                              content: Text("Status Update"),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(ctx).pop(false);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Feedbacks.routename,
+                              arguments: {"status": "Complete", "id": id});
                         },
                       )),
                   Padding(
@@ -398,35 +384,37 @@ Widget editEmail(BuildContext context, String id) {
                           ),
                         ),
                         onPressed: () async {
-                          await FirebaseFirestore.instance
-                              .collection("Duties")
-                              .doc(id)
-                              .update({
-                            "status": "Working",
-                            "Updation":
-                                "Report is not correct as duty assign Please attach the correct report again"
-                          });
-                          await FirebaseFirestore.instance
-                              .collection("DutyReport")
-                              .doc(id)
-                              .delete();
-                          Navigator.of(context)
-                              .pushNamed(PoliceDutiesStatus.routeName);
-                          return await showDialog(
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              title: Text('Update'),
-                              content: Text("Status Update"),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(ctx).pop(false);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+                          Navigator.of(context).pushNamed(Feedbacks.routename,
+                              arguments: {"status": "Working", "id": id});
+                          // await FirebaseFirestore.instance
+                          //     .collection("Duties")
+                          //     .doc(id)
+                          //     .update({
+                          //   "status": "Working",
+                          //   "Updation":
+                          //       "Report is not correct as duty assign Please attach the correct report again"
+                          // });
+                          // await FirebaseFirestore.instance
+                          //     .collection("DutyReport")
+                          //     .doc(id)
+                          //     .delete();
+                          // Navigator.of(context)
+                          //     .pushNamed(PoliceDutiesStatus.routeName);
+                          // return await showDialog(
+                          //   context: context,
+                          //   builder: (ctx) => AlertDialog(
+                          //     title: Text('Update'),
+                          //     content: Text("Status Update"),
+                          //     actions: <Widget>[
+                          //       TextButton(
+                          //         child: Text('Ok'),
+                          //         onPressed: () {
+                          //           Navigator.of(ctx).pop(false);
+                          //         },
+                          //       ),
+                          //     ],
+                          //   ),
+                          // );
                         },
                       )),
                 ],

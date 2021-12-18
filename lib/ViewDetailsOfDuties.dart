@@ -112,6 +112,19 @@ class _dutydetailsState extends State<dutydetails> {
                 Divider(
                   color: Colors.black,
                 ),
+
+                datas['status'] == "Working" ||
+                        datas['status'] == "Complete" ||
+                        datas['status'] == "Request"
+                    ? Text(
+                        'SHO ${datas['Assign by']} Feedback:   ${datas['SHOFeedback'] ?? "No feedback"}',
+                        softWrap: true,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))
+                    : Container(),
+
                 Text("Officer Name:  ${name}",
                     style: TextStyle(
                         color: Colors.grey,
@@ -120,6 +133,7 @@ class _dutydetailsState extends State<dutydetails> {
                 Divider(
                   color: Colors.black,
                 ),
+
                 Text("Description",
                     softWrap: true,
                     style: TextStyle(

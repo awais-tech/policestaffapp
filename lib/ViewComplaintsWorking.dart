@@ -60,7 +60,7 @@ class _ViewComplaintsWorkingState extends State<ViewComplaintsWorking> {
                             elevation: 10,
                             child: Container(
                               padding:
-                                  EdgeInsets.only(top: 30, left: 20, right: 20),
+                                  EdgeInsets.only(top: 10, left: 20, right: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -153,27 +153,6 @@ class _ViewComplaintsWorkingState extends State<ViewComplaintsWorking> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["status"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
                                               "Priority",
                                               style: TextStyle(
                                                 fontSize: 12,
@@ -184,7 +163,8 @@ class _ViewComplaintsWorkingState extends State<ViewComplaintsWorking> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "high",
+                                              (snp.data!.docs[i].data()
+                                                  as Map)["Priority"],
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 // fontWeight: FontWeight.bold,
@@ -224,7 +204,7 @@ class _ViewComplaintsWorkingState extends State<ViewComplaintsWorking> {
                           maxCrossAxisExtent: 450,
                           // MediaQuery.of(context).size.width /
                           // (MediaQuery.of(context).size.height / 1.4)
-                          childAspectRatio: 3 / 2,
+                          childAspectRatio: 1,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                         ));

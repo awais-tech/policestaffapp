@@ -151,16 +151,6 @@ class _ViewDutiesWorkingState extends State<ViewDutiesWorking> {
                                               height: 5,
                                             ),
                                             Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
                                               "Priority",
                                               style: TextStyle(
                                                 fontSize: 12,

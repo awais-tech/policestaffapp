@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/ViewComplaintComplete.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewComplaintsWorking.dart';
@@ -19,8 +20,8 @@ class PolicsComplaintStatus extends StatelessWidget {
         length: json.decode(
                     Constants.prefs.getString('userinfo') as String)['Role'] ==
                 "Police Inspector"
-            ? 4
-            : 3,
+            ? 5
+            : 4,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
@@ -57,6 +58,10 @@ class PolicsComplaintStatus extends StatelessWidget {
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
+                  child: Tab(icon: Icon(Icons.work), text: "Request"),
+                ),
+                FittedBox(
+                  fit: BoxFit.contain,
                   child: Tab(icon: Icon(Icons.done_all), text: "Completed"),
                 ),
                 // FittedBox(
@@ -75,6 +80,7 @@ class PolicsComplaintStatus extends StatelessWidget {
                 ViewComplaints(),
               ViewComplaintsassigned(),
               ViewComplaintsWorking(),
+              RequestComplaint(),
               ViewComplaintsComplete(),
             ],
           ),

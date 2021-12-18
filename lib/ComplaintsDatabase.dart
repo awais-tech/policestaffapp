@@ -9,6 +9,8 @@ import 'dart:convert';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection("Duties");
 final CollectionReference _maincomplaints = _firestore.collection("Complaints");
+final CollectionReference _maincomplaintsR =
+    _firestore.collection("ComplaintsReport");
 final CollectionReference _mainDuty = _firestore.collection("DutyReport");
 final CollectionReference _mainCrime = _firestore.collection("CriminalRecord");
 
@@ -44,6 +46,8 @@ class DutiesDatabase {
                 "status": "assigned",
                 "PoliceOfficerid": Complaints["PoliceOfficer"],
                 "OfficerName": (val.data() as Map)["Name"],
+                "Assigned By": json.decode(
+                    Constants.prefs.getString('userinfo') as String)["Name"],
                 "DescriptionForOfficer": Complaints["Description"],
                 "Priority": Complaints["Priority"],
                 "Date Assigned": Complaints["Date"],
@@ -145,10 +149,138 @@ class DutiesDatabase {
       collectionRef.set({
         "Description": Complaints["Description"],
         "Image": image,
+        "status": "Remarks Needed",
         "Date": Complaints["Date"],
       });
       collections.update({
         "status": "Request",
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static Future<void> RequestComplaints(Complaints, image, id) async {
+    try {
+      DocumentReference _maincomplain = _maincomplaints.doc(id);
+      DocumentReference _maincomplai = _maincomplaintsR.doc(id);
+      _maincomplai.set({
+        "Description": Complaints["Description"],
+        "Image": image,
+        "status": "Remarks Needed",
+        "Date": Complaints["Date"],
+      });
+      _maincomplain.update({
+        "status": "Request",
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static Future<void> UploadFeedback(Complaints, id) async {
+    try {
+      DocumentReference collectionRef = _mainDuty.doc(id["id"]);
+      DocumentReference collections = _mainCollection.doc(id["id"]);
+      collectionRef.update({
+        "SHOFeedback": Complaints["Description"],
+        "status": id["status"],
+      });
+      collections.update({
+        "status": id["status"],
+        "SHOFeedback": Complaints["Description"],
+      });
+      _firestore.collection('Duties').doc(id["id"]).get().then((va) async {
+        _firestore
+            .collection('PoliceStaff')
+            .doc(va.data()!["PoliceStaffid"])
+            .get()
+            .then((val) async {
+          if (id["status"] == "Working") {
+            final url = Uri.parse(
+                'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+            Map<String, String> headers = {"Content-type": "application/json"};
+
+            var doc = await http.post(
+              url,
+              headers: headers,
+              body: json.encode({
+                'email': (val.data() as Map)["Email"],
+                'message':
+                    "Hi ${(val.data() as Map)["Name"]}!<br> You duty about ${va.data()!["Title"]} has been ReAssign to you <br>Please check  SHO remarks ${Complaints["Description"]}<br>",
+              }),
+            );
+          } else {
+            final url = Uri.parse(
+                'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+            Map<String, String> headers = {"Content-type": "application/json"};
+
+            var doc = await http.post(
+              url,
+              headers: headers,
+              body: json.encode({
+                'email': (val.data() as Map)["Email"],
+                'message':
+                    "Hi ${(val.data() as Map)["Name"]}!<br> You duty about ${va.data()!["Title"]} has been Completed  <br>Please check  SHO remarks ${Complaints["Description"]}<br>",
+              }),
+            );
+          }
+        });
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static Future<void> UploadFeedbacks(Complaints, id) async {
+    try {
+      DocumentReference collectionRef = _maincomplaints.doc(id["id"]);
+      DocumentReference collections = _maincomplaintsR.doc(id["id"]);
+      collectionRef.update({
+        "SHOFeedback": Complaints["Description"],
+        "status": id["status"],
+        "Ufeedback": ""
+      });
+      collections.update({
+        "status": id["status"],
+        "SHOFeedback": Complaints["Description"],
+      });
+      _firestore.collection('Complaints').doc(id["id"]).get().then((va) async {
+        _firestore
+            .collection('PoliceStaff')
+            .doc(va.data()!["PoliceOfficerid"])
+            .get()
+            .then((val) async {
+          if (id["status"] == "Working") {
+            final url = Uri.parse(
+                'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+            Map<String, String> headers = {"Content-type": "application/json"};
+
+            var doc = await http.post(
+              url,
+              headers: headers,
+              body: json.encode({
+                'email': (val.data() as Map)["Email"],
+                'message':
+                    "Hi ${(val.data() as Map)["Name"]}!<br> You Complaint about ${va.data()!["Title"]} has been ReAssign to you <br>Please check  SHO remarks ${Complaints["Description"]}<br>",
+              }),
+            );
+          } else {
+            final url = Uri.parse(
+                'https://fitnessappauth.herokuapp.com/api/users/TokenRefreshs');
+            Map<String, String> headers = {"Content-type": "application/json"};
+
+            var doc = await http.post(
+              url,
+              headers: headers,
+              body: json.encode({
+                'email': (val.data() as Map)["Email"],
+                'message':
+                    "Hi ${(val.data() as Map)["Name"]}!<br> You Complaint about ${va.data()!["Title"]} has been Completed  <br>Please check  SHO remarks ${Complaints["Description"]}<br>",
+              }),
+            );
+          }
+        });
       });
     } catch (e) {
       throw e;

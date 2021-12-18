@@ -5,17 +5,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
 import 'package:policesfs/ComplaintEmergency.dart';
+import 'package:policesfs/ComplaintReport.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
+import 'package:policesfs/ComplaintsFeedback.dart';
 import 'package:policesfs/Complaintsapprove.dart';
 import 'package:policesfs/Complaintspamcheck.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Dashboard.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/DutyReport.dart';
+import 'package:policesfs/Dutyfeedback.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/RegisteredComplaints.dart';
+import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
@@ -128,6 +132,10 @@ class _MyAppState extends State<MyApp> {
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
         DutyReport.routename: (ctx) => DutyReport(),
         ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
+        Feedbacks.routename: (ctx) => Feedbacks(),
+        RequestComplaint.routeName: (ctx) => RequestComplaint(),
+        FeedbacksC.routename: (ctx) => FeedbacksC(),
+        ComplaintReport.routename: (ctx) => ComplaintReport(),
 
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),
