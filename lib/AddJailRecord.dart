@@ -1,30 +1,21 @@
-import 'dart:convert';
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:policesfs/ComplaintEmergency.dart';
-import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/ComplaintsDatabase.dart';
-import 'package:policesfs/Constants.dart';
 import 'package:policesfs/JailRecords.dart';
-import 'package:policesfs/PoliceSFSDuties.dart';
-import 'package:policesfs/PoliceSFSDutiesProvider.dart';
 import 'package:select_form_field/select_form_field.dart';
-import 'package:provider/provider.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:policesfs/camera.dart';
 import 'package:policesfs/image_upload.dart';
 
-class NewJailRecord extends StatefulWidget {
-  static final routename = "AddCrimeRecord";
+class AddJailRecord extends StatefulWidget {
+  static final routename = "AddJailRecord";
   @override
-  _NewJailRecordState createState() => _NewJailRecordState();
+  _AddJailRecordState createState() => _AddJailRecordState();
 }
 
-class _NewJailRecordState extends State<NewJailRecord> {
+class _AddJailRecordState extends State<AddJailRecord> {
   var loading = false;
 
   bool _isInit = true;
@@ -44,7 +35,7 @@ class _NewJailRecordState extends State<NewJailRecord> {
 
       await ref.putFile(File(_userImageFile!.path));
       final download = await ref.getDownloadURL();
-      await DutiesDatabase.addJailRecord(savedata, download);
+      await DutiesDatabase.addJailRecord(savedata, "https://a.jp");
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(

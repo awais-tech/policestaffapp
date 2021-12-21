@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
 import 'package:policesfs/Constants.dart';
-import 'package:policesfs/NewJailRecord.dart';
+import 'package:policesfs/AddJailRecord.dart';
 import 'package:policesfs/RegisteredComplaints.dart';
 import 'package:policesfs/completeEmergency.dart';
-import 'AddJailRecords.dart';
+import 'ViewJailRecords.dart';
 import 'dart:convert';
 
 class JailRecords extends StatefulWidget {
@@ -119,9 +119,9 @@ class _JailRecordsState extends State<JailRecords> {
                                             .toLowerCase()
                                             .contains(
                                                 name.toString().toLowerCase())
-                                        ? AddJailRecord(snp.data!.docs[i])
+                                        ? ViewJailRecord(snp.data!.docs[i])
                                         : Container()
-                                    : AddJailRecord(snp.data!.docs[i])));
+                                    : ViewJailRecord(snp.data!.docs[i])));
                   }
                   return Center(
                     child: CircularProgressIndicator(
@@ -146,7 +146,7 @@ class _JailRecordsState extends State<JailRecords> {
                 Icons.add_circle_outline_sharp,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(NewJailRecord.routename);
+                Navigator.of(context).pushNamed(AddJailRecord.routename);
               },
               backgroundColor: Colors.red,
             )

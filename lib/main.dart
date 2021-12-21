@@ -17,7 +17,7 @@ import 'package:policesfs/DutyReport.dart';
 import 'package:policesfs/Dutyfeedback.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Login.dart';
-import 'package:policesfs/NewJailRecord.dart';
+import 'package:policesfs/AddJailRecord.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/RegisteredComplaints.dart';
@@ -30,6 +30,7 @@ import 'package:policesfs/ViewDutiesRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AssignComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
+import 'ViewJailRecords.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,7 +134,8 @@ class _MyAppState extends State<MyApp> {
         detailsofSpam.routename: (ctx) => detailsofSpam(),
         ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
-        NewJailRecord.routename: (ctx) => NewJailRecord(),
+        AddJailRecord.routename: (ctx) => AddJailRecord(),
+        ViewJailRecord.routeName: (ctx) => ViewJailRecord(''),
         DutyReport.routename: (ctx) => DutyReport(),
         ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
         Feedbacks.routename: (ctx) => Feedbacks(),

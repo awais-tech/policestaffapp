@@ -7,16 +7,17 @@ import 'package:intl/intl.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:select_form_field/select_form_field.dart';
 
-class AddJailRecord extends StatefulWidget {
+class ViewJailRecord extends StatefulWidget {
   final comp;
+  static final routeName = 'ViewJailRecord';
 
-  AddJailRecord(this.comp);
+  ViewJailRecord(this.comp);
 
   @override
-  _AddJailRecordState createState() => _AddJailRecordState();
+  _ViewJailRecordState createState() => _ViewJailRecordState();
 }
 
-class _AddJailRecordState extends State<AddJailRecord> {
+class _ViewJailRecordState extends State<ViewJailRecord> {
   var _expanded = false;
 
   @override
