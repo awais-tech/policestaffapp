@@ -13,6 +13,7 @@ final CollectionReference _maincomplaintsR =
     _firestore.collection("ComplaintsReport");
 final CollectionReference _mainDuty = _firestore.collection("DutyReport");
 final CollectionReference _mainCrime = _firestore.collection("CriminalRecord");
+final CollectionReference _JailsRecord = _firestore.collection("JailRecord");
 
 class DutiesDatabase {
   static String? userID;
@@ -106,6 +107,34 @@ class DutiesDatabase {
               Constants.prefs.getString('userinfo') as String)['StationId'],
           "status": "Pending"
         });
+      });
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
+  static Future<void> addJailRecord(Complaints, image) async {
+    try {
+      Random random = new Random();
+      int randomNumber = random.nextInt(1000) + 100;
+      int randoms = random.nextInt(10);
+      String no = randoms.toString() +
+          DateTime.now().microsecond.toString() +
+          randomNumber.toString();
+      print(Complaints["TotalPrisoners"]);
+      await _JailsRecord.add({
+        "status": Complaints["Status"],
+        "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
+        "PrisonerNo": Complaints["PrisonerNo"],
+        "Description": Complaints["Description"],
+        "TotalPrisoners": Complaints["TotalPrisoners"],
+        "ImageUrl": image,
+        "Record Id": no,
+        "Date added": Complaints["Date"],
+        "CrimeType": Complaints["CrimeType"],
+        "Policestationid": json.decode(
+            Constants.prefs.getString('userinfo') as String)['StationId'],
       });
     } catch (e) {
       print(e);

@@ -15,7 +15,9 @@ import 'package:policesfs/Dashboard.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/DutyReport.dart';
 import 'package:policesfs/Dutyfeedback.dart';
+import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Login.dart';
+import 'package:policesfs/NewJailRecord.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/RegisteredComplaints.dart';
@@ -123,6 +125,7 @@ class _MyAppState extends State<MyApp> {
         AssignComplaintsScreen.routename: (ctx) => AssignComplaintsScreen(),
         ViewComplaints.routeName: (ctx) => ViewComplaints(),
         PolicsComplaintStatus.routeName: (ctx) => PolicsComplaintStatus(),
+        JailRecords.routeName: (ctx) => JailRecords(),
         Operatordashboard.routeName: (ctx) => Operatordashboard(),
         OperatorStatus.routeName: (ctx) => OperatorStatus(),
         Complaintspampending.routeName: (ctx) => Complaintspampending(),
@@ -130,6 +133,7 @@ class _MyAppState extends State<MyApp> {
         detailsofSpam.routename: (ctx) => detailsofSpam(),
         ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
+        NewJailRecord.routename: (ctx) => NewJailRecord(),
         DutyReport.routename: (ctx) => DutyReport(),
         ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
         Feedbacks.routename: (ctx) => Feedbacks(),
