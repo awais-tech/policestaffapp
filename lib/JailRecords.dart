@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/AddJailRecord.dart';
-import 'package:policesfs/RegisteredComplaints.dart';
+import 'package:policesfs/AddCriminalRecord.dart';
 import 'package:policesfs/completeEmergency.dart';
 import 'ViewJailRecords.dart';
 import 'dart:convert';

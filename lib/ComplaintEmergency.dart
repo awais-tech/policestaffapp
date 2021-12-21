@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
 import 'package:policesfs/Constants.dart';
-import 'package:policesfs/RegisteredComplaints.dart';
+import 'package:policesfs/AddCriminalRecord.dart';
 import 'package:policesfs/completeEmergency.dart';
 import 'dart:convert';
 

@@ -20,7 +20,7 @@ import 'package:policesfs/Login.dart';
 import 'package:policesfs/AddJailRecord.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Policetabbar.dart';
-import 'package:policesfs/RegisteredComplaints.dart';
+import 'package:policesfs/AddCriminalRecord.dart';
 import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
 import 'package:policesfs/ComplaintReport.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: camel_case_types
 class Complaintdetails extends StatelessWidget {
@@ -104,12 +105,14 @@ class Complaintdetails extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18))
                                     : Container(),
-                                Text(
-                                    "Date Created:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
+                                FittedBox(
+                                  child: Text(
+                                      "Date Created:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                ),
                                 Divider(
                                   color: Colors.black,
                                 ),
@@ -137,6 +140,33 @@ class Complaintdetails extends StatelessWidget {
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
+                                Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            )),
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.red[900])),
+                                        onPressed: () async {
+                                          try {
+                                            var url = 'tel:${datas["phone"]}';
+                                            if (await canLaunch(url)) {
+                                              await launch(url);
+                                            } else {
+                                              throw url;
+                                            }
+                                          } catch (e) {
+                                            print(e.toString());
+                                          }
+                                        },
+                                        child: FittedBox(
+                                            child: Text("Call Complainer")))),
                                 datas["Date Assigned"] != null
                                     ? Text(
                                         "Start Working On:  ${DateTime.parse(datas["Date Assigned"].toDate().toString()).toString()}",
