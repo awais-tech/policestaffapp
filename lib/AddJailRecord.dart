@@ -31,10 +31,10 @@ class _AddJailRecordState extends State<AddJailRecord> {
       loading = true;
     });
     try {
-      final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
+      // final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
 
-      await ref.putFile(File(_userImageFile!.path));
-      final download = await ref.getDownloadURL();
+      // await ref.putFile(File(_userImageFile!.path));
+      // final download = await ref.getDownloadURL();
       await DutiesDatabase.addJailRecord(savedata, "https://a.jp");
       await showDialog(
           context: context,
