@@ -44,31 +44,34 @@ class Complaintdetails extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image(
-                        image: NetworkImage("${datas['imageUrl']}"),
-                        height: 100,
-                        width: double.infinity,
-                      ),
-                    ),
-                    SizedBox(height: 10),
                     Center(
                       child: Container(
-                        margin: EdgeInsets.only(bottom: 20),
+                        margin: EdgeInsets.all(20),
                         child: Card(
                             elevation: 40,
+                            shadowColor: Colors.blueGrey,
                             child: Container(
                               padding: EdgeInsets.all(10),
                               width: MediaQuery.of(context).size.width / 1.2,
                               child: Column(children: [
+                                SizedBox(height: 10),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image(
+                                    image: NetworkImage("${datas['imageUrl']}"),
+                                    height: 100,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
                                 Text(
                                   datas['Title'],
                                   style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
+                                SizedBox(height: 5),
+
                                 // ignore: prefer_const_constructors
                                 Text(
                                   'Category:${datas['Catagory']}',
@@ -77,26 +80,36 @@ class Complaintdetails extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Text("sub category:${datas['sub category']}",
+                                SizedBox(height: 5),
+
+                                Text("Sub-Category:${datas['sub category']}",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
-                                Text("sent by:${datas['sent by']}",
+                                SizedBox(height: 5),
+
+                                Text("Sent by:${datas['sent by']}",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
+                                SizedBox(height: 5),
+
                                 Text("Type: ${datas['Type']}",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
+                                SizedBox(height: 5),
+
                                 Text("Status: ${datas['status']}",
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
+                                SizedBox(height: 5),
+
                                 datas['ComplaintNo'] != "Not assign"
                                     ? Text(
                                         "Complaint No: ${datas['ComplaintNo']}",
@@ -120,7 +133,7 @@ class Complaintdetails extends StatelessWidget {
                                         datas['status'] == "Complete" ||
                                         datas['status'] == "Request"
                                     ? Text(
-                                        'SHO ${datas['Assigned By'] ?? ""} Feedback:   ${datas['SHOFeedback'] ?? "No feedback"}',
+                                        'SHO ${datas['Assigned By'] ?? ""}Feedback:   ${datas['SHOFeedback'] ?? "No feedback"}',
                                         softWrap: true,
                                         style: TextStyle(
                                             color: Colors.grey,
@@ -135,11 +148,16 @@ class Complaintdetails extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18))
                                     : Container(),
-                                Text("Complainer Phone no:  ${datas["phone"]}",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
+                                SizedBox(height: 5),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                      "Complainant Phone No:  ${datas["phone"]}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                ),
                                 Container(
                                     padding: EdgeInsets.all(10),
                                     child: ElevatedButton(
@@ -166,7 +184,7 @@ class Complaintdetails extends StatelessWidget {
                                           }
                                         },
                                         child: FittedBox(
-                                            child: Text("Call Complainer")))),
+                                            child: Text("Call Complainant")))),
                                 datas["Date Assigned"] != null
                                     ? Text(
                                         "Start Working On:  ${DateTime.parse(datas["Date Assigned"].toDate().toString()).toString()}",
@@ -189,12 +207,15 @@ class Complaintdetails extends StatelessWidget {
                                 Divider(
                                   color: Colors.black,
                                 ),
-                                Text(
-                                    "ReportNo:  ${datas["ReportNo"] ?? "No Report No"}",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                      "Report No:  ${datas["ReportNo"] ?? "No Report No"}",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                ),
 
                                 Divider(
                                   color: Colors.black,
@@ -206,6 +227,7 @@ class Complaintdetails extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22)),
                                 Text("${datas['Description']}",
+                                    textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,

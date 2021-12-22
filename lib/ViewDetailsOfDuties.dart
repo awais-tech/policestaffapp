@@ -55,97 +55,123 @@ class _dutydetailsState extends State<dutydetails> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           // ignore: duplicate_ignore
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    image: AssetImage('assets/Images/crime.jpg'),
-                    height: 100,
-                    width: double.infinity,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  datas['Title'],
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                // ignore: prefer_const_constructors
-                Text(
-                  'Category:${datas['Category']}',
-                  style: TextStyle(
-                      color: Colors.red[900],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-                Text("Priority:${datas['Priority']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("Location:${datas['Location']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("Assign By: ${datas['Assign by']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("Status: ${datas['status']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text(
-                    "Date Created:  ${DateTime.parse(datas["Date Created"].toDate().toString()).toString()}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Divider(
-                  color: Colors.black,
-                ),
+            Card(
+              margin: EdgeInsets.all(20),
+              elevation: 40,
+              shadowColor: Colors.blueGrey,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image(
+                        image: AssetImage('assets/Images/crime.jpg'),
+                        height: 100,
+                        width: double.infinity,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      datas['Title'],
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 5),
 
-                datas['status'] == "Working" ||
-                        datas['status'] == "Complete" ||
-                        datas['status'] == "Request"
-                    ? Text(
-                        'SHO ${datas['Assign by']} Feedback:   ${datas['SHOFeedback'] ?? "No feedback"}',
-                        softWrap: true,
+                    // ignore: prefer_const_constructors
+                    Text(
+                      'Category:${datas['Category']}',
+                      style: TextStyle(
+                          color: Colors.red[900],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    SizedBox(height: 5),
+
+                    Text("Priority:${datas['Priority']}",
                         style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18))
-                    : Container(),
+                            fontSize: 18)),
+                    SizedBox(height: 5),
 
-                Text("Officer Name:  ${name}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Divider(
-                  color: Colors.black,
+                    Text("Location:${datas['Location']}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    SizedBox(height: 5),
+
+                    Text("Assign By: ${datas['Assign by']}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    SizedBox(height: 5),
+
+                    Text("Status: ${datas['status']}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    SizedBox(height: 5),
+                    FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                          "Date Created:  ${DateTime.parse(datas["Date Created"].toDate().toString()).toString()}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18)),
+                    ),
+                    Divider(
+                      color: Colors.black,
+                    ),
+
+                    datas['status'] == "Working" ||
+                            datas['status'] == "Complete" ||
+                            datas['status'] == "Request"
+                        ? Text(
+                            'SHO ${datas['Assign by']} Feedback:   ${datas['SHOFeedback'] ?? "No feedback"}',
+                            softWrap: true,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18))
+                        : Container(),
+
+                    Text("Officer Name:  ${name}",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                    Divider(
+                      color: Colors.black,
+                    ),
+
+                    Text("Description",
+                        softWrap: true,
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22)),
+                    SizedBox(height: 5),
+
+                    Text("${datas['Description']}",
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18)),
+                  ],
                 ),
-
-                Text("Description",
-                    softWrap: true,
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22)),
-                Text("${datas['Description']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-              ],
+              ),
             ),
             // ignore: prefer_const_constructors
             SizedBox(

@@ -45,6 +45,7 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                         itemCount: snp.data!.docs.length,
                         itemBuilder: (context, i) {
                           return Card(
+                            margin: EdgeInsets.all(20),
                             elevation: 10,
                             child: Container(
                               padding:
@@ -124,7 +125,7 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                                               },
                                               icon: Icon(Icons.map_outlined),
                                               label:
-                                                  Text("Complainer Location"),
+                                                  Text("Complainant Location"),
                                             ),
                                             SizedBox(
                                               height: 5,

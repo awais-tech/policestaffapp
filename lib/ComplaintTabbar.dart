@@ -32,6 +32,7 @@ class PolicsComplaintStatus extends StatelessWidget {
                 child: Text(
                   'Check All Complaints',
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 10),
                 ),
               ),
             ),
@@ -44,13 +45,14 @@ class PolicsComplaintStatus extends StatelessWidget {
                     fit: BoxFit.contain,
                     child: Tab(
                         icon: Icon(Icons.pending_actions),
-                        text: "Approve Complaints"),
+                        text: "Approved\nComplaints"),
                   ),
 
                 FittedBox(
                   fit: BoxFit.contain,
                   child: Tab(
-                      icon: Icon(Icons.assignment), text: "Assigned Complaint"),
+                      icon: Icon(Icons.assignment),
+                      text: "Assigned\nComplaint"),
                 ),
                 FittedBox(
                   fit: BoxFit.contain,

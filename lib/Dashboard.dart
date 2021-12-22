@@ -78,7 +78,7 @@ class Staffdashboard extends StatelessWidget {
                                       ),
                                     ),
                                     subtitle: Text(
-                                      "For add duties Press that button",
+                                      "To Assign Duties, Press '+' Button.",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 14,
@@ -246,7 +246,8 @@ class Staffdashboard extends StatelessWidget {
                                     size: 75,
                                   ),
                                   Text(
-                                    "Chat with  Operator",
+                                    "Chat with\nOperator",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
@@ -285,7 +286,8 @@ class Staffdashboard extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                     Text(
-                                      "Progess Statistics",
+                                      "Progess\nStatistics",
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,

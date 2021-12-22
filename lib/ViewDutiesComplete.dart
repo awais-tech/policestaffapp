@@ -64,11 +64,13 @@ class _ViewDutiesCompleteState extends State<ViewDutiesComplete> {
                         itemCount: snp.data!.docs.length,
                         itemBuilder: (context, i) {
                           return Card(
-                            elevation: 10,
+                            margin: EdgeInsets.all(20),
+                            elevation: 20,
                             child: Container(
                               padding:
                                   EdgeInsets.only(top: 10, left: 20, right: 20),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(

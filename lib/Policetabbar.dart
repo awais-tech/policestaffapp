@@ -15,13 +15,11 @@ class PoliceDutiesStatus extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
             title: Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.only(top: 40, bottom: 30, left: 30),
               width: double.infinity,
-              child: FittedBox(
-                child: Text(
-                  'Check All Duties',
-                  textAlign: TextAlign.center,
-                ),
+              child: Text(
+                'Check All Duties',
+                style: TextStyle(fontSize: 24),
               ),
             ),
             bottom: TabBar(
@@ -30,7 +28,7 @@ class PoliceDutiesStatus extends StatelessWidget {
                   fit: BoxFit.contain,
                   child: Tab(
                       icon: Icon(Icons.pending_actions),
-                      text: "Duties not accepted yet"),
+                      text: "Duties Not\nAccepted Yet"),
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
@@ -42,8 +40,8 @@ class PoliceDutiesStatus extends StatelessWidget {
                 ),
                 FittedBox(
                   fit: BoxFit.contain,
-                  child:
-                      Tab(icon: Icon(Icons.done_all), text: "Completed Duties"),
+                  child: Tab(
+                      icon: Icon(Icons.done_all), text: "Completed\nDuties"),
                 ),
               ],
             ),
