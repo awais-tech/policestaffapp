@@ -85,11 +85,12 @@ class _AddJailRecordState extends State<AddJailRecord> {
 
   final savedata = {
     'CrimeType': '',
-    'Status': '',
     "Description": "",
     "PrisonNo": "",
-    "TotalPrisoners": "",
+    "Address": '',
+    "PrisonerCNIC": "",
     "ImageUrl": "",
+    "ContactNo": "",
     "DateTime": DateTime.now(),
   };
   final List<Map<String, dynamic>> status = [
@@ -144,7 +145,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
     final ids = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jail Record'),
+        title: Text('Add Prisoners'),
         backgroundColor: Colors.blue[900],
       ),
       body: Padding(
@@ -159,7 +160,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'Total Prisoners',
+                            labelText: 'Prisoner CNIC/B-Form Number',
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
@@ -171,7 +172,27 @@ class _AddJailRecordState extends State<AddJailRecord> {
                             return null;
                           },
                           onSaved: (value) {
-                            savedata["TotalPrisoners"] = value!;
+                            savedata["PrisonerCNIC"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Contact Number',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Title.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["ContactNo"] = value!;
                           },
                         ),
                       ),
@@ -190,7 +211,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                       Container(
                         padding: const EdgeInsets.all(15.0),
                         child: SelectFormField(
-                          labelText: 'Select Cell Status',
+                          labelText: 'Allocate Prison',
                           type: SelectFormFieldType.dropdown,
                           initialValue: 'Empty', // or can be dialog
                           items: status,
@@ -217,9 +238,30 @@ class _AddJailRecordState extends State<AddJailRecord> {
                       Container(
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
+                          maxLines: 2,
+                          decoration: InputDecoration(
+                            labelText: 'Prisoner Residential Address',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Description.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["Address"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
                           maxLines: 4,
                           decoration: InputDecoration(
-                            labelText: 'Prisoners Description',
+                            labelText: 'Prisoner Description',
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
@@ -256,26 +298,6 @@ class _AddJailRecordState extends State<AddJailRecord> {
                       //     },
                       //   ),
                       // ),
-                      Container(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Allocated Prison Cell Number',
-                            border: OutlineInputBorder(),
-                          ),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter Allocated Prison Cell Number.';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            savedata["PrisonerNo"] = value!;
-                          },
-                        ),
-                      ),
                       Container(
                           padding: const EdgeInsets.all(15.0),
                           child: DateTimePicker(
@@ -333,7 +355,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                                 onPressed: () {
                                   AssignDuties(ids);
                                 },
-                                child: Text("Add Jail Record"))),
+                                child: Text("Add Prisoner"))),
                       )
                     ],
                   ),

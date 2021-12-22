@@ -14,6 +14,8 @@ final CollectionReference _maincomplaintsR =
 final CollectionReference _mainDuty = _firestore.collection("DutyReport");
 final CollectionReference _mainCrime = _firestore.collection("CriminalRecord");
 final CollectionReference _JailsRecord = _firestore.collection("JailRecord");
+final CollectionReference _JailCellsRecord =
+    _firestore.collection("CellRecord");
 
 class DutiesDatabase {
   static String? userID;
@@ -114,6 +116,31 @@ class DutiesDatabase {
     }
   }
 
+  static Future<void> addJailCellRecord(Cell) async {
+    try {
+      Random random = new Random();
+      int randomNumber = random.nextInt(1000) + 100;
+      int randoms = random.nextInt(10);
+      String no = randoms.toString() +
+          DateTime.now().microsecond.toString() +
+          randomNumber.toString();
+      print(Cell["TotalCapacity"]);
+      await _JailCellsRecord.add({
+        "PrisonerNo": Cell["PrisonerNo"],
+        "TotalCapacity": Cell["TotalCapacity"],
+        "Record Id": no,
+        "Date added": Cell["Date"],
+        "Division": json.decode(
+            Constants.prefs.getString('userinfo') as String)['Division'],
+        "Policestationid": json.decode(
+            Constants.prefs.getString('userinfo') as String)['StationId'],
+      });
+    } catch (e) {
+      print(e);
+      throw (e);
+    }
+  }
+
   static Future<void> addJailRecord(Complaints, image) async {
     try {
       Random random = new Random();
@@ -124,11 +151,12 @@ class DutiesDatabase {
           randomNumber.toString();
       print(Complaints["TotalPrisoners"]);
       await _JailsRecord.add({
-        "status": Complaints["Status"],
+        "ContactNo": Complaints["ContactNo"],
         "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
-        "PrisonerNo": Complaints["PrisonerNo"],
+        "PrisonNo": Complaints["PrisonNo"],
+        "Address": Complaints["Address"],
         "Description": Complaints["Description"],
-        "TotalPrisoners": Complaints["TotalPrisoners"],
+        "PrisonerCNIC": Complaints["PrisonerCNIC"],
         "ImageUrl": image,
         "Record Id": no,
         "Date added": Complaints["Date"],
