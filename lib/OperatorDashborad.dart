@@ -16,12 +16,14 @@ class Operatordashboard extends StatelessWidget {
     Icons.home,
     Icons.cancel_outlined,
     Icons.record_voice_over,
+    Icons.list
   ];
 
   final List<String> navigators = [
     "Home",
     "Crime Record",
     "Jail Record",
+    "Staff List"
   ];
   @override
   Widget build(BuildContext context) {

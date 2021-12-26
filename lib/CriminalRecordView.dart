@@ -45,7 +45,8 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                       ),
                     ),
                   ),
-                  subtitle: FittedBox(
+                  title: FittedBox(
+                    fit: BoxFit.contain,
                     child: Text(
                       'Record Id: ${widget.comp.data()['Record Id']}',
                       softWrap: true,

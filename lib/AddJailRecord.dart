@@ -20,7 +20,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
 
   bool _isInit = true;
   var save;
-  void AssignDuties(ids) async {
+  void AssignDuties(id) async {
     var form = _form.currentState!.validate();
     if (!form) {
       return;
@@ -35,7 +35,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
 
       // await ref.putFile(File(_userImageFile!.path));
       // final download = await ref.getDownloadURL();
-      await DutiesDatabase.addJailRecord(savedata, "https://a.jp");
+      await DutiesDatabase.addJailRecord(savedata, "as", id["ids"], id["idd"]);
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -43,7 +43,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                   'Record Added',
                 ),
                 title: Text(
-                  'Warning',
+                  'Perfect',
                   style: TextStyle(color: Colors.red),
                 ),
                 actions: [
@@ -88,6 +88,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
     "Description": "",
     "PrisonNo": "",
     "Address": '',
+    "Name": '',
     "PrisonerCNIC": "",
     "ImageUrl": "",
     "ContactNo": "",
@@ -142,7 +143,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
 
   @override
   Widget build(BuildContext context) {
-    final ids = ModalRoute.of(context)?.settings.arguments;
+    final ids = ModalRoute.of(context)?.settings.arguments as Map;
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Prisoners'),
@@ -198,6 +199,26 @@ class _AddJailRecordState extends State<AddJailRecord> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Contact Number',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Priosoner Name.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["Name"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
                         child: SelectFormField(
                           labelText: 'Select Crime Type',
                           type: SelectFormFieldType.dropdown,
@@ -205,18 +226,6 @@ class _AddJailRecordState extends State<AddJailRecord> {
                           items: CrimeType,
                           onSaved: (value) {
                             savedata["CrimeType"] = value!;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SelectFormField(
-                          labelText: 'Allocate Prison',
-                          type: SelectFormFieldType.dropdown,
-                          initialValue: 'Empty', // or can be dialog
-                          items: status,
-                          onSaved: (value) {
-                            savedata["Status"] = value!;
                           },
                         ),
                       ),

@@ -2,26 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddJailCell.dart';
 import 'package:policesfs/Constants.dart';
-import 'ViewJailCells.dart';
+import 'package:policesfs/ViewJailCells.dart';
+import 'package:policesfs/prisonerwidget.dart';
 import 'dart:convert';
+import 'AddJailRecord.dart';
 
-class JailRecords extends StatefulWidget {
-  static final routeName = 'JailRecord';
+class ViewPrisoner extends StatefulWidget {
+  static final routeName = 'ViewPrisoner';
 
   @override
-  State<JailRecords> createState() => _JailRecordsState();
+  _ViewPrisonerState createState() => _ViewPrisonerState();
 }
 
-class _JailRecordsState extends State<JailRecords> {
-  final stream =
-      FirebaseFirestore.instance.collection('CellRecord').snapshots();
+class _ViewPrisonerState extends State<ViewPrisoner> {
+  var _expanded = false;
   var name = "";
   @override
   Widget build(BuildContext context) {
+    final ids = ModalRoute.of(context)?.settings.arguments;
+    final stream = FirebaseFirestore.instance
+        .collection('JailRecord')
+        .where("Prisonerdoc", isEqualTo: ids)
+        .snapshots();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: FittedBox(child: Text('Jail Record')),
+        title: FittedBox(child: Text('Prisoner Record')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +53,7 @@ class _JailRecordsState extends State<JailRecords> {
                     decoration: InputDecoration(
                       fillColor: Colors.blueAccent[50],
                       filled: true,
-                      labelText: 'Search by Prison ID',
+                      labelText: 'Search by Name',
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue)),
                       labelStyle:
@@ -74,16 +80,17 @@ class _JailRecordsState extends State<JailRecords> {
                         : ListView.builder(
                             itemCount: snp.data!.docs.length,
                             itemBuilder: (ctx, i) => Container(
-                                child: name != ""
-                                    ? (snp.data!.docs[i].data()
-                                                as Map)["PrisonerNo"]
-                                            .toString()
-                                            .toLowerCase()
-                                            .contains(
-                                                name.toString().toLowerCase())
-                                        ? ViewJailCellsRecord(snp.data!.docs[i])
-                                        : Container()
-                                    : ViewJailCellsRecord(snp.data!.docs[i])));
+                              child: name != ""
+                                  ? (snp.data!.docs[i].data() as Map)["Name"]
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(
+                                              name.toString().toLowerCase())
+                                      ? ViewPrisonerRecord(snp.data!.docs[i])
+                                      : Container()
+                                  : ViewPrisonerRecord(snp.data!.docs[i]),
+                            ),
+                          );
                   }
                   return Center(
                     child: CircularProgressIndicator(
@@ -97,23 +104,6 @@ class _JailRecordsState extends State<JailRecords> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: json.decode(Constants.prefs.getString('userinfo')
-                      as String)['Role'] ==
-                  "Operator" ||
-              json.decode(Constants.prefs.getString('userinfo') as String)[
-                      'Role'] ==
-                  "Police Inspector"
-          ? FloatingActionButton(
-              child: Icon(
-                Icons.add_circle_outline_sharp,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(AddJailCellRecord.routename);
-              },
-              backgroundColor: Colors.red,
-            )
-          : null,
     );
   }
 }

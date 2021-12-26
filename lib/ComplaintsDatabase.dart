@@ -119,8 +119,8 @@ class DutiesDatabase {
   static Future<void> addJailCellRecord(Cell) async {
     try {
       Random random = new Random();
-      int randomNumber = random.nextInt(1000) + 100;
-      int randoms = random.nextInt(10);
+      int randomNumber = random.nextInt(100) + 5;
+      int randoms = random.nextInt(100);
       String no = randoms.toString() +
           DateTime.now().microsecond.toString() +
           randomNumber.toString();
@@ -128,6 +128,7 @@ class DutiesDatabase {
       await _JailCellsRecord.add({
         "PrisonerNo": Cell["PrisonerNo"],
         "TotalCapacity": Cell["TotalCapacity"],
+        "left": Cell["TotalCapacity"],
         "Record Id": no,
         "Date added": Cell["Date"],
         "Division": json.decode(
@@ -141,7 +142,7 @@ class DutiesDatabase {
     }
   }
 
-  static Future<void> addJailRecord(Complaints, image) async {
+  static Future<void> addJailRecord(Complaints, image, ids, id) async {
     try {
       Random random = new Random();
       int randomNumber = random.nextInt(1000) + 100;
@@ -152,8 +153,10 @@ class DutiesDatabase {
       print(Complaints["TotalPrisoners"]);
       await _JailsRecord.add({
         "ContactNo": Complaints["ContactNo"],
+        "Name": Complaints["Name"],
         "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
-        "PrisonNo": Complaints["PrisonNo"],
+        "PrisonNo": ids,
+        "Prisonerdoc": id,
         "Address": Complaints["Address"],
         "Description": Complaints["Description"],
         "PrisonerCNIC": Complaints["PrisonerCNIC"],

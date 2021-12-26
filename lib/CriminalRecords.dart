@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/AddCriminalRecord.dart';
-import 'package:policesfs/completeEmergency.dart';
+import 'package:policesfs/CriminalRecordView.dart';
 import 'dart:convert';
 
 class ComplaintEmergency extends StatefulWidget {

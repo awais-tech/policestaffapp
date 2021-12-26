@@ -4,12 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
-import 'package:policesfs/ComplaintEmergency.dart';
+import 'package:policesfs/CriminalRecords.dart';
 import 'package:policesfs/ComplaintReport.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/ComplaintsFeedback.dart';
 import 'package:policesfs/Complaintsapprove.dart';
 import 'package:policesfs/Complaintspamcheck.dart';
+import 'package:policesfs/ComplaintspecficTabar.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Dashboard.dart';
 import 'package:policesfs/DetailsSPam.dart';
@@ -19,15 +20,20 @@ import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/AddJailRecord.dart';
 import 'package:policesfs/OperatorDashborad.dart';
+import 'package:policesfs/Pcomplete.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/AddCriminalRecord.dart';
+import 'package:policesfs/Pworking.dart';
 import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/Spamchecker.dart';
+import 'package:policesfs/Stafflist.dart';
 import 'package:policesfs/Userdetail.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
 import 'package:policesfs/ViewDutiesRequest.dart';
+import 'package:policesfs/ViewPrisoner.dart';
+import 'package:policesfs/specficdutytabbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddJailCell.dart';
 import 'AssignComplaints.dart';
@@ -138,23 +144,19 @@ class _MyAppState extends State<MyApp> {
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
         AddJailRecord.routename: (ctx) => AddJailRecord(),
         AddJailCellRecord.routename: (ctx) => AddJailCellRecord(),
-
-        //ViewJailRecord.routeName: (ctx) => ViewJailRecord(''),
         DutyReport.routename: (ctx) => DutyReport(),
         ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
         Feedbacks.routename: (ctx) => Feedbacks(),
         RequestComplaint.routeName: (ctx) => RequestComplaint(),
         FeedbacksC.routename: (ctx) => FeedbacksC(),
         ComplaintReport.routename: (ctx) => ComplaintReport(),
-        UserDetail.routename: (ctx) => UserDetail()
-
-        // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
-        // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),
-        // ComplaintTrack.routeName: (ctx) => ComplaintTrack(),
-        // Chat.routeName: (ctx) => Chat(),
-        // Addcomplaint.routeName: (ctx) => Addcomplaint(),
-        // ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
-        // AboutUs.routeName: (ctx) => AboutUs(),
+        UserDetail.routename: (ctx) => UserDetail(),
+        StaffList.routeName: (ctx) => StaffList(),
+        Pworking.routeName: (ctx) => Pworking(""),
+        Pcomplete.routeName: (ctx) => Pcomplete(""),
+        SpecficTababar.routeName: (ctx) => SpecficTababar(),
+        specficduty.routeName: (ctx) => specficduty(),
+        ViewPrisoner.routeName: (ctx) => ViewPrisoner()
       },
     );
   }

@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:policesfs/ComplaintEmergency.dart';
+import 'package:policesfs/CriminalRecords.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/OperatorDashborad.dart';
+import 'package:policesfs/Stafflist.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,6 +98,9 @@ class Drawner extends StatelessWidget {
                             } else if (navigators[index] == "Jail Record") {
                               Navigator.of(context)
                                   .pushNamed(JailRecords.routeName);
+                            } else if (navigators[index] == "Staff List") {
+                              Navigator.of(context)
+                                  .pushNamed(StaffList.routeName);
                             }
                           },
                           leading: Icon(

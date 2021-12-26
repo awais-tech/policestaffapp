@@ -17,6 +17,10 @@ class Staffdashboard extends StatelessWidget {
     "Home",
     "Crime Record",
     "Jail Record",
+    json.decode(Constants.prefs.getString('userinfo') as String)['Role'] ==
+            "Police Inspector"
+        ? "Staff List"
+        : ""
   ];
   @override
   Widget build(BuildContext context) {

@@ -53,7 +53,7 @@ class UserDetail extends StatelessWidget {
                                   child: Text("No Data is here"),
                                 );
                               } else if (snp.hasData || snp.data != null) {
-                                var datas = snp.data.hashCode();
+                                var datas = snp.data.data();
 
                                 return Card(
                                     elevation: 40,

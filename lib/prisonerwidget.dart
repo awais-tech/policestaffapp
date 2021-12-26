@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:policesfs/ViewPrisoner.dart';
 import 'AddJailRecord.dart';
 
-class ViewJailCellsRecord extends StatefulWidget {
+class ViewPrisonerRecord extends StatefulWidget {
   final comp;
-  static final routeName = 'ViewJailCellsRecord';
+  static final routeName = 'ViewPrisonerRecord';
 
-  ViewJailCellsRecord(this.comp);
+  ViewPrisonerRecord(this.comp);
 
   @override
-  _ViewJailCellsRecordState createState() => _ViewJailCellsRecordState();
+  _ViewPrisonerRecordState createState() => _ViewPrisonerRecordState();
 }
 
-class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
+class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
   var _expanded = false;
 
   @override
