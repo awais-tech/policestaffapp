@@ -5,6 +5,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AssignComplaints.dart';
+import 'package:policesfs/Userdetail.dart';
 
 // ignore: camel_case_types
 class detailsofSpam extends StatelessWidget {
@@ -158,11 +159,10 @@ class detailsofSpam extends StatelessWidget {
               height: 10,
             ),
             Container(
-              height: 140,
               width: double.infinity,
               color: Colors.blue[900],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -247,6 +247,25 @@ class detailsofSpam extends StatelessWidget {
                                   TextStyle(fontSize: 16))),
                         )
                       : Container(),
+                  ElevatedButton(
+                    child: FittedBox(
+                      child: Text('User Detail',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16)),
+                    ),
+                    onPressed: () async {
+                      Navigator.of(context).pushNamed(UserDetail.routename,
+                          arguments: datas['Userid']);
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                        textStyle:
+                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
+                  )
                 ],
               ),
             ),

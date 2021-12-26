@@ -23,6 +23,7 @@ import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/AddCriminalRecord.dart';
 import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/Spamchecker.dart';
+import 'package:policesfs/Userdetail.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
@@ -142,6 +143,7 @@ class _MyAppState extends State<MyApp> {
         RequestComplaint.routeName: (ctx) => RequestComplaint(),
         FeedbacksC.routename: (ctx) => FeedbacksC(),
         ComplaintReport.routename: (ctx) => ComplaintReport(),
+        UserDetail.routename: (ctx) => UserDetail()
 
         // Complainantdashboard.routeName: (ctx) => Complainantdashboard(),
         // ComplaintHistory.routeName: (ctx) => ComplaintHistory(),
