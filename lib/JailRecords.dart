@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:policesfs/AssignComplaints.dart';
+import 'package:policesfs/AddJailCell.dart';
 import 'package:policesfs/Constants.dart';
-import 'package:policesfs/AddJailRecord.dart';
-import 'package:policesfs/AddCriminalRecord.dart';
-import 'package:policesfs/completeEmergency.dart';
-import 'ViewJailRecords.dart';
+import 'ViewJailCells.dart';
 import 'dart:convert';
 
 class JailRecords extends StatefulWidget {
@@ -18,49 +14,15 @@ class JailRecords extends StatefulWidget {
 
 class _JailRecordsState extends State<JailRecords> {
   final stream =
-      FirebaseFirestore.instance.collection('JailRecord').snapshots();
+      FirebaseFirestore.instance.collection('CellRecord').snapshots();
   var name = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: FittedBox(child: Text('Jail Records')),
+        title: FittedBox(child: Text('Jail Record')),
       ),
-
-      // body: StreamBuilder<List<ComplaintsModel>>(
-      //   stream: complaints.allcomplaints,
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasError) {
-      //       print(snapshot);
-      //       return Center(
-      //         child: Text("No Data is here"),
-      //       );
-      //     } else {
-      //       final com = snapshot.data;
-      //       return com!.isEmpty
-      //           ? Center(
-      //               child: Padding(
-      //                 padding: const EdgeInsets.all(8.0),
-      //                 child: FittedBox(
-      //                   fit: BoxFit.contain,
-      //                   child: Text(
-      //                     'Welcome! Pending Complaints will be shown here',
-      //                     textAlign: TextAlign.center,
-      //                   ),
-      //                 ),
-      //               ),
-      //             )
-      //           : ListView.builder(
-      //               itemCount: snapshot.data!.length,
-      //               itemBuilder: (ctx, i) =>
-      //                   (snapshot.data![i].status == 'pending'
-      //                       ? PendingCompalints(snapshot.data![i])
-      //                       : Container()),
-      //             );
-      //     }
-      //   },
-      // ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -85,7 +47,7 @@ class _JailRecordsState extends State<JailRecords> {
                     decoration: InputDecoration(
                       fillColor: Colors.blueAccent[50],
                       filled: true,
-                      labelText: 'Search by Crime Type',
+                      labelText: 'Search by Prison ID',
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue)),
                       labelStyle:
@@ -114,14 +76,14 @@ class _JailRecordsState extends State<JailRecords> {
                             itemBuilder: (ctx, i) => Container(
                                 child: name != ""
                                     ? (snp.data!.docs[i].data()
-                                                as Map)["CrimeType"]
+                                                as Map)["PrisonNo"]
                                             .toString()
                                             .toLowerCase()
                                             .contains(
                                                 name.toString().toLowerCase())
-                                        ? ViewJailRecord(snp.data!.docs[i])
+                                        ? ViewJailCellsRecord(snp.data!.docs[i])
                                         : Container()
-                                    : ViewJailRecord(snp.data!.docs[i])));
+                                    : ViewJailCellsRecord(snp.data!.docs[i])));
                   }
                   return Center(
                     child: CircularProgressIndicator(
@@ -135,9 +97,7 @@ class _JailRecordsState extends State<JailRecords> {
           ),
         ],
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-
       floatingActionButton: json.decode(
                   Constants.prefs.getString('userinfo') as String)['Role'] ==
               "Operator"
@@ -146,7 +106,7 @@ class _JailRecordsState extends State<JailRecords> {
                 Icons.add_circle_outline_sharp,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(AddJailRecord.routename);
+                Navigator.of(context).pushNamed(AddJailCellRecord.routename);
               },
               backgroundColor: Colors.red,
             )

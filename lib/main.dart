@@ -29,6 +29,7 @@ import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
 import 'package:policesfs/ViewDutiesRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'AddJailCell.dart';
 import 'AssignComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
 import 'ViewJailRecords.dart';
@@ -136,7 +137,9 @@ class _MyAppState extends State<MyApp> {
         ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
         AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
         AddJailRecord.routename: (ctx) => AddJailRecord(),
-        ViewJailRecord.routeName: (ctx) => ViewJailRecord(''),
+        AddJailCellRecord.routename: (ctx) => AddJailCellRecord(),
+
+        //ViewJailRecord.routeName: (ctx) => ViewJailRecord(''),
         DutyReport.routename: (ctx) => DutyReport(),
         ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
         Feedbacks.routename: (ctx) => Feedbacks(),
