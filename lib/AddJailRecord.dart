@@ -168,7 +168,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please enter Title.';
+                              return 'Please enter CNIC.';
                             }
                             return null;
                           },
@@ -188,7 +188,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please enter Title.';
+                              return 'Please enter Contactno.';
                             }
                             return null;
                           },
@@ -201,14 +201,14 @@ class _AddJailRecordState extends State<AddJailRecord> {
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'Contact Number',
+                            labelText: 'Prisoner Name',
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please enter Priosoner Name.';
+                              return 'Please enter Prisoner Name.';
                             }
                             return null;
                           },

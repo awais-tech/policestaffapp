@@ -183,13 +183,13 @@ class DutiesDatabase {
           randomNumber.toString();
       print(Complaints["Title"]);
       await _mainCrime.add({
-        "status": Complaints["Status"],
         "PoliceOfficerid": FirebaseAuth.instance.currentUser!.uid,
         "Person Name": Complaints["Name"],
         "Description": Complaints["Description"],
         "Title": Complaints["Title"],
         "ImageUrl": image,
         "Record Id": no,
+        "status": "In Jail",
         "Date added": Complaints["Date"],
         "CrimeType": Complaints["CrimeType"],
         "IdentificationMark": Complaints["IdentificationMark"],
