@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
+import 'package:policesfs/Chat/OperatorChat.dart';
+import 'package:policesfs/Chat/chat.dart';
+import 'package:policesfs/ChatUser.dart';
 import 'package:policesfs/CriminalRecords.dart';
 import 'package:policesfs/ComplaintReport.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
@@ -156,7 +159,10 @@ class _MyAppState extends State<MyApp> {
         Pcomplete.routeName: (ctx) => Pcomplete(""),
         SpecficTababar.routeName: (ctx) => SpecficTababar(),
         specficduty.routeName: (ctx) => specficduty(),
-        ViewPrisoner.routeName: (ctx) => ViewPrisoner()
+        ViewPrisoner.routeName: (ctx) => ViewPrisoner(),
+        Chat.routeName: (ctx) => Chat(),
+        ChatUser.routeName: (ctx) => ChatUser(),
+        OperatorChat.routeName: (ctx) => OperatorChat()
       },
     );
   }

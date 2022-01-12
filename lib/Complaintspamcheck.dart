@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:policesfs/Chat/OperatorChat.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
@@ -163,21 +165,47 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                                               height: 5,
                                             ),
                                             Center(
-                                              child: TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                            detailsofSpam
-                                                                .routename,
-                                                            arguments: {
-                                                          "data": (snp
-                                                              .data!.docs[i]
-                                                              .data()),
-                                                          "id": snp
-                                                              .data!.docs[i].id
-                                                        });
-                                                  },
-                                                  child: Text('View Details')),
+                                              child: Column(
+                                                children: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                detailsofSpam
+                                                                    .routename,
+                                                                arguments: {
+                                                              "data": (snp
+                                                                  .data!.docs[i]
+                                                                  .data()),
+                                                              "id": snp.data!
+                                                                  .docs[i].id
+                                                            });
+                                                      },
+                                                      child:
+                                                          Text('View Details')),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pushNamed(
+                                                                OperatorChat
+                                                                    .routeName,
+                                                                arguments: {
+                                                              "receiverid": (snp
+                                                                          .data!
+                                                                          .docs[i]
+                                                                          .data()
+                                                                      as Map)[
+                                                                  "Userid"],
+                                                              "senderid":
+                                                                  FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser!
+                                                                      .uid,
+                                                            });
+                                                      },
+                                                      child: Text('Chat')),
+                                                ],
+                                              ),
                                             )
                                           ],
                                         ),

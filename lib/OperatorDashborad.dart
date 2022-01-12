@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
+import 'package:policesfs/ChatUser.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/ViewComplaints.dart';
@@ -15,16 +17,10 @@ class Operatordashboard extends StatelessWidget {
   static List<IconData> navigatorsIcon = [
     Icons.home,
     Icons.cancel_outlined,
-    Icons.record_voice_over,
     Icons.list
   ];
 
-  final List<String> navigators = [
-    "Home",
-    "Crime Record",
-    "Jail Record",
-    "Staff List"
-  ];
+  final List<String> navigators = ["Home", "Crime Record", "Staff List"];
   @override
   Widget build(BuildContext context) {
     print(Constants.prefs.getBool("login"));
@@ -116,17 +112,20 @@ class Operatordashboard extends StatelessWidget {
                             elevation: 8,
                             color: Colors.pink[200],
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(JailRecords.routeName);
+                              },
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Icon(
-                                    Icons.checklist_rtl_rounded,
+                                    Icons.recent_actors_rounded,
                                     size: 75,
                                   ),
                                   Text(
-                                    "Attendance",
+                                    "Jail Record",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
@@ -154,7 +153,10 @@ class Operatordashboard extends StatelessWidget {
                             elevation: 8,
                             color: Colors.cyanAccent[400],
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(ChatUser.routeName);
+                              },
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -164,7 +166,7 @@ class Operatordashboard extends StatelessWidget {
                                     size: 75,
                                   ),
                                   Text(
-                                    "Chat with Police Staff",
+                                    "Chat with User",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),

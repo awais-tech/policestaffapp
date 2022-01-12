@@ -34,7 +34,6 @@ dependencies:
   dropdown_plus: ^0.0.9
   image_picker: ^0.8.4+2
   url_launcher: ^6.0.12
-  location: ^4.2.0
   select_form_field: "^2.2.0"
   date_time_picker: "^2.1.0"
   flutter_custom_clippers: ^2.0.0

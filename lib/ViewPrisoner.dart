@@ -4,6 +4,7 @@ import 'package:policesfs/AddJailCell.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/ViewJailCells.dart';
 import 'package:policesfs/prisonerwidget.dart';
+import 'package:select_form_field/select_form_field.dart';
 import 'dart:convert';
 import 'AddJailRecord.dart';
 
@@ -16,14 +17,68 @@ class ViewPrisoner extends StatefulWidget {
 
 class _ViewPrisonerState extends State<ViewPrisoner> {
   var _expanded = false;
+  var search = "Name";
   var name = "";
+  var status = 'All';
+  final List<Map<String, dynamic>> Allstatus = [
+    {
+      'value': 'All',
+      'label': 'All',
+    },
+    {
+      'value': 'In Jail',
+      'label': 'In Jail',
+    },
+    {
+      'value': 'Ran away from Jail',
+      'label': 'Ran away from Jail',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
+    },
+    {
+      'value': 'Complete its punishment',
+      'label': 'Complete its punishment',
+    },
+    {
+      'value': 'No punishment Release',
+      'label': 'No punishment Release',
+    },
+    {
+      'value': 'Shift to other Cell',
+      'label': 'Shift to other Cell',
+    },
+  ];
+
+  final List<Map<String, dynamic>> searching = [
+    {
+      'value': 'Name',
+      'label': 'Name',
+    },
+    {
+      'value': 'PrisonerCNIC',
+      'label': 'PrisonerCNIC',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     final ids = ModalRoute.of(context)?.settings.arguments;
-    final stream = FirebaseFirestore.instance
-        .collection('JailRecord')
-        .where("Prisonerdoc", isEqualTo: ids)
-        .snapshots();
+
+    var stream;
+    print(status);
+    if (status != "All") {
+      stream = FirebaseFirestore.instance
+          .collection('JailRecord')
+          .where("Prisonerdoc", isEqualTo: ids)
+          .where("status", isEqualTo: status)
+          .snapshots();
+    } else {
+      stream = FirebaseFirestore.instance
+          .collection('JailRecord')
+          .where("Prisonerdoc", isEqualTo: ids)
+          .snapshots();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
@@ -33,6 +88,36 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Container(
+              padding: const EdgeInsets.all(3.0),
+              child: SelectFormField(
+                onChanged: (val) => setState(() {
+                  status = val;
+                }),
+                labelText: 'Filter By Status',
+                type: SelectFormFieldType.dropdown,
+                initialValue: "All", // or can be dialog
+                items: Allstatus,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Container(
+              padding: const EdgeInsets.all(3.0),
+              child: SelectFormField(
+                onChanged: (val) => setState(() {
+                  search = val;
+                }),
+                labelText: 'Search by',
+                type: SelectFormFieldType.dropdown,
+                initialValue: "Name", // or can be dialog
+                items: searching,
+              ),
+            ),
+          ),
           Row(
             children: [
               Container(
@@ -53,7 +138,7 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
                     decoration: InputDecoration(
                       fillColor: Colors.blueAccent[50],
                       filled: true,
-                      labelText: 'Search by Name',
+                      labelText: 'Search by ${search}',
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue)),
                       labelStyle:
@@ -80,16 +165,15 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
                         : ListView.builder(
                             itemCount: snp.data!.docs.length,
                             itemBuilder: (ctx, i) => Container(
-                              child: name != ""
-                                  ? (snp.data!.docs[i].data() as Map)["Name"]
-                                          .toString()
-                                          .toLowerCase()
-                                          .contains(
-                                              name.toString().toLowerCase())
-                                      ? ViewPrisonerRecord(snp.data!.docs[i])
-                                      : Container()
-                                  : ViewPrisonerRecord(snp.data!.docs[i]),
-                            ),
+                                child: name != ""
+                                    ? (snp.data!.docs[i].data() as Map)[search]
+                                            .toString()
+                                            .toLowerCase()
+                                            .contains(
+                                                name.toString().toLowerCase())
+                                        ? ViewPrisonerRecord(snp.data!.docs[i])
+                                        : Container()
+                                    : ViewPrisonerRecord(snp.data!.docs[i])),
                           );
                   }
                   return Center(

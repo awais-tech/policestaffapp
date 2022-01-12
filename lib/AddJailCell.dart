@@ -31,8 +31,8 @@ class _AddJailCellRecordState extends State<AddJailCellRecord> {
                   'Record Added',
                 ),
                 title: Text(
-                  'Warning',
-                  style: TextStyle(color: Colors.red),
+                  'Perfect',
+                  style: TextStyle(color: Colors.green),
                 ),
                 actions: [
                   TextButton(

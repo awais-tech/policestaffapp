@@ -38,11 +38,13 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
                     icon: Icon(Icons.add),
                     onPressed: () {
                       var id = widget.comp.data()['PrisonerNo'];
+                      var capacity = widget.comp.data()['left'];
                       var ids = widget.comp.id;
                       Navigator.of(context)
                           .pushNamed(AddJailRecord.routename, arguments: {
                         "ids": id,
                         "idd": ids,
+                        "capacity": capacity,
                       });
                     },
                   ),

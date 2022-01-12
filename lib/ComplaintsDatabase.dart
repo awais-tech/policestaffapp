@@ -142,7 +142,8 @@ class DutiesDatabase {
     }
   }
 
-  static Future<void> addJailRecord(Complaints, image, ids, id) async {
+  static Future<void> addJailRecord(
+      Complaints, image, ids, id, capacity) async {
     try {
       Random random = new Random();
       int randomNumber = random.nextInt(1000) + 100;
@@ -162,11 +163,18 @@ class DutiesDatabase {
         "PrisonerCNIC": Complaints["PrisonerCNIC"],
         "ImageUrl": image,
         "Record Id": no,
+        "Days": Complaints["years"],
+        "status": "In Jail",
+        "update": "false",
+        "updateA": "false",
         "Date added": Complaints["Date"],
         "CrimeType": Complaints["CrimeType"],
         "Policestationid": json.decode(
             Constants.prefs.getString('userinfo') as String)['StationId'],
       });
+      var left = double.parse(capacity) - 1;
+      print(left);
+      await _JailCellsRecord.doc(id).update({"left": left.toString()});
     } catch (e) {
       print(e);
       throw (e);

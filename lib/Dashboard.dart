@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
+import 'package:policesfs/Chat/chat.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
@@ -16,7 +18,6 @@ class Staffdashboard extends StatelessWidget {
   final List<String> navigators = [
     "Home",
     "Crime Record",
-    "Jail Record",
     json.decode(Constants.prefs.getString('userinfo') as String)['Role'] ==
             "Police Inspector"
         ? "Staff List"
@@ -202,17 +203,20 @@ class Staffdashboard extends StatelessWidget {
                             elevation: 8,
                             color: Colors.pink[200],
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(JailRecords.routeName);
+                              },
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   Icon(
-                                    Icons.checklist_rtl_rounded,
+                                    Icons.recent_actors_rounded,
                                     size: 75,
                                   ),
                                   Text(
-                                    "Attendance",
+                                    "Jail Record",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
@@ -240,7 +244,9 @@ class Staffdashboard extends StatelessWidget {
                             elevation: 8,
                             color: Colors.cyanAccent[400],
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).pushNamed(Chat.routeName);
+                              },
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -250,7 +256,7 @@ class Staffdashboard extends StatelessWidget {
                                     size: 75,
                                   ),
                                   Text(
-                                    "Chat with\nOperator",
+                                    "Chat with\nAdmin",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/ViewPrisoner.dart';
 import 'package:select_form_field/select_form_field.dart';
@@ -17,7 +18,11 @@ class ViewPrisonerRecord extends StatefulWidget {
 
 class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
   var _expanded = false;
+  var savedate;
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final CollectionReference _JailCellsRecord =
+      FirebaseFirestore.instance.collection("CellRecord");
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,18 +38,37 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
               ),
             ),
             trailing: Container(
-              width: 100,
+              width: 180,
               child: Row(
                 children: [
                   IconButton(
                     icon: Icon(Icons.track_changes),
                     onPressed: () {
-                      var id = widget.comp.data()['PrisonerNo'];
-                      var ids = widget.comp.id;
-                      Navigator.of(context)
-                          .pushNamed(AddJailRecord.routename, arguments: {
-                        "ids": id,
-                        "idd": ids,
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return editstatus(
+                                context, widget.comp.data(), widget.comp.id);
+                          });
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete_forever),
+                    onPressed: () async {
+                      await _firestore
+                          .collection("JailRecord")
+                          .doc(widget.comp.id)
+                          .delete();
+                      await _JailCellsRecord.doc(
+                              widget.comp.data()["Prisonerdoc"])
+                          .get()
+                          .then((val) async {
+                        await _JailCellsRecord.doc(
+                                widget.comp.data()["Prisonerdoc"])
+                            .update({
+                          "left": double.parse((val.data() as Map)["left"]) + 1
+                        });
                       });
                     },
                   ),
@@ -103,35 +127,6 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
 }
 
 Widget editEmail(BuildContext context, data, id) {
-  final List<Map<String, dynamic>> status = [
-    {
-      'value': 'On Bail',
-      'label': 'On Bail',
-    },
-    {
-      'value': 'in Jail',
-      'label': 'in Jail',
-    },
-    {
-      'value': 'Ran away from Jail',
-      'label': 'Ran away from Jail',
-    },
-    {
-      'value': 'Other',
-      'label': 'Other',
-    },
-    {
-      'value': 'Complete its punishment',
-      'label': 'Complete its punishment',
-    },
-    {
-      'value': 'No punishment Release',
-      'label': 'No punishment Release',
-    },
-  ];
-  var statuschan = TextEditingController();
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
@@ -140,12 +135,28 @@ Widget editEmail(BuildContext context, data, id) {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('Report'),
+                Text("Original Status :In Jail"),
+                Text("Current status :${data['status']}"),
+                data['update'] == "true"
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            'Current Status Date ${DateFormat('dd/MM/yyyy hh:mm').format(data['updatestatusdate'].toDate())}',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      )
+                    : Container(),
+                data['updates'] == "true"
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            'Record Updated on ${DateFormat('dd/MM/yyyy hh:mm').format(data['updateddate'].toDate())}',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      )
+                    : Container(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      DateFormat('dd/MM/yyyy hh:mm')
-                          .format(data['Date added'].toDate()),
+                      'Prisoner started penalty Date${DateFormat('dd/MM/yyyy hh:mm').format(data['Date added'].toDate())}',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
                 Padding(
@@ -163,6 +174,12 @@ Widget editEmail(BuildContext context, data, id) {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text('Record Id:' + (data['Record Id']),
+                      softWrap: true,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Number of Days in Jail:' + (data['Days']),
                       softWrap: true,
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
@@ -195,6 +212,109 @@ Widget editEmail(BuildContext context, data, id) {
                     ),
                   ),
                 ),
+              ])));
+}
+
+Widget editstatus(BuildContext context, data, id) {
+  final List<Map<String, dynamic>> status = [
+    {
+      'value': 'In Jail',
+      'label': 'In Jail',
+    },
+    {
+      'value': 'Ran away from Jail',
+      'label': 'Ran away from Jail',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
+    },
+    {
+      'value': 'Complete its punishment',
+      'label': 'Complete its punishment',
+    },
+    {
+      'value': 'No punishment Release',
+      'label': 'No punishment Release',
+    },
+    {
+      'value': 'Death in Jail',
+      'label': 'Death in Jail',
+    },
+    {
+      'value': 'Shift to other Cell',
+      'label': 'Shift to other Cell',
+    },
+  ];
+  var statuschan = TextEditingController();
+  var years = TextEditingController();
+  var changecrime = TextEditingController();
+  var savedate;
+  final CollectionReference _JailCellsRecord =
+      FirebaseFirestore.instance.collection("CellRecord");
+  final List<Map<String, dynamic>> CrimeType = [
+    {
+      'value': 'Theif',
+      'label': 'Theif',
+    },
+    {
+      'value': 'Kidnapping',
+      'label': 'Kidnapping',
+    },
+    {
+      'value': 'Terroist',
+      'label': 'Terroist',
+    },
+    {
+      'value': 'Street Crime',
+      'label': 'Street Crime',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
+    },
+  ];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    initialValue: data["Days"].toString(),
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                      labelText: 'Change no of Days',
+                      border: OutlineInputBorder(),
+                    ),
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    onChanged: (val) {
+                      years.text = val;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter Days.';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SelectFormField(
+                    labelText: 'Change Crime Type',
+                    type: SelectFormFieldType.dropdown,
+                    initialValue: data["CrimeType"], // or can be dialog
+                    items: CrimeType,
+                    onChanged: (value) => changecrime.text = value,
+                  ),
+                ),
                 Padding(
                     padding: MediaQuery.of(context).viewInsets,
                     child: Container(
@@ -213,7 +333,8 @@ Widget editEmail(BuildContext context, data, id) {
                                     onChanged: (val) => statuschan.text = val,
                                     labelText: 'Change status',
                                     type: SelectFormFieldType.dropdown,
-                                    initialValue: "in Jail", // or can be dialog
+                                    initialValue:
+                                        data["status"], // or can be dialog
                                     items: status,
                                   ),
                                 ),
@@ -255,10 +376,70 @@ Widget editEmail(BuildContext context, data, id) {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () async {
-                                      await _firestore
-                                          .collection("JailRecord")
-                                          .doc(id)
-                                          .update({"status": statuschan.text});
+                                      if (statuschan.text != "") {
+                                        await _firestore
+                                            .collection("JailRecord")
+                                            .doc(id)
+                                            .update({
+                                          "status": statuschan.text == ""
+                                              ? data["status"]
+                                              : statuschan.text,
+                                          "updatestatusdate": DateTime.now(),
+                                          "Days": years.text == ""
+                                              ? data["Days"]
+                                              : years.text,
+                                          "CrimeType": changecrime.text == ""
+                                              ? data["CrimeType"]
+                                              : changecrime.text,
+                                          "update": "true"
+                                        });
+                                        if (statuschan.text == "In Jail") {
+                                          await _JailCellsRecord.doc(
+                                                  data["Prisonerdoc"])
+                                              .get()
+                                              .then((val) async {
+                                            await _JailCellsRecord.doc(
+                                                    data["Prisonerdoc"])
+                                                .update({
+                                              "left": (double.parse((val.data()
+                                                          as Map)["left"]) +
+                                                      1)
+                                                  .toString()
+                                            });
+                                          });
+                                        } else {
+                                          await _JailCellsRecord.doc(
+                                                  data["Prisonerdoc"])
+                                              .get()
+                                              .then((val) async {
+                                            await _JailCellsRecord.doc(
+                                                    data["Prisonerdoc"])
+                                                .update({
+                                              "left": (double.parse((val.data()
+                                                          as Map)["left"]) -
+                                                      1)
+                                                  .toString(),
+                                            });
+                                          });
+                                        }
+                                      } else {
+                                        await _firestore
+                                            .collection("JailRecord")
+                                            .doc(id)
+                                            .update({
+                                          "status": statuschan.text == ""
+                                              ? data["status"]
+                                              : statuschan.text,
+                                          "updateddate": DateTime.now(),
+                                          "Days": years.text == ""
+                                              ? data["Days"]
+                                              : years.text,
+                                          "CrimeType": changecrime.text == ""
+                                              ? data["CrimeType"]
+                                              : changecrime.text,
+                                          "updates": "true"
+                                        });
+                                      }
                                       return await showDialog(
                                         context: context,
                                         builder: (ctx) => AlertDialog(

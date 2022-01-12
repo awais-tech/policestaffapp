@@ -35,7 +35,8 @@ class _AddJailRecordState extends State<AddJailRecord> {
 
       // await ref.putFile(File(_userImageFile!.path));
       // final download = await ref.getDownloadURL();
-      await DutiesDatabase.addJailRecord(savedata, "as", id["ids"], id["idd"]);
+      await DutiesDatabase.addJailRecord(
+          savedata, "as", id["ids"], id["idd"], id["capacity"]);
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -244,6 +245,28 @@ class _AddJailRecordState extends State<AddJailRecord> {
                       //   maintainState: true,
                       //   visible: false,
                       // ),
+
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          maxLines: 2,
+                          decoration: InputDecoration(
+                            labelText: 'no of Days',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter Days.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["years"] = value!;
+                          },
+                        ),
+                      ),
                       Container(
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(

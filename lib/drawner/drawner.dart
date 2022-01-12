@@ -95,9 +95,6 @@ class Drawner extends StatelessWidget {
                             } else if (navigators[index] == "Crime Record") {
                               Navigator.of(context)
                                   .pushNamed(ComplaintEmergency.routeName);
-                            } else if (navigators[index] == "Jail Record") {
-                              Navigator.of(context)
-                                  .pushNamed(JailRecords.routeName);
                             } else if (navigators[index] == "Staff List") {
                               Navigator.of(context)
                                   .pushNamed(StaffList.routeName);
