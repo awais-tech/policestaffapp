@@ -45,7 +45,8 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                         itemCount: snp.data!.docs.length,
                         itemBuilder: (context, i) {
                           return Card(
-                            elevation: 10,
+                            margin: EdgeInsets.all(20),
+                            elevation: 20,
                             child: Container(
                               padding:
                                   EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -162,10 +163,12 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                                               ),
                                             ),
                                             SizedBox(
-                                              height: 5,
+                                              height: 20,
                                             ),
                                             Center(
-                                              child: Column(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
                                                   TextButton(
                                                       onPressed: () {

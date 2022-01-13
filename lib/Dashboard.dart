@@ -291,12 +291,12 @@ class Staffdashboard extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Icon(
-                                      Icons.auto_graph,
+                                      Icons.add_moderator,
                                       size: 75,
                                       color: Colors.white,
                                     ),
                                     Text(
-                                      "Progess\nStatistics",
+                                      "Add Manual\nComplaints",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,

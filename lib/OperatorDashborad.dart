@@ -16,7 +16,7 @@ class Operatordashboard extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   static List<IconData> navigatorsIcon = [
     Icons.home,
-    Icons.cancel_outlined,
+    Icons.list_alt_rounded,
     Icons.list
   ];
 

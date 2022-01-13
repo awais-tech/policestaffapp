@@ -34,13 +34,12 @@ class Drawner extends StatelessWidget {
                         .decode(snapshot.data.getString('userinfo') as String);
                     children = <Widget>[
                       Container(
-                        color: Colors.blue,
                         child: UserAccountsDrawerHeader(
-                          decoration: BoxDecoration(color: Colors.blue),
+                          decoration: BoxDecoration(color: Colors.blue[900]),
                           accountEmail: Text(c['Email']),
                           accountName: Text(c['Name']),
                           currentAccountPicture: CircleAvatar(
-                            backgroundColor: Colors.red,
+                            backgroundColor: Colors.blueGrey,
                           ),
                         ),
                       )
@@ -80,35 +79,42 @@ class Drawner extends StatelessWidget {
                 },
               ),
               Container(
-                color: Colors.blue[900],
                 height: constraints.minHeight * 0.7,
-                child: ListView.builder(
+                child: ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: navigators.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        margin: EdgeInsets.only(top: 3),
-                        child: ListTile(
-                          onTap: () async {
-                            if (navigators[index] == "Home") {
-                              Navigator.of(context).pushReplacementNamed('/');
-                            } else if (navigators[index] == "Crime Record") {
-                              Navigator.of(context)
-                                  .pushNamed(ComplaintEmergency.routeName);
-                            } else if (navigators[index] == "Staff List") {
-                              Navigator.of(context)
-                                  .pushNamed(StaffList.routeName);
-                            }
-                          },
-                          leading: Icon(
-                            Operatordashboard.navigatorsIcon[index],
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            "${navigators[index]}",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          ),
-                        ),
+                          margin: EdgeInsets.only(top: 3),
+                          child: ListTile(
+                            onTap: () async {
+                              if (navigators[index] == "Home") {
+                                Navigator.of(context).pushReplacementNamed('/');
+                              } else if (navigators[index] == "Crime Record") {
+                                Navigator.of(context)
+                                    .pushNamed(ComplaintEmergency.routeName);
+                              } else if (navigators[index] == "Staff List") {
+                                Navigator.of(context)
+                                    .pushNamed(StaffList.routeName);
+                              }
+                            },
+                            leading: Icon(
+                              Operatordashboard.navigatorsIcon[index],
+                              color: Colors.blue[900],
+                            ),
+                            title: Text(
+                              "${navigators[index]}",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ));
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        thickness: 0.5,
+                        color: Colors.black,
                       );
                     }),
               ),

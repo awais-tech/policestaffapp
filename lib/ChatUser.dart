@@ -31,7 +31,7 @@ class _ChatUserState extends State<ChatUser> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: FittedBox(child: Text('Chat With users')),
+        title: FittedBox(child: Text('Chat With Users')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -251,7 +251,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                         child: TextFormField(
                           maxLines: 2,
                           decoration: InputDecoration(
-                            labelText: 'no of Days',
+                            labelText: 'Number of Days',
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,

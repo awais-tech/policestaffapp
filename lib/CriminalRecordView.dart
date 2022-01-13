@@ -30,44 +30,30 @@ class _ComplEmergencyState extends State<ComplEmergency> {
         stream: stream,
         builder: (context, snapshot) {
           return Card(
-            elevation: 6,
-            margin: EdgeInsets.all(6),
+            elevation: 10,
+            margin: EdgeInsets.all(10),
             child: Column(
               children: <Widget>[
+                SizedBox(height: 10),
                 ListTile(
-                  leading: CircleAvatar(
-                    radius: 40,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        ' ${widget.comp.data()['Title']} ',
-                        softWrap: true,
-                      ),
-                    ),
+                  title: Text(
+                    'Record ID: ${widget.comp.data()['Record Id']}',
+                    softWrap: true,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
-                  title: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      'Record Id: ${widget.comp.data()['Record Id']}',
-                      softWrap: true,
-                    ),
+                  subtitle: Text(
+                    'Crime Reason: ${widget.comp.data()['CrimeType']}',
+                    softWrap: true,
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11),
+                    textAlign: TextAlign.start,
                   ),
                   trailing: Container(
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.details_outlined),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) {
-                                  return editEmail(context, "View Detail",
-                                      widget.comp, snapshot.data!);
-                                });
-                          },
-                        ),
                         json.decode(Constants.prefs.getString('userinfo')
                                     as String)['Role'] ==
                                 "Operator"
@@ -88,50 +74,22 @@ class _ComplEmergencyState extends State<ComplEmergency> {
                               )
                             : Container(),
                         IconButton(
-                          icon: Icon(_expanded
-                              ? Icons.expand_less
-                              : Icons.expand_more),
+                          icon: Icon(Icons.info_outline_rounded),
+                          color: Colors.red[900],
                           onPressed: () {
-                            setState(() {
-                              _expanded = !_expanded;
-                            });
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return editEmail(context, "View Detail",
+                                      widget.comp, snapshot.data!);
+                                });
                           },
                         ),
                       ],
                     ),
                   ),
                 ),
-                if (_expanded)
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          width: 70,
-                          child: Text(
-                            'Description: ${widget.comp.data()['Description']}',
-                            softWrap: true,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Text(
-                              'CrimeReason :${widget.comp.data()['CrimeType']}',
-                              softWrap: true,
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
               ],
             ),
           );
@@ -209,12 +167,12 @@ Widget changestatus(BuildContext context, String title, compl, station) {
       'label': 'Ran away from Jail',
     },
     {
-      'value': 'Other',
-      'label': 'Other',
-    },
-    {
       'value': 'Complete its punishment',
       'label': 'Complete its punishment',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
     },
   ];
   var statuschan = TextEditingController();
@@ -228,14 +186,14 @@ Widget changestatus(BuildContext context, String title, compl, station) {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text('Change status'),
+          Text('Change Status'),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               padding: const EdgeInsets.all(15.0),
               child: SelectFormField(
                 onChanged: (val) => statuschan.text = val,
-                labelText: 'Change status',
+                labelText: 'Change Status',
                 type: SelectFormFieldType.dropdown,
                 initialValue: compl.data()["status"], // or can be dialog
                 items: status,
@@ -256,7 +214,7 @@ Widget changestatus(BuildContext context, String title, compl, station) {
                               MediaQuery.of(context).padding.top) *
                       0.35),
                   backgroundColor: MaterialStateProperty.all(
-                      Color(0xff8d43d6)), // <-- Button color
+                      Colors.red[900]), // <-- Button color
                   overlayColor:
                       MaterialStateProperty.resolveWith<Color?>((states) {
                     if (states.contains(MaterialState.pressed))

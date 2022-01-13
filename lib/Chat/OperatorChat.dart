@@ -17,7 +17,7 @@ class OperatorChat extends StatelessWidget {
           padding: EdgeInsets.all(20),
           width: double.infinity,
           child: Text(
-            'OperatorChat',
+            'Operator Chat',
             textAlign: TextAlign.center,
           ),
         ),

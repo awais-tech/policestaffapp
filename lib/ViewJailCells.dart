@@ -19,8 +19,8 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 6,
-      margin: EdgeInsets.all(6),
+      elevation: 10,
+      margin: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
           ListTile(
@@ -28,6 +28,8 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
               child: Text(
                 'Allocated Prison Cell ID: ${widget.comp.data()['PrisonerNo']}',
                 softWrap: true,
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
             trailing: Container(
@@ -35,6 +37,7 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
               child: Row(
                 children: [
                   IconButton(
+                    color: Colors.red[900],
                     icon: Icon(Icons.add),
                     onPressed: () {
                       var id = widget.comp.data()['PrisonerNo'];
@@ -50,6 +53,7 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
                   ),
                   IconButton(
                     icon: Icon(Icons.search),
+                    color: Colors.red[900],
                     onPressed: () {
                       var ids = widget.comp.id;
                       Navigator.of(context)
@@ -61,7 +65,7 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+            padding: EdgeInsets.only(bottom: 20, left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -69,9 +73,10 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Total Capacity:${widget.comp.data()['TotalCapacity']}',
+                      'Total Capacity: ${widget.comp.data()['TotalCapacity']}',
                       softWrap: true,
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
                     ),
@@ -81,9 +86,10 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Capacity Left:${widget.comp.data()["left"]}',
+                      'Capacity Left: ${widget.comp.data()["left"]}',
                       softWrap: true,
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
                     ),

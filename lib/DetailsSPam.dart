@@ -38,121 +38,124 @@ class detailsofSpam extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           // ignore: duplicate_ignore
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    image: NetworkImage("${datas['imageUrl']}"),
-                    height: 100,
-                    width: double.infinity,
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                      image: NetworkImage("${datas['imageUrl']}"),
+                      height: 100,
+                      width: double.infinity,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  datas['Title'],
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                // ignore: prefer_const_constructors
-                Text(
-                  'Category:${datas['Catagory']}',
-                  style: TextStyle(
-                      color: Colors.red[900],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-                Text("sub category:${datas['sub category']}",
+                  SizedBox(height: 10),
+                  Text(
+                    datas['Title'],
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  // ignore: prefer_const_constructors
+                  Text(
+                    'Category:${datas['Catagory']}',
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: Colors.red[900],
                         fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("sent by:${datas['sent by']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("Type: ${datas['Type']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Text("Status: ${datas['status']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                datas['ComplaintNo'] != "Not assign"
-                    ? Text("Complaint No: ${datas['ComplaintNo']}",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18))
-                    : Container(),
-                Text(
-                    "Date Created:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Divider(
-                  color: Colors.black,
-                ),
-                datas["OfficerName"] != "No"
-                    ? Text("Assigned To:  ${datas["OfficerName"]}",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18))
-                    : Container(),
-                Text("Complainer Phone no:  ${datas["phone"]}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                datas["Date Assigned"] != null
-                    ? Text(
-                        "Start Working On:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18))
-                    : Container(),
+                        fontSize: 20),
+                  ),
+                  Text("sub category:${datas['sub category']}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  Text("sent by:${datas['sent by']}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  Text("Type: ${datas['Type']}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  Text("Status: ${datas['status']}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  datas['ComplaintNo'] != "Not assign"
+                      ? Text("Complaint No: ${datas['ComplaintNo']}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18))
+                      : Container(),
+                  Text(
+                      "Date Created:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  Divider(
+                    color: Colors.black,
+                  ),
+                  datas["OfficerName"] != "No"
+                      ? Text("Assigned To:  ${datas["OfficerName"]}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18))
+                      : Container(),
+                  Text("Complainer Phone no:  ${datas["phone"]}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  datas["Date Assigned"] != null
+                      ? Text(
+                          "Start Working On:  ${DateTime.parse(datas["date"].toDate().toString()).toString()}",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18))
+                      : Container(),
 
-                datas["Description for officer"] != null
-                    ? Text(
-                        "Description for officer:  ${datas["DescriptionForOfficer"]}",
-                        softWrap: true,
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18))
-                    : Container(),
+                  datas["Description for officer"] != null
+                      ? Text(
+                          "Description for officer:  ${datas["DescriptionForOfficer"]}",
+                          softWrap: true,
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18))
+                      : Container(),
 
-                Divider(
-                  color: Colors.black,
-                ),
-                Text("ReportNo:  ${datas["ReportNo"] ?? "No Report No"}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-                Divider(
-                  color: Colors.black,
-                ),
-                Text("Description",
-                    softWrap: true,
-                    style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22)),
-                Text("${datas['Description']}",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18)),
-              ],
+                  Divider(
+                    color: Colors.black,
+                  ),
+                  Text("ReportNo:  ${datas["ReportNo"] ?? "No Report No"}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                  Divider(
+                    color: Colors.black,
+                  ),
+                  Text("Description",
+                      softWrap: true,
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22)),
+                  Text("${datas['Description']}",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)),
+                ],
+              ),
             ),
             // ignore: prefer_const_constructors
             SizedBox(
@@ -162,8 +165,9 @@ class detailsofSpam extends StatelessWidget {
               width: double.infinity,
               color: Colors.blue[900],
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(height: 20),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image(
@@ -172,34 +176,104 @@ class detailsofSpam extends StatelessWidget {
                       width: 100,
                     ),
                   ),
-                  SizedBox(width: 15),
-                  datas['status'] == "disapprove"
-                      ? ElevatedButton(
-                          child: Text("Approve",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
-                          onPressed: () async {
-                            await _firestore
-                                .collection("Complaints")
-                                .doc(ids)
-                                .update({"status": "pending"});
-                            return showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text('Update'),
-                                content: Text("APPROVED"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Yes'),
-                                    onPressed: () {
-                                      Navigator.of(ctx).pop(false);
-                                    },
-                                  ),
-                                ],
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      datas['status'] == "disapprove"
+                          ? Container(
+                              margin: EdgeInsets.all(10),
+                              child: ElevatedButton(
+                                child: Text("Approve",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                onPressed: () async {
+                                  await _firestore
+                                      .collection("Complaints")
+                                      .doc(ids)
+                                      .update({"status": "pending"});
+                                  return showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      title: Text('Update'),
+                                      content: Text("APPROVED"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Yes'),
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop(false);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.black),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(10)),
+                                    textStyle: MaterialStateProperty.all(
+                                        TextStyle(fontSize: 16))),
                               ),
-                            );
+                            )
+                          : Container(),
+                      datas['status'] == "disapprove"
+                          ? Container(
+                              margin: EdgeInsets.all(10),
+                              child: ElevatedButton(
+                                child: Text("Delete",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                onPressed: () async {
+                                  await _firestore
+                                      .collection("Complaints")
+                                      .doc(ids)
+                                      .delete();
+                                  return showDialog(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      title: Text('Update'),
+                                      content: Text("Complaints is deleted"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Yes'),
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop(false);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.black),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(10)),
+                                    textStyle: MaterialStateProperty.all(
+                                        TextStyle(fontSize: 16))),
+                              ),
+                            )
+                          : Container(),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          child: FittedBox(
+                            child: Text('User Detail',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16)),
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pushNamed(
+                                UserDetail.routename,
+                                arguments: datas['Userid']);
                           },
                           style: ButtonStyle(
                               backgroundColor:
@@ -208,64 +282,10 @@ class detailsofSpam extends StatelessWidget {
                                   MaterialStateProperty.all(EdgeInsets.all(10)),
                               textStyle: MaterialStateProperty.all(
                                   TextStyle(fontSize: 16))),
-                        )
-                      : Container(),
-                  datas['status'] == "disapprove"
-                      ? ElevatedButton(
-                          child: Text("Delete",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
-                          onPressed: () async {
-                            await _firestore
-                                .collection("Complaints")
-                                .doc(ids)
-                                .delete();
-                            return showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text('Update'),
-                                content: Text("Complaints is deleted"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Yes'),
-                                    onPressed: () {
-                                      Navigator.of(ctx).pop(false);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.black),
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(10)),
-                              textStyle: MaterialStateProperty.all(
-                                  TextStyle(fontSize: 16))),
-                        )
-                      : Container(),
-                  ElevatedButton(
-                    child: FittedBox(
-                      child: Text('User Detail',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16)),
-                    ),
-                    onPressed: () async {
-                      Navigator.of(context).pushNamed(UserDetail.routename,
-                          arguments: datas['Userid']);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-                        textStyle:
-                            MaterialStateProperty.all(TextStyle(fontSize: 16))),
-                  )
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

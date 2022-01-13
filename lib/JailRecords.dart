@@ -97,7 +97,7 @@ class _JailRecordsState extends State<JailRecords> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: json.decode(Constants.prefs.getString('userinfo')
                       as String)['Role'] ==
                   "Operator" ||
@@ -111,7 +111,7 @@ class _JailRecordsState extends State<JailRecords> {
               onPressed: () {
                 Navigator.of(context).pushNamed(AddJailCellRecord.routename);
               },
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.red[900],
             )
           : null,
     );

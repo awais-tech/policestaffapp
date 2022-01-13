@@ -137,12 +137,12 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
       'label': 'Terroist',
     },
     {
-      'value': 'Other',
-      'label': 'Other',
-    },
-    {
       'value': 'Street Crime',
       'label': 'Street Crime',
+    },
+    {
+      'value': 'Other',
+      'label': 'Other',
     },
   ];
   XFile? _userImageFile;
@@ -346,7 +346,8 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
                                 onPressed: () {
                                   AssignDuties(ids);
                                 },
-                                child: Text("Add Criminal Record"))),
+                                child:
+                                    Text("Add Criminal Record", maxLines: 1))),
                       )
                     ],
                   ),

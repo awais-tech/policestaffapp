@@ -134,7 +134,7 @@ class _ComplaintEmergencyState extends State<ComplaintEmergency> {
         ],
       ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
       floatingActionButton: json.decode(
                   Constants.prefs.getString('userinfo') as String)['Role'] ==
@@ -146,7 +146,7 @@ class _ComplaintEmergencyState extends State<ComplaintEmergency> {
               onPressed: () {
                 Navigator.of(context).pushNamed(AddCrimeRecord.routename);
               },
-              backgroundColor: Colors.red,
+              backgroundColor: Colors.red[900],
             )
           : null,
     );

@@ -49,7 +49,7 @@ class _OperatornewState extends State<Operatornew> {
           Expanded(
             child: TextField(
               controller: _controller,
-              decoration: InputDecoration(labelText: 'Send a message...'),
+              decoration: InputDecoration(labelText: 'Enter Message Here...'),
               onChanged: (value) {
                 setState(() {
                   _enteredMessage = value;
@@ -58,7 +58,7 @@ class _OperatornewState extends State<Operatornew> {
             ),
           ),
           IconButton(
-            color: Theme.of(context).primaryColor,
+            color: Colors.red[900],
             icon: Icon(
               Icons.send,
             ),
