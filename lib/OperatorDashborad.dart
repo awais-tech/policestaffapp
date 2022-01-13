@@ -17,7 +17,8 @@ class Operatordashboard extends StatelessWidget {
   static List<IconData> navigatorsIcon = [
     Icons.home,
     Icons.list_alt_rounded,
-    Icons.list
+    Icons.list,
+    Icons.report
   ];
 
   final List<String> navigators = ["Home", "Crime Record", "Staff List"];

@@ -41,8 +41,8 @@ class _AssignComplaintsScreenState extends State<AssignComplaintsScreen> {
                   'Complaints has been assigned ?',
                 ),
                 title: Text(
-                  'Warning',
-                  style: TextStyle(color: Colors.red),
+                  'Perfect',
+                  style: TextStyle(color: Colors.green),
                 ),
                 actions: [
                   TextButton(

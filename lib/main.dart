@@ -19,6 +19,7 @@ import 'package:policesfs/Dashboard.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/DutyReport.dart';
 import 'package:policesfs/Dutyfeedback.dart';
+import 'package:policesfs/Emergency.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/AddJailRecord.dart';
@@ -162,7 +163,8 @@ class _MyAppState extends State<MyApp> {
         ViewPrisoner.routeName: (ctx) => ViewPrisoner(),
         Chat.routeName: (ctx) => Chat(),
         ChatUser.routeName: (ctx) => ChatUser(),
-        OperatorChat.routeName: (ctx) => OperatorChat()
+        OperatorChat.routeName: (ctx) => OperatorChat(),
+        Emergency.routeName: (ctx) => Emergency()
       },
     );
   }

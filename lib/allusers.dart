@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/Chat/OperatorChat.dart';
 import 'package:policesfs/ViewPrisoner.dart';
@@ -32,13 +33,17 @@ class _ViewallusersState extends State<Viewallusers> {
         trailing: IconButton(
           icon: Icon(Icons.chat),
           onPressed: () {
-            var senderid = widget.comp["senderid"];
-            var receiverid = widget.comp["receiverid"];
+            var senderid = widget.comp["receiverid"] !=
+                    FirebaseAuth.instance.currentUser!.uid
+                ? widget.comp["receiverid"]
+                : widget.comp["senderid"];
+
+            // var receiverid = widget.comp["receiverid"];
 
             var ids = widget.comp.id;
             Navigator.of(context).pushNamed(OperatorChat.routeName, arguments: {
-              "senderid": senderid,
-              "receiverid": receiverid,
+              "senderid": FirebaseAuth.instance.currentUser!.uid,
+              "receiverid": senderid,
             });
           },
         ),

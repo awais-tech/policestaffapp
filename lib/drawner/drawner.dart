@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:policesfs/CriminalRecords.dart';
+import 'package:policesfs/Emergency.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Stafflist.dart';
@@ -96,6 +97,9 @@ class Drawner extends StatelessWidget {
                               } else if (navigators[index] == "Staff List") {
                                 Navigator.of(context)
                                     .pushNamed(StaffList.routeName);
+                              } else if (navigators[index] == "Emergency") {
+                                Navigator.of(context)
+                                    .pushNamed(Emergency.routeName);
                               }
                             },
                             leading: Icon(

@@ -31,7 +31,7 @@ class _ChatUserState extends State<ChatUser> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: FittedBox(child: Text('Chat With Users')),
+        title: FittedBox(child: Text('Chat With users')),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,20 +80,41 @@ class _ChatUserState extends State<ChatUser> {
                     );
                   } else if (snp.hasData || snp.data != null) {
                     var i = -1;
-                    var all = snp.data?.docs
-                        .where((elements) {
-                          i = i + 1;
-                          print(i);
+                    var all = snp.data?.docs.where((elements) {
+                      i = i + 1;
+                      print(i);
 
-                          return snp.data?.docs.indexWhere((ele) =>
+                      return snp.data?.docs.indexWhere((ele) =>
+                              ((elements.data() as Map)["receiverid"] ==
+                                      (ele.data() as Map)["receiverid"] &&
                                   (elements.data() as Map)["senderid"] ==
-                                  (ele.data() as Map)["senderid"]) ==
-                              i;
-                        })
-                        .where((element) =>
-                            (element.data() as Map)["senderid"] !=
-                            FirebaseAuth.instance.currentUser!.uid)
-                        .toList();
+                                      (elements.data() as Map)["senderid"]) ||
+                              ((elements.data() as Map)["receiverid"] ==
+                                      (ele.data() as Map)["senderid"] &&
+                                  (elements.data() as Map)["senderid"] ==
+                                      (elements.data()
+                                          as Map)["receiverid"])) ==
+                          i;
+                    }).where((elements) {
+                      return (elements.data() as Map)["senderid"] ==
+                              FirebaseAuth.instance.currentUser!.uid ||
+                          (elements.data() as Map)["receiverid"] ==
+                              FirebaseAuth.instance.currentUser!.uid;
+                    }).toList();
+                    //     .where((elements) {
+                    //   return (elements.data() as Map)["senderid"] ==
+                    //           FirebaseAuth.instance.currentUser!.uid ||
+                    //       (elements.data() as Map)["receiverid"] ==
+                    //           FirebaseAuth.instance.currentUser!.uid;
+                    // }).where((elements) {
+                    //   i = i + 1;
+                    //   print(i);
+
+                    //   return snp.data?.docs.indexWhere((ele) =>
+                    //           (elements.data() as Map)["receiverid"] ==
+                    //           (ele.data() as Map)["receiverid"]) ==
+                    //       i;
+                    // }).toList();
 
                     return all!.length < 1
                         ? Center(child: Container(child: Text("No Record")))
@@ -101,7 +122,7 @@ class _ChatUserState extends State<ChatUser> {
                             itemCount: all.length,
                             itemBuilder: (ctx, i) => Container(
                                 child: name != ""
-                                    ? all[0]["SenderName"]
+                                    ? all[i]["SenderName"]
                                             .toString()
                                             .toLowerCase()
                                             .contains(

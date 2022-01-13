@@ -22,6 +22,7 @@ class Staffdashboard extends StatelessWidget {
             "Police Inspector"
         ? "Staff List"
         : ""
+            "Emergency"
   ];
   @override
   Widget build(BuildContext context) {

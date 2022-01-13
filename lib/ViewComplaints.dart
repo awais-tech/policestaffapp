@@ -28,8 +28,6 @@ class _ViewComplaintsState extends State<ViewComplaints> {
 
   @override
   Widget build(BuildContext context) {
-    print(json
-        .decode(Constants.prefs.getString('userinfo') as String)['Division']);
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
             stream: stream,
@@ -151,17 +149,17 @@ class _ViewComplaintsState extends State<ViewComplaints> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              (snp.data!.docs[i].data()
-                                                  as Map)["Priority"],
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            // SizedBox(
+                                            //   height: 5,
+                                            // ),
+                                            // Text(
+                                            //   (snp.data!.docs[i].data()
+                                            //       as Map)["Priority"],
+                                            //   style: TextStyle(
+                                            //     fontSize: 12,
+                                            //     // fontWeight: FontWeight.bold,
+                                            //   ),
+                                            // ),
                                             SizedBox(
                                               height: 5,
                                             ),
