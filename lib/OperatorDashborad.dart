@@ -21,7 +21,12 @@ class Operatordashboard extends StatelessWidget {
     Icons.report
   ];
 
-  final List<String> navigators = ["Home", "Crime Record", "Staff List"];
+  final List<String> navigators = [
+    "Home",
+    "Crime Record",
+    "Staff List",
+    "Emergency"
+  ];
   @override
   Widget build(BuildContext context) {
     print(Constants.prefs.getBool("login"));

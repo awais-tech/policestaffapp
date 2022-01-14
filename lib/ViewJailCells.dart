@@ -36,21 +36,28 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
               width: 100,
               child: Row(
                 children: [
-                  IconButton(
-                    color: Colors.red[900],
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      var id = widget.comp.data()['PrisonerNo'];
-                      var capacity = widget.comp.data()['left'];
-                      var ids = widget.comp.id;
-                      Navigator.of(context)
-                          .pushNamed(AddJailRecord.routename, arguments: {
-                        "ids": id,
-                        "idd": ids,
-                        "capacity": capacity,
-                      });
-                    },
-                  ),
+                  widget.comp.data()['left'] == "0"
+                      ? IconButton(
+                          color: Colors.red[900],
+                          tooltip: "Capacity is Full",
+                          icon: Icon(Icons.add),
+                          onPressed: null,
+                        )
+                      : IconButton(
+                          color: Colors.red[900],
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            var id = widget.comp.data()['PrisonerNo'];
+                            var capacity = widget.comp.data()['left'];
+                            var ids = widget.comp.id;
+                            Navigator.of(context)
+                                .pushNamed(AddJailRecord.routename, arguments: {
+                              "ids": id,
+                              "idd": ids,
+                              "capacity": capacity,
+                            });
+                          },
+                        ),
                   IconButton(
                     icon: Icon(Icons.search),
                     color: Colors.red[900],

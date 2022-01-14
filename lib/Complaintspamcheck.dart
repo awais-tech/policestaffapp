@@ -145,26 +145,6 @@ class _ComplaintspampendingState extends State<Complaintspampending> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text(
-                                              "Priority",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "high",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
                                             Center(
                                               child: Row(
                                                 mainAxisAlignment:

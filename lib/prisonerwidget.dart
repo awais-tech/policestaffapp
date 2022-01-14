@@ -67,7 +67,9 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                         await _JailCellsRecord.doc(
                                 widget.comp.data()["Prisonerdoc"])
                             .update({
-                          "left": double.parse((val.data() as Map)["left"]) + 1
+                          "left":
+                              (double.parse((val.data() as Map)["left"]) + 1)
+                                  .toString()
                         });
                       });
                     },

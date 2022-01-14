@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:policesfs/CriminalRecords.dart';
-import 'package:policesfs/Emergency.dart';
+// import 'package:policesfs/Emergency.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/OperatorDashborad.dart';
+import 'package:policesfs/Screens/ManageAllEmergency/AllEmergency.dart';
+import 'package:policesfs/Screens/ManageAllEmergency/emergencytab.dart';
 import 'package:policesfs/Stafflist.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,7 +101,11 @@ class Drawner extends StatelessWidget {
                                     .pushNamed(StaffList.routeName);
                               } else if (navigators[index] == "Emergency") {
                                 Navigator.of(context)
-                                    .pushNamed(Emergency.routeName);
+                                    .pushNamed(OperatorEmergency.routeName);
+                              } else if (navigators[index] ==
+                                  "Emergency Complaint") {
+                                Navigator.of(context)
+                                    .pushNamed(AllEmergency.routeName);
                               }
                             },
                             leading: Icon(

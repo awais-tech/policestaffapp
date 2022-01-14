@@ -16,10 +16,11 @@ import 'package:policesfs/Complaintspamcheck.dart';
 import 'package:policesfs/ComplaintspecficTabar.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/Dashboard.dart';
+import 'package:policesfs/DeatilEmgergency.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/DutyReport.dart';
 import 'package:policesfs/Dutyfeedback.dart';
-import 'package:policesfs/Emergency.dart';
+
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/Login.dart';
 import 'package:policesfs/AddJailRecord.dart';
@@ -29,6 +30,8 @@ import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/AddCriminalRecord.dart';
 import 'package:policesfs/Pworking.dart';
 import 'package:policesfs/RequestComplaint.dart';
+import 'package:policesfs/Screens/ManageAllEmergency/AllEmergency.dart';
+import 'package:policesfs/Screens/ManageAllEmergency/emergencytab.dart';
 import 'package:policesfs/Spamchecker.dart';
 import 'package:policesfs/Stafflist.dart';
 import 'package:policesfs/Userdetail.dart';
@@ -164,7 +167,9 @@ class _MyAppState extends State<MyApp> {
         Chat.routeName: (ctx) => Chat(),
         ChatUser.routeName: (ctx) => ChatUser(),
         OperatorChat.routeName: (ctx) => OperatorChat(),
-        Emergency.routeName: (ctx) => Emergency()
+        OperatorEmergency.routeName: (ctx) => OperatorEmergency(),
+        DetailEmergency.routename: (ctx) => DetailEmergency(),
+        AllEmergency.routeName: (ctx) => AllEmergency()
       },
     );
   }

@@ -3,25 +3,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/Chat/OperatorChat.dart';
 import 'package:policesfs/Constants.dart';
+import 'package:policesfs/DeatilEmgergency.dart';
 import 'package:policesfs/DetailsSPam.dart';
 import 'package:policesfs/ViewDetailsOfDuties.dart';
 import 'package:policesfs/ViewDetailsofComplaints.dart';
+import 'package:policesfs/maps.dart';
 import 'package:provider/provider.dart';
-import 'PoliceSFSDutiesProvider.dart';
+
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ComplaintsApprove extends StatefulWidget {
-  static final routeName = 'ComplaintsApprove';
+class AllEmergency extends StatefulWidget {
+  static final routeName = 'AllEmergency';
 
   @override
-  _ComplaintsApproveState createState() => _ComplaintsApproveState();
+  _AllEmergencyState createState() => _AllEmergencyState();
 }
 
-class _ComplaintsApproveState extends State<ComplaintsApprove> {
+class _AllEmergencyState extends State<AllEmergency> {
   final stream = FirebaseFirestore.instance
-      .collection('Complaints')
-      .where('status', isNotEqualTo: 'disapprove')
+      .collection('Emergency')
+      .where('status', isNotEqualTo: 'pending')
       .where('PoliceStationName',
           isEqualTo: json.decode(
               Constants.prefs.getString('userinfo') as String)['Division'])
@@ -29,12 +31,20 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          title: Text(
+            'View Emergency Complaints',
+            textAlign: TextAlign.center,
+          ),
+        ),
         body: StreamBuilder<QuerySnapshot>(
             stream: stream,
             builder: (context, snp) {
               if (snp.hasError) {
+                print(snp.error);
                 return Center(
-                  child: Text("No Data is here"),
+                  child: Text("No Complaint is here"),
                 );
               } else if (snp.hasData || snp.data != null) {
                 return snp.data!.docs.length < 1
@@ -118,38 +128,30 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
                                                 // fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                            TextButton.icon(
+                                              onPressed: () {
+                                                String map = (snp.data!.docs[i]
+                                                            .data() as Map)[
+                                                        "Complaint Location"]
+                                                    as String;
+                                                var maps = map.split(",");
+                                                var lat = double.parse(maps[0]);
+                                                ;
+                                                var long =
+                                                    double.parse(maps[1]);
+                                                ;
+
+                                                MapUtils.openMap(lat, long);
+                                              },
+                                              icon: Icon(Icons.map_outlined),
+                                              label:
+                                                  Text("Complainer Location"),
+                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text(
-                                              "Status",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
                                             SizedBox(
                                               height: 5,
-                                            ),
-                                            Text(
-                                              "Priority",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              "high",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
                                             ),
                                             Center(
                                               child: Row(
@@ -158,7 +160,7 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pushNamed(
-                                                                detailsofSpam
+                                                                DetailEmergency
                                                                     .routename,
                                                                 arguments: {
                                                               "data": (snp
@@ -170,27 +172,33 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
                                                       },
                                                       child:
                                                           Text('View Details')),
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                                OperatorChat
-                                                                    .routeName,
-                                                                arguments: {
-                                                              "receiverid": (snp
+                                                  (snp.data!.docs[i].data()
+                                                                  as Map)[
+                                                              "Userid"] !=
+                                                          "without login"
+                                                      ? TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(
+                                                                    OperatorChat
+                                                                        .routeName,
+                                                                    arguments: {
+                                                                  "receiverid": (snp
                                                                           .data!
                                                                           .docs[i]
                                                                           .data()
-                                                                      as Map)[
-                                                                  "Userid"],
-                                                              "senderid":
-                                                                  FirebaseAuth
-                                                                      .instance
-                                                                      .currentUser!
-                                                                      .uid,
-                                                            });
-                                                      },
-                                                      child: Text('Chat')),
+                                                                      as Map)["Userid"],
+                                                                  "senderid":
+                                                                      FirebaseAuth
+                                                                          .instance
+                                                                          .currentUser!
+                                                                          .uid,
+                                                                });
+                                                          },
+                                                          child: Text('Chat'))
+                                                      : Text(
+                                                          "User not have an account"),
                                                 ],
                                               ),
                                             )
