@@ -72,6 +72,10 @@ class _LoginScreenState extends State<LoginScreen> {
         'Role': dat['Role'],
         'StationId': dat['PoliceStationID'],
         'Email': dat['Email'],
+        'Address': dat['Address'],
+        'Phoneno': dat['PhoneNo'],
+        'CNIC': dat['CNIC'],
+        "Password": _authData["password"]
       });
 
       await prefs.setString('userinfo', userinfo);

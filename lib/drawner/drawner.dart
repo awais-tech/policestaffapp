@@ -5,6 +5,7 @@ import 'package:policesfs/CriminalRecords.dart';
 // import 'package:policesfs/Emergency.dart';
 import 'package:policesfs/JailRecords.dart';
 import 'package:policesfs/OperatorDashborad.dart';
+import 'package:policesfs/Profile.dart';
 import 'package:policesfs/Screens/ManageAllEmergency/AllEmergency.dart';
 import 'package:policesfs/Screens/ManageAllEmergency/emergencytab.dart';
 import 'package:policesfs/Stafflist.dart';
@@ -106,6 +107,9 @@ class Drawner extends StatelessWidget {
                                   "Emergency Complaint") {
                                 Navigator.of(context)
                                     .pushNamed(AllEmergency.routeName);
+                              } else if (navigators[index] == "Profile") {
+                                Navigator.of(context)
+                                    .pushNamed(Profile.routeName);
                               }
                             },
                             leading: Icon(

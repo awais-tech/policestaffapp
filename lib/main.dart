@@ -28,6 +28,7 @@ import 'package:policesfs/OperatorDashborad.dart';
 import 'package:policesfs/Pcomplete.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/AddCriminalRecord.dart';
+import 'package:policesfs/Profile.dart';
 import 'package:policesfs/Pworking.dart';
 import 'package:policesfs/RequestComplaint.dart';
 import 'package:policesfs/Screens/ManageAllEmergency/AllEmergency.dart';
@@ -169,7 +170,8 @@ class _MyAppState extends State<MyApp> {
         OperatorChat.routeName: (ctx) => OperatorChat(),
         OperatorEmergency.routeName: (ctx) => OperatorEmergency(),
         DetailEmergency.routename: (ctx) => DetailEmergency(),
-        AllEmergency.routeName: (ctx) => AllEmergency()
+        AllEmergency.routeName: (ctx) => AllEmergency(),
+        Profile.routeName: (ctx) => Profile(),
       },
     );
   }
