@@ -404,7 +404,7 @@ Widget editstatus(BuildContext context, data, id) {
                                                     data["Prisonerdoc"])
                                                 .update({
                                               "left": (double.parse((val.data()
-                                                          as Map)["left"]) +
+                                                          as Map)["left"]) -
                                                       1)
                                                   .toString()
                                             });
@@ -418,7 +418,7 @@ Widget editstatus(BuildContext context, data, id) {
                                                     data["Prisonerdoc"])
                                                 .update({
                                               "left": (double.parse((val.data()
-                                                          as Map)["left"]) -
+                                                          as Map)["left"]) +
                                                       1)
                                                   .toString(),
                                             });

@@ -33,6 +33,8 @@ class _ComplaintsApproveState extends State<ComplaintsApprove> {
             stream: stream,
             builder: (context, snp) {
               if (snp.hasError) {
+                print(snp.error);
+                print(2);
                 return Center(
                   child: Text("No Data is here"),
                 );
