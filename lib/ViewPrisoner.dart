@@ -91,6 +91,7 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: Container(
+              margin: EdgeInsets.all(15),
               padding: const EdgeInsets.all(3.0),
               child: SelectFormField(
                 onChanged: (val) => setState(() {
@@ -106,6 +107,7 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: Container(
+              margin: EdgeInsets.all(15),
               padding: const EdgeInsets.all(3.0),
               child: SelectFormField(
                 onChanged: (val) => setState(() {
@@ -121,7 +123,7 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: 15),
                 child: Icon(Icons.search),
               ),
               SizedBox(
@@ -129,7 +131,7 @@ class _ViewPrisonerState extends State<ViewPrisoner> {
               ), //
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20, right: 10),
+                  margin: EdgeInsets.only(top: 20, bottom: 20, right: 15),
                   child: TextField(
                     keyboardType: TextInputType.text,
                     onChanged: (val) => setState(() {

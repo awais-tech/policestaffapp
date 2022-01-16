@@ -26,23 +26,25 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 6,
-      margin: EdgeInsets.all(6),
+      elevation: 10,
+      margin: EdgeInsets.all(15),
       child: Column(
         children: <Widget>[
           ListTile(
             leading: FittedBox(
               child: Text(
-                'PrisonerCNIC: ${widget.comp.data()['PrisonerCNIC']}',
+                'Prisoner CNIC: ${widget.comp.data()['PrisonerCNIC']}',
                 softWrap: true,
               ),
             ),
             trailing: Container(
               width: 180,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.track_changes),
+                    icon: Icon(Icons.edit_attributes_rounded),
+                    color: Colors.red[900],
                     onPressed: () {
                       showModalBottomSheet(
                           context: context,
@@ -54,7 +56,8 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete_forever),
+                    icon: Icon(Icons.delete),
+                    color: Colors.red[900],
                     onPressed: () async {
                       await _firestore
                           .collection("JailRecord")
@@ -75,7 +78,8 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.details_outlined),
+                    icon: Icon(Icons.info_outline_rounded),
+                    color: Colors.red[900],
                     onPressed: () {
                       showModalBottomSheet(
                           context: context,
@@ -99,7 +103,7 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Crime Type:${widget.comp.data()['CrimeType']}',
+                      'Crime Type: ${widget.comp.data()['CrimeType']}',
                       softWrap: true,
                       style: TextStyle(
                         color: Colors.grey,
@@ -111,7 +115,7 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Contact No:${widget.comp.data()["ContactNo"]}',
+                      'Contact No: ${widget.comp.data()["ContactNo"]}',
                       softWrap: true,
                       style: TextStyle(
                         color: Colors.grey,

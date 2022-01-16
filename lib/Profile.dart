@@ -348,8 +348,8 @@ class _ProfileState extends State<Profile> {
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                   child: Icon(
-                    Icons.add_call,
-                    color: Color(0xff8d43d6),
+                    Icons.house,
+                    color: Colors.blue[900],
                   ),
                 ),
                 Straightline(),
@@ -382,15 +382,15 @@ class _ProfileState extends State<Profile> {
                             MediaQuery.of(context).padding.top) *
                     0.35),
                 backgroundColor: MaterialStateProperty.all(
-                    Color(0xff8d43d6)), // <-- Button color
+                    Colors.red[900]), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))
-                    return Color(0xffB788E5); // <-- Splash color
+                    return Colors.red; // <-- Splash color
                 }),
               ),
               child: const Text(
-                "submit",
+                "Submit",
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () => {
@@ -427,7 +427,7 @@ class _ProfileState extends State<Profile> {
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                   child: Icon(
                     Icons.add_call,
-                    color: Color(0xff8d43d6),
+                    color: Colors.blue[900],
                   ),
                 ),
                 Straightline(),
@@ -460,15 +460,15 @@ class _ProfileState extends State<Profile> {
                             MediaQuery.of(context).padding.top) *
                     0.35),
                 backgroundColor: MaterialStateProperty.all(
-                    Color(0xff8d43d6)), // <-- Button color
+                    Colors.red[900]), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))
-                    return Color(0xffB788E5); // <-- Splash color
+                    return Colors.red; // <-- Splash color
                 }),
               ),
               child: const Text(
-                "submit",
+                "Submit",
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () => {
@@ -504,8 +504,8 @@ class _ProfileState extends State<Profile> {
                   padding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                   child: Icon(
-                    Icons.map_outlined,
-                    color: Color(0xff8d43d6),
+                    Icons.password_rounded,
+                    color: Colors.blue[900],
                   ),
                 ),
                 Straightline(),
@@ -539,15 +539,15 @@ class _ProfileState extends State<Profile> {
                             MediaQuery.of(context).padding.top) *
                     0.35),
                 backgroundColor: MaterialStateProperty.all(
-                    Color(0xff8d43d6)), // <-- Button color
+                    Colors.red[900]), // <-- Button color
                 overlayColor:
                     MaterialStateProperty.resolveWith<Color?>((states) {
                   if (states.contains(MaterialState.pressed))
-                    return Color(0xffB788E5); // <-- Splash color
+                    return Colors.red; // <-- Splash color
                 }),
               ),
               child: const Text(
-                "submit",
+                "Submit",
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () => {
@@ -618,7 +618,7 @@ class _ProfileState extends State<Profile> {
                 trailing: index < 4
                     ? IconButton(
                         icon: Icon(Icons.edit),
-                        color: Color(0xff8d43d6),
+                        color: Colors.red[900],
                         onPressed: () {
                           showModalBottomSheet(
                               shape: RoundedRectangleBorder(
@@ -643,7 +643,7 @@ class _ProfileState extends State<Profile> {
                               });
                         },
                       )
-                    : Icon(Icons.view_compact),
+                    : Icon(Icons.lock),
               ),
             );
           }),

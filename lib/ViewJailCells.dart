@@ -59,7 +59,7 @@ class _ViewJailCellsRecordState extends State<ViewJailCellsRecord> {
                           },
                         ),
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: Icon(Icons.list_rounded),
                     color: Colors.red[900],
                     onPressed: () {
                       var ids = widget.comp.id;
