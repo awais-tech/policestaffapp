@@ -41,7 +41,7 @@ class DutiesDatabase {
             body: json.encode({
               'email': (val.data() as Map)["Email"],
               'message':
-                  "Hi ${(val.data() as Map)["Name"]}!<br> You assigned  a Complaint to Resolve  <h1>Desscription from SHO</h1> ${Complaints["Description"]}<br> <h1>Desscription from Complainer</h1>:${Complaints["Description"]} <br> For accept duties and see further detail please open the app",
+                  "Hi ${(val.data() as Map)["Name"]}!<br> You assigned  a Complaint to Resolve  <h1>Desscription from SHO</h1> ${Complaints["Description"]}<br> For see further detail please open the app",
             }),
           );
           await collectionRef
