@@ -34,7 +34,7 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
             leading: Container(
               child: FittedBox(
                 child: Text(
-                  'Prisoner CNIC: ${widget.comp.data()['PrisonerCNIC']}',
+                  'Prisoner CNIC:\n${widget.comp.data()['PrisonerCNIC']}',
                   softWrap: true,
                 ),
               ),
@@ -105,7 +105,7 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Crime Type: ${widget.comp.data()['CrimeType']}',
+                      'Crime Type:\n${widget.comp.data()['CrimeType']}',
                       softWrap: true,
                       style: TextStyle(
                         color: Colors.grey,
@@ -117,7 +117,7 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
                   child: FittedBox(
                     fit: BoxFit.contain,
                     child: Text(
-                      'Contact No: ${widget.comp.data()["ContactNo"]}',
+                      'Contact No:\n${widget.comp.data()["ContactNo"]}',
                       softWrap: true,
                       style: TextStyle(
                         color: Colors.grey,
@@ -295,9 +295,9 @@ Widget editstatus(BuildContext context, data, id) {
                   padding: const EdgeInsets.all(15.0),
                   child: TextFormField(
                     initialValue: data["Days"].toString(),
-                    maxLines: 2,
+                    maxLines: 1,
                     decoration: InputDecoration(
-                      labelText: 'Change no of Days',
+                      labelText: 'Change Number of Days',
                       border: OutlineInputBorder(),
                     ),
                     textInputAction: TextInputAction.next,
@@ -332,7 +332,10 @@ Widget editstatus(BuildContext context, data, id) {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('Change status'),
+                              Text(
+                                'Change Status',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -367,16 +370,15 @@ Widget editstatus(BuildContext context, data, id) {
                                                           MediaQuery.of(context)
                                                               .padding
                                                               .top) *
-                                              0.35),
+                                              0.28),
                                       backgroundColor:
-                                          MaterialStateProperty.all(Color(
-                                              0xff8d43d6)), // <-- Button color
+                                          MaterialStateProperty.all(Colors
+                                              .red[900]), // <-- Button color
                                       overlayColor: MaterialStateProperty
                                           .resolveWith<Color?>((states) {
                                         if (states
                                             .contains(MaterialState.pressed))
-                                          return Color(
-                                              0xffB788E5); // <-- Splash color
+                                          return Colors.red; // <-- Splash color
                                       }),
                                     ),
                                     child: const Text(
