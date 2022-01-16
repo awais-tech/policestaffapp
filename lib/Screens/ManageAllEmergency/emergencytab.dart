@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:policesfs/Complaintsapprove.dart';
 import 'package:policesfs/Complaintspamcheck.dart';
+import 'package:policesfs/Screens/ManageAllEmergency/EmergencyApprove.dart';
 import 'package:policesfs/Screens/ManageAllEmergency/EmergencyPending.dart';
 
 import 'package:policesfs/ViewComplaintComplete.dart';
@@ -58,7 +59,7 @@ class OperatorEmergency extends StatelessWidget {
           body: TabBarView(
             children: [
               EmergencyPending(),
-              ComplaintsApprove(),
+              EmergencyApprove(),
             ],
           ),
         ),

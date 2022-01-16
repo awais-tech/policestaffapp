@@ -215,7 +215,7 @@ class _AddJailRecordState extends State<AddJailRecord> {
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter Prisoner Name.';

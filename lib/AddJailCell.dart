@@ -103,7 +103,7 @@ class _AddJailCellRecordState extends State<AddJailCellRecord> {
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please Enter Prison Cell Number.';

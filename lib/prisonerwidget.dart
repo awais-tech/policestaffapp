@@ -31,10 +31,12 @@ class _ViewPrisonerRecordState extends State<ViewPrisonerRecord> {
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: FittedBox(
-              child: Text(
-                'Prisoner CNIC: ${widget.comp.data()['PrisonerCNIC']}',
-                softWrap: true,
+            leading: Container(
+              child: FittedBox(
+                child: Text(
+                  'Prisoner CNIC: ${widget.comp.data()['PrisonerCNIC']}',
+                  softWrap: true,
+                ),
               ),
             ),
             trailing: Container(

@@ -268,7 +268,6 @@ class Complaintdetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 10),
-
                           json.decode(Constants.prefs.getString('userinfo')
                                       as String)['Role'] ==
                                   "Police Inspector"
@@ -359,28 +358,27 @@ class Complaintdetails extends StatelessWidget {
                                     )
                                   : Container()
                               : Container(),
-                             ElevatedButton(
-                                      child: FittedBox(
-                                        child: Text('User Detail',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16)),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.of(context).pushNamed(
-                                            UserDetail.routename,
-                                            arguments: datas['Userid']);
-                                      },
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.black),
-                                          padding: MaterialStateProperty.all(
-                                              EdgeInsets.all(10)),
-                                          textStyle: MaterialStateProperty.all(
-                                              TextStyle(fontSize: 16))),
-                                    )
+                          ElevatedButton(
+                            child: FittedBox(
+                              child: Text('User Detail',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                            ),
+                            onPressed: () async {
+                              Navigator.of(context).pushNamed(
+                                  UserDetail.routename,
+                                  arguments: datas['Userid']);
+                            },
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.black),
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(10)),
+                                textStyle: MaterialStateProperty.all(
+                                    TextStyle(fontSize: 16))),
+                          )
                         ],
                       ),
                     ),
