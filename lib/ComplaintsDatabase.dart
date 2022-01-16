@@ -198,6 +198,7 @@ class DutiesDatabase {
         "ImageUrl": image,
         "Record Id": no,
         "status": "In Jail",
+        "CNIC": Complaints["CNIC"],
         "Date added": Complaints["Date"],
         "CrimeType": Complaints["CrimeType"],
         "IdentificationMark": Complaints["IdentificationMark"],

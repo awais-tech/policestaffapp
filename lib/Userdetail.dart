@@ -111,6 +111,12 @@ class UserDetail extends StatelessWidget {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18)),
                                         SizedBox(height: 5),
+                                        Text("CNIC: ${datas['CNIC']}",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                        SizedBox(height: 5),
 
                                         Divider(
                                           color: Colors.black,

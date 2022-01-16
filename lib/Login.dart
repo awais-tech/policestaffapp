@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Dashboard.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,6 +16,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  var token;
+
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? _userId;
 
@@ -98,11 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
         errorMessage = 'Invalid password.';
       }
       _showErrorDialog(errorMessage);
+      setState(() {
+        _isLoading = false;
+      });
     } catch (error) {
       const errorMessage =
           'Could not authenticate you. Please try again later.';
 
       _showErrorDialog(errorMessage);
+      setState(() {
+        _isLoading = false;
+      });
     }
     setState(() {
       _isLoading = false;

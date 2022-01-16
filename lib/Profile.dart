@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
           'Address': dat['Address'],
           'Phoneno': dat['Phoneno'],
           'CNIC': value,
-          "Password": dat["password"]
+          "Password": dat["Password"]
         });
         await Constants.prefs.setString('userinfo', userinfo);
       }
@@ -74,7 +74,7 @@ class _ProfileState extends State<Profile> {
           'Address': value,
           'Phoneno': dat['Phoneno'],
           'CNIC': dat['CNIC'],
-          "Password": dat["password"]
+          "Password": dat["Password"]
         });
         await Constants.prefs.setString('userinfo', userinfo);
       }
@@ -93,7 +93,7 @@ class _ProfileState extends State<Profile> {
           'Address': dat['Address'],
           'Phoneno': value,
           'CNIC': dat["CNIC"],
-          "Password": dat["password"]
+          "Password": dat["Password"]
         });
         await Constants.prefs.setString('userinfo', userinfo);
       }

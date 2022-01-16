@@ -4,12 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:policesfs/AddDuties.dart';
+import 'package:policesfs/ManualComplaints/Manaual.dart';
+import 'package:provider/provider.dart';
 import 'package:policesfs/Chat/OperatorChat.dart';
 import 'package:policesfs/Chat/chat.dart';
 import 'package:policesfs/ChatUser.dart';
 import 'package:policesfs/CriminalRecords.dart';
 import 'package:policesfs/ComplaintReport.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
+import 'package:policesfs/ManualComplaints/utilities.dart';
 import 'package:policesfs/ComplaintsFeedback.dart';
 import 'package:policesfs/Complaintsapprove.dart';
 import 'package:policesfs/Complaintspamcheck.dart';
@@ -104,75 +107,83 @@ class _MyAppState extends State<MyApp> {
       );
     }
 
-    return MaterialApp(
-      title: 'Police SFS',
-      theme: ThemeData(
-        primaryColor: Color(0xffB788E5),
-      ),
-      home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (ctx, userSnapshot) {
-            if (userSnapshot.data != null) {
-              return json.decode(Constants.prefs.getString('userinfo')
-                          as String)['Role'] ==
-                      ""
-                  ? Center(child: CircularProgressIndicator())
-                  : json.decode(Constants.prefs.getString('userinfo')
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Utilities(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Police SFS',
+        theme: ThemeData(
+          primaryColor: Color(0xffB788E5),
+        ),
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (ctx, userSnapshot) {
+              if (userSnapshot.data != null) {
+                return json.decode(Constants.prefs.getString('userinfo')
+                            as String)['Role'] ==
+                        ""
+                    ? Center(child: CircularProgressIndicator())
+                    : json.decode(Constants.prefs.getString('userinfo')
+                                as String)['Role'] ==
+                            "Operator"
+                        ? Operatordashboard()
+                        : Staffdashboard();
+              }
+
+              return Constants.prefs.getBool('login') == true
+                  ? json.decode(Constants.prefs.getString('userinfo')
                               as String)['Role'] ==
                           "Operator"
                       ? Operatordashboard()
-                      : Staffdashboard();
-            }
-
-            return Constants.prefs.getBool('login') == true
-                ? json.decode(Constants.prefs.getString('userinfo') as String)[
-                            'Role'] ==
-                        "Operator"
-                    ? Operatordashboard()
-                    : Staffdashboard()
-                : LoginScreen();
-          }),
-      routes: {
-        Staffdashboard.routeName: (ctx) => Staffdashboard(),
-        AddDutiesScreen.routename: (ctx) => AddDutiesScreen(),
-        dutydetails.routename: (ctx) => dutydetails(),
-        ViewDuties.routeName: (ctx) => ViewDuties(),
-        PoliceDutiesStatus.routeName: (ctx) => PoliceDutiesStatus(),
-        Complaintdetails.routename: (ctx) => Complaintdetails(),
-        AssignComplaintsScreen.routename: (ctx) => AssignComplaintsScreen(),
-        ViewComplaints.routeName: (ctx) => ViewComplaints(),
-        PolicsComplaintStatus.routeName: (ctx) => PolicsComplaintStatus(),
-        JailRecords.routeName: (ctx) => JailRecords(),
-        Operatordashboard.routeName: (ctx) => Operatordashboard(),
-        OperatorStatus.routeName: (ctx) => OperatorStatus(),
-        Complaintspampending.routeName: (ctx) => Complaintspampending(),
-        ComplaintsApprove.routeName: (ctx) => ComplaintsApprove(),
-        detailsofSpam.routename: (ctx) => detailsofSpam(),
-        ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
-        AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
-        AddJailRecord.routename: (ctx) => AddJailRecord(),
-        AddJailCellRecord.routename: (ctx) => AddJailCellRecord(),
-        DutyReport.routename: (ctx) => DutyReport(),
-        ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
-        Feedbacks.routename: (ctx) => Feedbacks(),
-        RequestComplaint.routeName: (ctx) => RequestComplaint(),
-        FeedbacksC.routename: (ctx) => FeedbacksC(),
-        ComplaintReport.routename: (ctx) => ComplaintReport(),
-        UserDetail.routename: (ctx) => UserDetail(),
-        StaffList.routeName: (ctx) => StaffList(),
-        Pworking.routeName: (ctx) => Pworking(""),
-        Pcomplete.routeName: (ctx) => Pcomplete(""),
-        SpecficTababar.routeName: (ctx) => SpecficTababar(),
-        specficduty.routeName: (ctx) => specficduty(),
-        ViewPrisoner.routeName: (ctx) => ViewPrisoner(),
-        Chat.routeName: (ctx) => Chat(),
-        ChatUser.routeName: (ctx) => ChatUser(),
-        OperatorChat.routeName: (ctx) => OperatorChat(),
-        OperatorEmergency.routeName: (ctx) => OperatorEmergency(),
-        DetailEmergency.routename: (ctx) => DetailEmergency(),
-        AllEmergency.routeName: (ctx) => AllEmergency(),
-        Profile.routeName: (ctx) => Profile(),
-      },
+                      : Staffdashboard()
+                  : LoginScreen();
+            }),
+        routes: {
+          Staffdashboard.routeName: (ctx) => Staffdashboard(),
+          AddDutiesScreen.routename: (ctx) => AddDutiesScreen(),
+          dutydetails.routename: (ctx) => dutydetails(),
+          ViewDuties.routeName: (ctx) => ViewDuties(),
+          PoliceDutiesStatus.routeName: (ctx) => PoliceDutiesStatus(),
+          Complaintdetails.routename: (ctx) => Complaintdetails(),
+          AssignComplaintsScreen.routename: (ctx) => AssignComplaintsScreen(),
+          ViewComplaints.routeName: (ctx) => ViewComplaints(),
+          PolicsComplaintStatus.routeName: (ctx) => PolicsComplaintStatus(),
+          JailRecords.routeName: (ctx) => JailRecords(),
+          Operatordashboard.routeName: (ctx) => Operatordashboard(),
+          OperatorStatus.routeName: (ctx) => OperatorStatus(),
+          Complaintspampending.routeName: (ctx) => Complaintspampending(),
+          ComplaintsApprove.routeName: (ctx) => ComplaintsApprove(),
+          detailsofSpam.routename: (ctx) => detailsofSpam(),
+          ComplaintEmergency.routeName: (ctx) => ComplaintEmergency(),
+          AddCrimeRecord.routename: (ctx) => AddCrimeRecord(),
+          AddJailRecord.routename: (ctx) => AddJailRecord(),
+          AddJailCellRecord.routename: (ctx) => AddJailCellRecord(),
+          DutyReport.routename: (ctx) => DutyReport(),
+          ViewDutiesRequest.routeName: (ctx) => ViewDutiesRequest(),
+          Feedbacks.routename: (ctx) => Feedbacks(),
+          RequestComplaint.routeName: (ctx) => RequestComplaint(),
+          FeedbacksC.routename: (ctx) => FeedbacksC(),
+          ComplaintReport.routename: (ctx) => ComplaintReport(),
+          UserDetail.routename: (ctx) => UserDetail(),
+          StaffList.routeName: (ctx) => StaffList(),
+          Pworking.routeName: (ctx) => Pworking(""),
+          Pcomplete.routeName: (ctx) => Pcomplete(""),
+          SpecficTababar.routeName: (ctx) => SpecficTababar(),
+          specficduty.routeName: (ctx) => specficduty(),
+          ViewPrisoner.routeName: (ctx) => ViewPrisoner(),
+          Chat.routeName: (ctx) => Chat(),
+          ChatUser.routeName: (ctx) => ChatUser(),
+          OperatorChat.routeName: (ctx) => OperatorChat(),
+          OperatorEmergency.routeName: (ctx) => OperatorEmergency(),
+          DetailEmergency.routename: (ctx) => DetailEmergency(),
+          AllEmergency.routeName: (ctx) => AllEmergency(),
+          Profile.routeName: (ctx) => Profile(),
+          ManualCom.routeName: (ctx) => ManualCom()
+        },
+      ),
     );
   }
 }

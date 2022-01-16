@@ -31,12 +31,12 @@ class _AddJailRecordState extends State<AddJailRecord> {
       loading = true;
     });
     try {
-      // final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
+      final ref = FirebaseStorage.instance.ref().child(_userImageFile!.name);
 
-      // await ref.putFile(File(_userImageFile!.path));
-      // final download = await ref.getDownloadURL();
+      await ref.putFile(File(_userImageFile!.path));
+      final download = await ref.getDownloadURL();
       await DutiesDatabase.addJailRecord(
-          savedata, "as", id["ids"], id["idd"], id["capacity"]);
+          savedata, download, id["ids"], id["idd"], id["capacity"]);
       await showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -135,6 +135,13 @@ class _AddJailRecordState extends State<AddJailRecord> {
       'label': 'Other',
     },
   ];
+  bool isCnic(String em) {
+    String p = r'^[0-9]{5}-[0-9]{7}-[0-9]$';
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   XFile? _userImageFile;
   void _pickedImage(XFile image) {
     _userImageFile = image;
@@ -170,6 +177,8 @@ class _AddJailRecordState extends State<AddJailRecord> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter CNIC.';
+                            } else if (!isCnic(value)) {
+                              return 'Please enter valid Cnic.';
                             }
                             return null;
                           },

@@ -7,6 +7,7 @@ import 'package:policesfs/Chat/chat.dart';
 import 'package:policesfs/ComplaintTabbar.dart';
 import 'package:policesfs/Constants.dart';
 import 'package:policesfs/JailRecords.dart';
+import 'package:policesfs/ManualComplaints/Manaual.dart';
 import 'package:policesfs/Policetabbar.dart';
 import 'package:policesfs/ViewComplaints.dart';
 import 'package:policesfs/ViewDuties.dart';
@@ -287,7 +288,10 @@ class Staffdashboard extends StatelessWidget {
                               elevation: 8,
                               color: Colors.deepOrange[700],
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(ManualCom.routeName);
+                                },
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,

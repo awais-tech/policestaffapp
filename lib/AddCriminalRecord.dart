@@ -91,6 +91,13 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
     });
   }
 
+  bool isCnic(String em) {
+    String p = r'^[0-9]{5}-[0-9]{7}-[0-9]$';
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   final savedata = {
     'CrimeType': '',
     'Status': '',
@@ -99,6 +106,7 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
     "Title": "",
     "ImageUrl": "",
     "IdentificationMark": "",
+    "CNIC": "",
     "Date": DateTime.now(),
   };
   final List<Map<String, dynamic>> status = [
@@ -245,6 +253,29 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
                           },
                           onSaved: (value) {
                             savedata["Description"] = value!;
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            border: OutlineInputBorder(),
+                          ),
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter CNIC.';
+                            } else if (!isCnic(value)) {
+                              return 'Please enter VALID CNIC.';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            savedata["CNIC"] = value!;
                           },
                         ),
                       ),
