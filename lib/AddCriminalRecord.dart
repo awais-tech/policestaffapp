@@ -261,7 +261,7 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
                         child: TextFormField(
                           maxLines: 4,
                           decoration: InputDecoration(
-                            labelText: 'Description',
+                            labelText: 'CNIC',
                             border: OutlineInputBorder(),
                           ),
                           textInputAction: TextInputAction.next,
@@ -349,7 +349,7 @@ class _AddCrimeRecordState extends State<AddCrimeRecord> {
                       UserImagePicker(_pickedImage),
                       camera(_pickedImage),
                       SizedBox(
-                        height: 8,
+                        height: 2,
                       ),
                       Center(
                         child: Container(

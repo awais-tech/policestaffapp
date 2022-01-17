@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: _isLoading
                       ? Center(child: CircularProgressIndicator())
                       : Container(
-                          height: MediaQuery.of(context).size.height / 1.5,
+                          height: MediaQuery.of(context).size.height / 1.3,
                           width: double.infinity,
                           child: Card(
                             shadowColor: Colors.blueGrey,
